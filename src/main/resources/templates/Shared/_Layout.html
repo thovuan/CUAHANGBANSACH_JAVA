@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Bootstrap 3 template for corporate business" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <!-- Theme skin::: Try Out different themes inside Content/skins folder-->
+    <link id="t-colors" href="~/Content/skins/default.css" rel="stylesheet" />
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+
+<body>
+
+<div id="wrapper">
+    <!-- start header -->
+    <header>
+        <div class="top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="topleft-info">
+                            <!--<li><i class="fa fa-phone"></i> +62 088 999 123</li>-->
+                            
+
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="sb-search" class="sb-search">
+                            <form>
+                                <label for="search"></label><input class="sb-search-input" placeholder="Enter your search term..." type="text" value="" name="search" id="search">
+                                <input class="sb-search-submit" type="submit" value="">
+                                <span class="sb-icon-search" title="Click to start searching"></span>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/"><img src="~/Content/PIC_INTRO/co-truong-hutech-dai-hoc-cong-nghe-tp-ho-chi-minh-350x233.png" alt="" width="200" height="80" /></a>
+                </div>
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Home <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">SHOP <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Shop", "Index", "SHOP", new { area = "" }, new { @class = "nav-link" })</li>
+
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">About <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Our Story", "Our_Story", "ABOUT", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Blog", "Index", "ABOUT", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "ABOUT", new { area = "" }, new { @class = "nav-link" })</li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Tracking<i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Tracking", "Index", "Tracking", new { area = "" }, new { @class = "nav-link" })</li>
+                            </ul>
+                        </li>
+
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">ACCOUNT <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                @if (Session["KHACH"] != null)
+                                {
+                                <li>@Html.ActionLink("Thông tin khách hàng", "TTKH", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Đăng Xuất", "Logout", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+                                }
+                                else
+                                {
+                                <li>@Html.ActionLink("Đăng Nhập", "Login", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Đổi Mật Khẩu", "UpdateMK", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Đăng Ký Tài Khoản", "Create", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+                                }
+
+
+
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">GIAO DIỆN <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Giao diện shop", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Giao diện của nhân viên", "Index", "STAFFLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+                            </ul>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Giỏ Hàng<i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Giỏ hàng", "MyCart", "GioHang", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Lịch sử mua hàng", "Index", "GioHang", new { area = "" }, new { @class = "nav-link" })</li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->
+
+
+    @RenderBody()
+
+
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 col-lg-3">
+                    <div class="widget">
+                        <h4>Get in touch with us</h4>
+                        <address>
+                            <strong>STLD Shop</strong><br>
+                            475A Dien Bien Phu Street<br>
+                            Ward 25, Binh Thanh District
+                        </address>
+                        <p>
+                            <i class="icon-phone"></i> 0123456789 <br>
+                            <i class="icon-envelope-alt"></i> thovuanit2003@gmail.com
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-lg-3">
+                    <div class="widget">
+                        <h4>Information</h4>
+                        <ul class="link-list">
+                            <li><a href="#">Press release</a></li>
+                            <li><a href="#">Terms and conditions</a></li>
+                            <li><a href="#">Privacy policy</a></li>
+                            <li><a href="#">Career center</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-sm-3 col-lg-3">
+                    <div class="widget">
+                        <h4>Pages</h4>
+                        <ul class="link-list">
+                            <li><a href="#">Press release</a></li>
+                            <li><a href="#">Terms and conditions</a></li>
+                            <li><a href="#">Privacy policy</a></li>
+                            <li><a href="#">Career center</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-lg-3">
+                    <div class="widget">
+                        <h4>Newsletter</h4>
+                        <p>Fill your email and sign up for monthly newsletter to keep updated</p>
+                        <div class="form-group multiple-form-group input-group">
+                            <input type="email" name="email" class="form-control">
+                            <span class="input-group-btn">
+                                    <button type="button" class="btn btn-theme btn-add">Subscribe</button>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="sub-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="copyright">
+                            <p>&copy; Sailor Theme - All Right Reserved</p>
+                            <div class="credits">
+                                <!--
+                                All the links in the footer should remain intact.
+                                You can delete the links only if you purchased the pro version.
+                                Licensing information: https://bootstrapmade.com/license/
+                                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Sailor
+                            -->
+                                <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="social-network">
+                            <li><a href="#" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" data-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#" data-placement="top" title="Pinterest"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="#" data-placement="top" title="Google plus"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+
+<!-- Placed at the end of the document so the pages load faster -->
+@Scripts.Render("~/bundles/CustomJS")
+
+@RenderSection("scripts", required: false)
+</body>
+</html>

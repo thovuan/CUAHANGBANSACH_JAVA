@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang login của khách</title>
+</head>
+<body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+
+                @using (Html.BeginForm("Login", "GUESTLOGIN", FormMethod.Post))
+                {
+                @Html.AntiForgeryToken()
+                <h2>Login</h2>
+                <hr class="colorgraph" />
+
+                <div class="form-group">
+                    <label for="tendangnhap">Tên Đăng Nhập</label>
+                    <input type="text" id="tendangnhap" class="form-control" th:field="*{tendangnhap}" placeholder="Tên Đăng Nhập">
+                    @Html.ValidationMessageFor(m => m.tendangnhap, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.matkhau, htmlAttributes: new { @class = "form-control input-lg", @placeholder = "Mật Khẩu", type = "password" })
+                    <br />
+                    @Html.ValidationMessageFor(m => m.matkhau, "", new { @class = "text-danger" })
+                </div>
+
+                <hr class="colorgraph" />
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <input id="LoginForm" type="submit" value="Đăng Nhập" class="btn btn-primary btn-block" />
+                    </div>
+
+                    <div class="col-xs-12 col-md-6">
+                        <p>@Html.ActionLink("Đổi Mật Khẩu", "UpdateMK", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</p>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <p>@Html.ActionLink("Đăng Ký Tài Khoản", "Create", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</p>
+                    </div>
+                </div>
+
+                //@Html.ValidationSummary()
+
+                @ViewBag.Status
+                }
+            </div>
+        </div>
+    </div>
+
+
+</section>
+</body>
+</html>

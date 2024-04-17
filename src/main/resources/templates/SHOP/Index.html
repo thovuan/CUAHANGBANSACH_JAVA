@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<marquee style="color: blue;">本店へようこそ</marquee>
+<section id="content">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-4">
+                <aside class="left-sidebar">
+                    <div class="widget">
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="s" placeholder="Search.." />
+                                <input type="submit" class="form-control" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="widget">
+                        <h5 class="widgetheading">Thể loại</h5>
+                        <ul class="cat">
+                            @{
+                            List<THELOAISACH> list_CD = THELOAI_DAO.Read();
+                            foreach (THELOAISACH cd in list_CD)
+                            {
+                            <li>
+                                <i class="fa fa-angle-right"></i>
+                                @Html.ActionLink(cd.tentheloai, "Index", "SHOP", routeValues: new { @Ma_TheLoai = cd.matheloai }, htmlAttributes: null)<span> (@cd.Count)</span>
+                            </li>
+                            }
+                            }
+                        </ul>
+
+
+                    </div>
+                    <div class="widget">
+                        <h5 class="widgetheading">NXB</h5>
+                        <ul class="cat">
+                            @{
+                            List<NXB> list_NXB = NXB_DAO.Read();
+                            foreach (NXB cd in list_NXB)
+                            {
+                            <li>
+                                <i class="fa fa-angle-right"></i>
+                                @Html.ActionLink(cd.tennxb, "Index", "SHOP", routeValues: new { @Ma_NXB = cd.manxb }, htmlAttributes: null)<span> (@cd.Count)</span>
+                            </li>
+                            }
+                            }
+                        </ul>
+                    </div>
+                    <div class="widget">
+                        <h5 class="widgetheading">Popular tags</h5>
+                        <ul class="tags">
+                            <li><a href="#">Web design</a></li>
+                            <li><a href="#">Trends</a></li>
+                            <li><a href="#">Technology</a></li>
+                            <li><a href="#">Internet</a></li>
+                            <li><a href="#">Tutorial</a></li>
+                            <li><a href="#">Development</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="col-lg-8">
+                <h2 class="title">Book</h2>
+                <hr class="colorgraph" />
+                <div class="row2">
+                    @foreach (SACH sach in Model)
+                    {
+                    <div class="col-4">
+                        <img src="@sach.anhsanpham" />
+                        <p>Mã sách: @sach.masach</p>
+                        <h4>@sach.tensach</h4>
+                        <h5>Đơn Giá: @sach.dongia</h5>
+                        <h6>Số lượng hiện có: @sach.soluonghienco</h6>
+                        <button onclick="Lay_Thongtin('@sach.masach')" data-toggle="modal" data-target=".bs-modal-lg_1">Chi tiết</button>
+
+                        <input type="button" style="color: white; background-color:darkblue;" value="Thêm vào giỏ hàng" onclick="location.href='@Url.Action("Buy", "SHOP", routeValues: new { @MaSach = sach.masach })'" />
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <div class="modal fade bs-modal-lg_1" tabindex="-1" role="document" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <!-- Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Body -->
+                            <div class="row form-group" id="Body_Modal">
+                            </div>
+                            <!-- Footer -->
+                            <hr />
+                            <div class="row form-group">
+                                <button class="btn btn-default col-sm-3 col-mod-2 " data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @section scripts{
+            <script>
+                function Lay_Thongtin(MaSach) {
+                    //creating an XHLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                    //define a callback function
+                    var url = '@Url.Action("Detail", "SHOP")';
+                    url += '?MaSach=' + MaSach;
+                    xhr.open("GET", url, true);
+                    //onload property
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            document.getElementById('Body_Modal').innerHTML = xhr.responseText;
+
+                        }
+                    }
+                    //send request
+                    xhr.send();
+
+                }
+
+
+            </script>
+            }
+
+
+        </div>
+    </div>
+</section>
+</body>
+</html>

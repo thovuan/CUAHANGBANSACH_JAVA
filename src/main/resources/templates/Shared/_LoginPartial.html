@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+@if (Session["KHACH"]==null)
+{
+@Html.ActionLink("Login", "Login", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" });
+}
+else
+{
+KHACH khach = (KHACH)Session["KHACH"];
+<p>Xin chao, @khach.tenkhachhang</p>
+}
+</body>
+</html>

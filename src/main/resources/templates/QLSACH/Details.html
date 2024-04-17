@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <h2>Chi tiết thông tin Sách @Model.masach</h2>
+            <hr class="colorgraph" />
+            <div class="col-lg-4">
+                <h3>Ảnh sản phẩm</h3>
+                <div class="form-group">
+                    @if (!string.IsNullOrEmpty(Model.anhsanpham))
+                    {
+                    <img src=@Model.anhsanpham style="width: 200px; height: auto;" />
+                    }
+                    else
+                    {
+                    <span>Không có ảnh</span>
+                    }
+
+
+                </div>
+                <div class="form-group">
+                    <input type="button" value="Upload Ảnh" onclick="location.href='@Url.Action("UploadImage", "QLSACH", routeValues: new { @Ma_Sach = Model.masach })'" />
+
+                </div>
+
+
+            </div>
+
+            <dl class="col-lg-8">
+                <dt>
+                    @Html.DisplayNameFor(model => model.tensach)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.tensach)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.soluonghienco)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.soluonghienco)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.dacdiem)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.dacdiem)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DVT)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DVT)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.dongia)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.dongia)
+                </dd>
+
+                <dt>Tên thể loại</dt>
+                <dd>@Html.DisplayFor(model => model.tentheloai) </dd>
+
+
+            </dl>
+        </div>
+        <div class="form-group">
+            <input type="button" value="Cập nhật thông tin sách" onclick="location.href='@Url.Action("Edit", "QLSACH", routeValues: new { @Ma_Sach = Model.masach })'" />
+            <input type="button" value="Trở lại danh sách" onclick="location.href='@Url.Action("Index", "QLSACH")'" />
+        </div>
+
+    </div>
+
+
+
+
+</section>
+</body>
+</html>

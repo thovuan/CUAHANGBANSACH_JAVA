@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>DANH SÁCH SÁCH</h2>
+                <hr class="colorgraph" />
+
+                <p>
+
+
+                </p>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Mã Sách
+                        </th>
+                        <th>
+                            Tên Sách
+                        </th>
+                        <th>
+                            Số Lượng Hiện Có
+                        </th>
+                        <th>
+                            Đặc Điểm
+                        </th>
+                        <th>
+                            Ảnh Sản Phẩm
+                        </th>
+                        <th>
+                            Đơn Vị Tính
+                        </th>
+                        <th>
+                            Đơn Gi
+                        </th>
+                        <th>
+                            Tên Thể Loại
+                        </th>
+
+                        <th>
+                            Nhà Xuất Bản
+                        </th>
+                        <th>
+                            Tên Nhân Viên
+                        </th>
+                        <th></th>
+                    </tr>
+
+
+                    <tr th:each="sach: ${SACHList}">
+                        <td th:text="${sach.masach}">
+
+                        </td>
+                        <td th:text="${sach.tensach}">
+                            @Html.DisplayFor(modelItem => item.tensach)
+                        </td>
+                        <td th:text="${sach.soluonghienco}">
+                            @Html.DisplayFor(modelItem => item.soluonghienco)
+                        </td>
+                        <td th:text="${sach.dacdiem}">
+                            @Html.DisplayFor(modelItem => item.dacdiem)
+                        </td>
+                        <td >
+                            <img th:src="${sach.anhsanpham}" alt="" style="width: 50px" />
+                        </td>
+                        <td  th:text="${sach.DVT}">
+                            @Html.DisplayFor(modelItem => item.DVT)
+                        </td>
+                        <td th:text="${sach.dongia}">
+                            @Html.DisplayFor(modelItem => item.dongia)
+                        </td>
+                        <td th:text="${sach.tentheloai}">
+                            @Html.DisplayFor(modelItem => item.tentheloai)
+                        </td>
+                        <td th:text="${sach.tennxb}">
+                            @Html.DisplayFor(modelItem => item.tennxb)
+                        </td>
+                        <td th:text="${sach.tennhanvien}">
+                            @Html.DisplayFor(modelItem => item.tennhanvien)
+                        </td>
+                        <td>
+                            <input type="button" style="color: white; background-color:darkblue;" value="Edit" onclick="location.href='@{/QLSACH/Edit(Ma_Sach=${item.masach})}'" />
+                            <input type="button" style="color: white; background-color: red;" value="Thông tin sách" onclick="location.href='@{/QLSACH/Details(Ma_Sach=${item.masach})}'" />
+                            <input type="button" style="color: white; background-color: grey;" value="Xóa sách" onclick="location.href='@{/QLSACH/Delete(Ma_Sach=${item.masach})}'" />
+
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>
+</body>
+</html>
