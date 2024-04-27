@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -25,35 +25,30 @@
                     <div class="widget">
                         <h5 class="widgetheading">Thể loại</h5>
                         <ul class="cat">
-                            @{
-                            List<THELOAISACH> list_CD = THELOAI_DAO.Read();
-                            foreach (THELOAISACH cd in list_CD)
-                            {
-                            <li>
-                                <i class="fa fa-angle-right"></i>
-                                @Html.ActionLink(cd.tentheloai, "Index", "SHOP", routeValues: new { @Ma_TheLoai = cd.matheloai }, htmlAttributes: null)<span> (@cd.Count)</span>
-                            </li>
-                            }
-                            }
+                            <th:block th:each="cd : ${listTL}">
+                                <li>
+                                    <i class="fa fa-angle-right"></i>
+                                    <a th:href = "@{/SHOP/Index(MaTL=${cd.matheloai})}" th:text="${cd.matheloai}"></a><span th:text="(${cd.Count})"></span>
+
+                                </li>
+                            </th:block>
+
                         </ul>
-
-
                     </div>
+
                     <div class="widget">
                         <h5 class="widgetheading">NXB</h5>
                         <ul class="cat">
-                            @{
-                            List<NXB> list_NXB = NXB_DAO.Read();
-                            foreach (NXB cd in list_NXB)
-                            {
-                            <li>
-                                <i class="fa fa-angle-right"></i>
-                                @Html.ActionLink(cd.tennxb, "Index", "SHOP", routeValues: new { @Ma_NXB = cd.manxb }, htmlAttributes: null)<span> (@cd.Count)</span>
-                            </li>
-                            }
-                            }
+                            <th:block th:each="nxb : ${listNXB}">
+                                <li>
+                                    <i class="fa fa-angle-right"></i>
+                                    <a th:href = "@{/SHOP/Index_TheoNXB/{MaNXB}(MaNXB=${nxb.manxb})}" th:text="${nxb.manxb}"></a><span th:text="(${nxb.Count})"></span>
+
+                                </li>
+                            </th:block>
                         </ul>
                     </div>
+
                     <div class="widget">
                         <h5 class="widgetheading">Popular tags</h5>
                         <ul class="tags">
@@ -71,20 +66,22 @@
             <div class="col-lg-8">
                 <h2 class="title">Book</h2>
                 <hr class="colorgraph" />
-                <div class="row2">
-                    @foreach (SACH sach in Model)
-                    {
+                <div class="row2" th:each="hon : ${list}">
+
                     <div class="col-4">
-                        <img src="@sach.anhsanpham" />
-                        <p>Mã sách: @sach.masach</p>
-                        <h4>@sach.tensach</h4>
-                        <h5>Đơn Giá: @sach.dongia</h5>
-                        <h6>Số lượng hiện có: @sach.soluonghienco</h6>
+                        <img th:src="${hon.anhsanpham}" alt="" />
+                        <p th:text="${hon.masach}"></p>
+                        <h4 th:text="${hon.tensach}"></h4>
+                        <h5 th:text="${hon.dongia}"></h5>
+                        <h6 th:text="${hon.soluonghienco}"></h6>
                         <button onclick="Lay_Thongtin('@sach.masach')" data-toggle="modal" data-target=".bs-modal-lg_1">Chi tiết</button>
 
-                        <input type="button" style="color: white; background-color:darkblue;" value="Thêm vào giỏ hàng" onclick="location.href='@Url.Action("Buy", "SHOP", routeValues: new { @MaSach = sach.masach })'" />
+
+                        <form th:action="@{/SHOP/Buy/{id}(id = ${hon.masach})}" th:object="${hon}">
+                            <button type="submit" style="color: white; background-color:darkblue;">Details</button>
+                        </form>
                     </div>
-                    }
+
                 </div>
             </div>
 

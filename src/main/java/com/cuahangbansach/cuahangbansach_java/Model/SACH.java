@@ -1,8 +1,16 @@
 package com.cuahangbansach.cuahangbansach_java.Model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@Setter
+@Getter
+@DynamicInsert
+@DynamicUpdate
 @Table(name ="SACH")
 public class SACH {
     @Id
@@ -27,14 +35,19 @@ public class SACH {
     @Column(name="dongia")
     public int dongia;
 
-    @Column(name="matheloai")
-    public String matheloai;
+    @JoinColumn(name="matheloai", referencedColumnName = "matheloai")
+    @ManyToOne(fetch = FetchType.LAZY)
+    public THELOAISACH theloaisach;
 
-    @Column(name="manhanvien")
-    public String manhanvien;
 
-    @Column(name="manxb")
-    public String manxb;
+
+    @JoinColumn(name="manhanvien", referencedColumnName = "manhanvien")
+    @ManyToOne(fetch = FetchType.LAZY)
+    public NHANVIEN nhanvien;
+
+    @JoinColumn(name="manxb", referencedColumnName = "manxb")
+    @ManyToOne(fetch = FetchType.LAZY)
+    public NXB nxb;
 
     @Transient
     public String tentheloai;

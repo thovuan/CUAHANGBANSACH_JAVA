@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+</head>
+<body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>LỊCH SỬ MUA HÀNG</h2>
+                <hr class="colorgraph" />
+
+                <form th:action="@{/ShoppingCart/Create}">
+                    <button type="submit" style="color: white; background-color:yellowgreen;">Create</button>
+                </form>
+
+
+                <table class="table">
+                    <tr>
+                        <th>Mã Đơn Hàng</th>
+                        <th>
+                            Ngày Lập
+                        </th>
+                        <th>
+                            Tình Trạng Thanh Toán
+                        </th>
+                        <th>
+                            Tình Trạng
+                        </th>
+                        <th>
+                            Mã Khách Hàng
+                        </th>
+                        <th></th>
+                    </tr>
+
+
+                    <tr th:each="sc : ${SCL}">
+                        <td th:text="${sc.getMaphieumuahang()}">@Html.DisplayFor(modelItem => item.maphieumuahang) </td>
+                        <td th:text="${sc.getNgaylap()}">
+
+                        </td>
+                        <td th:text="${sc.getTinhtrangthanhtoan()}">
+
+                        </td>
+                        <td th:text="${sc.getTinhtrang()}">
+
+                        </td>
+                        <td th:text="${sc.getKhach().getMakhachhang()}">
+
+                        </td>
+                        <td>
+
+                            <form th:action="@{/ShoppingCart/Confirm/{id}(id = ${sc.getMaphieumuahang()})}" th:object="${sc}">
+                                <button type="submit" style="color: white; background-color:darkblue;">Confirm</button>
+                            </form>
+
+                            <form th:action="@{/ShoppingCart/Details/{id}(id = ${sc.getMaphieumuahang()})}" th:object="${sc}">
+                                <button type="submit" style="color: white; background-color:red;">Details
+                                </button>
+                            </form>
+
+                            <form th:action="@{/ShoppingCart/Delete/{id}(id = ${sc.getMaphieumuahang()})}" th:object="${sc}">
+                                <button type="submit" style="color: white; background-color:grey;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    }
+
+                </table>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

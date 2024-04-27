@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,24 +8,22 @@
 <section id="content">
     <div class="container">
         <div class="row">
-            <h2>Chi tiết thông tin Sách @Model.masach</h2>
+            <h2>Chi tiết thông tin Sách </h2>
+            <h3 th:text="${SACH.masach}"></h3>
             <hr class="colorgraph" />
             <div class="col-lg-4">
                 <h3>Ảnh sản phẩm</h3>
-                <div class="form-group">
-                    @if (!string.IsNullOrEmpty(Model.anhsanpham))
-                    {
-                    <img src=@Model.anhsanpham style="width: 200px; height: auto;" />
-                    }
-                    else
-                    {
+                <div class="form-group" th:if="${SACH.anhsanpham}!=null">
+                    <img th:src="${SACH.anhsanpham}" alt="" style="width: 200px; height: auto;" />
+
+                </div>
+                <div class="form-group" th:if="${SACH.anhsanpham}==null">
                     <span>Không có ảnh</span>
-                    }
 
 
                 </div>
                 <div class="form-group">
-                    <input type="button" value="Upload Ảnh" onclick="location.href='@Url.Action("UploadImage", "QLSACH", routeValues: new { @Ma_Sach = Model.masach })'" />
+
 
                 </div>
 
@@ -34,61 +32,59 @@
 
             <dl class="col-lg-8">
                 <dt>
-                    @Html.DisplayNameFor(model => model.tensach)
+                    Tên Sách
                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.tensach)
+                <dd th:text="${SACH.tensach}">
+
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.soluonghienco)
+                    Số Lượng Hien Co
                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.soluonghienco)
+                <dd th:text="${SACH.soluonghienco}">
+
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.dacdiem)
+                    Đặc Điểm
                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.dacdiem)
+                <dd th:text="${SACH.dacdiem}">
+
                 </dd>
 
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.DVT)
+                    Đơn Vị Tính
                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.DVT)
+                <dd th:text="${SACH.DVT}">
+
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.dongia)
+                    Đơn Giá
                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.dongia)
+                <dd th:text="${SACH.dongia}">
+
                 </dd>
 
                 <dt>Tên thể loại</dt>
-                <dd>@Html.DisplayFor(model => model.tentheloai) </dd>
+                <dd th:text="${SACH.tentheloai}"></dd>
 
 
             </dl>
         </div>
         <div class="form-group">
-            <input type="button" value="Cập nhật thông tin sách" onclick="location.href='@Url.Action("Edit", "QLSACH", routeValues: new { @Ma_Sach = Model.masach })'" />
-            <input type="button" value="Trở lại danh sách" onclick="location.href='@Url.Action("Index", "QLSACH")'" />
+            <form th:action="@{/QLSACH/Index}" th:object="${SACH}">
+                <button type="submit" style="color: white; background-color:darkblue;">Trở lại danh sách</button>
+            </form>
         </div>
 
     </div>
-
-
-
 
 </section>
 </body>

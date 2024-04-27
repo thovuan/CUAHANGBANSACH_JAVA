@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,102 +8,136 @@
 <section id="content">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                @using (Html.BeginForm("Edit", "QLSACH", FormMethod.Post))
-                {
-                @Html.AntiForgeryToken()
+            <form th:action="@{/QLSACH/Save}"  method="post" th:object="${sach}" enctype="multipart/form-data" class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 
                 <div class="form-horizontal">
-                    <h4>Cập nhật thông tin sách @Model.SACH.tensach</h4>
-                    @Html.HiddenFor(model => model.SACH.masach)
+                    <h4>Update Book Information</h4>
+                    <h5 th:text="${sach.masach}"></h5>
                     <hr class="colorgraph" />
 
-
+                    <input type="text" th:field="*{masach}" readonly="readonly">
 
                     <div class="form-group">
-
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.SACH.tensach, new { htmlAttributes = new { @class = "form-control input-lg", @placeholder = "Tên Sách" } })
-                            @Html.ValidationMessageFor(model => model.SACH.tensach, "", new { @class = "text-danger" })
+                            <label for = "tensach" class="col-sm-4 col-form-label">Tên Sách</label>
+                            <div class = "col-sm-8">
+                                <input type="text" class="form-control" id="tensach" name = "tensach" th:field="*{tensach}">
+                                <p th:if = "${#fields.hasErrors('tensach')}" th:errorclass="text-danger"
+                                   th:errors="${sach.tensach}"></p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label for = "soluonghienco" class="col-sm-4 col-form-label">Số Lượng Hện Có</label>
+                            <div class = "col-sm-8">
+                                <input type="text" class="form-control" id="soluonghienco" name = "soluonghienco" th:field="*{soluonghienco}">
+                                <p th:if = "${#fields.hasErrors('soluonghienco')}" th:errorclass="text-danger"
+                                   th:errors="${sach.soluonghienco}"></p>
+                            </div>
+
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.SACH.soluonghienco, new { htmlAttributes = new { @class = "form-control input-lg", @placeholder = "Số Lượng Hiện Có" } })
-                            @Html.ValidationMessageFor(model => model.SACH.soluonghienco, "", new { @class = "text-danger" })
+                            <label for = "dacdiem" class="col-sm-4 col-form-label">Đặc Điểm</label>
+                            <div class = "col-sm-8">
+                                <textarea class="form-control" id="dacdiem" name = "dacdiem" th:field="*{dacdiem}"></textarea>
+                                <p th:if = "${#fields.hasErrors('dacdiem')}" th:errorclass="text-danger"
+                                   th:errors="${sach.dacdiem}"></p>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+
+                            <label for = "DVT" class="col-sm-4 col-form-label">Đơn Vị Tính</label>
+                            <div class = "col-sm-8">
+                                <input type="text" class="form-control" id="DVT" name = "DVT" th:field="*{DVT}">
+                                <p th:if = "${#fields.hasErrors('DVT')}" th:errorclass="text-danger"
+                                   th:errors="${sach.DVT}"></p>
+                            </div>
+
+
+
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.SACH.dacdiem, new { htmlAttributes = new { @class = "form-control input-lg", @placeholder = "Đặc Điểm" } })
-                            @Html.ValidationMessageFor(model => model.SACH.dacdiem, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                            <label for = "dongia" class="col-sm-4 col-form-label">Đơn Giá</label>
+                            <div class = "col-sm-8">
+                                <input type="text" class="form-control" id="dongia" name = "dongia" th:field="*{dongia}">
+                                <p th:if = "${#fields.hasErrors('dongia')}" th:errorclass="text-danger"
+                                   th:errors="${sach.dongia}"></p>
+                            </div>
 
-
-
-                    <div class="form-group">
-
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.SACH.DVT, new { htmlAttributes = new { @class = "form-control input-lg", @placeholder = "Đơn Vị Tính" } })
-                            @Html.ValidationMessageFor(model => model.SACH.DVT, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.SACH.dongia, new { htmlAttributes = new { @class = "form-control input-lg", @placeholder = "Đon Giá" } })
-                            @Html.ValidationMessageFor(model => model.SACH.dongia, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                            <label for="theloaisach" class="col-sm-4 col-form-label"></label>
+                            <select name="theloaisach" class="form-control form-select" th:field="*{theloaisach}" id="theloaisach" th:name="theloaisach" >
 
+                                <option value="0">--Chon the loai--</option>
+                                <option th:each="category : ${TLList}"
+                                        th:value="${category.matheloai}"
+                                        th:text="${category.tentheloai}"
+                                        th:selected="${category.matheloai == sach.theloaisach.matheloai}"
 
-                    <div class="form-group">
+                                ></option>
 
-                        <div class="col-md-10">
-                            <select name="TheLoai" class="form-control">
-                                <option value="0">--Chọn Thể Loại--</option>
-                                @foreach (var tl in Model.THELOAISACH)
-                                {
-                                <option value="@tl.matheloai">@tl.tentheloai</option>
-                                }
                             </select>
                         </div>
                     </div>
 
-
-
                     <div class="form-group">
 
                         <div class="col-md-10">
-                            <select name="NXB" class="form-control">
-                                <option value="0">--Chọn Nhà Xuất Bản--</option>
-                                @foreach (var tl in Model.NXB)
-                                {
-                                <option value="@tl.manxb">@tl.tennxb</option>
-                                }
+                            <label for="nxb"></label>
+                            <select name="nxb" class="form-control" th:field="*{nxb}" id="nxb" th:name="nxb" >
+
+                                <option value="0">--Chon NXB--</option>
+                                <option th:each="category : ${NXBList}"
+                                        th:value="${category.manxb}"
+                                        th:text="${category.tennxb}"
+                                        th:selected="${category.manxb == sach.nxb.manxb}"
+                                ></option>
+
                             </select>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="file" class="form-control" name="image" />
+
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                            <input type="submit" value="Create" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
-                }
+
 
                 <div>
                     @Html.ActionLink("Back to List", "Index")
                 </div>
 
-            </div>
+            </form>
         </div>
 
     </div>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>DANH SÁCH THỂ LOẠI</h2>
+                <hr class="colorgraph" />
+
+
+                <div class="col-lg-4" style="margin-top:10px; margin-bottom: 10px">
+
+                    <form th:action="@{/QLTHELOAI/Create/}">
+                        <button type="submit" style="color: white; background-color:green;">Create</button>
+                    </form>
+                </div>
+
+                <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
+
+                    <form th:action="@{/QLTHELOAI/Index/}">
+                        <button type="submit" style="color: white; background-color:darkblue;">Edit</button>
+                    </form>
+                </div>
+
+
+
+                <table class="table">
+                    <tr>
+                        <th>
+                            Mã Thể Loại
+                        </th>
+                        <th>
+                            Tên thể loại
+                        </th>
+
+                    </tr>
+
+
+                    <tr th:each ="tl: ${TLList}">
+                        <td th:text ="${tl.matheloai}"></td>
+                        <td th:text ="${tl.tentheloai}">
+
+                        </td>
+                        <td>
+
+                            <form th:action="@{/QLTHELOAI/Update/{id}(id = ${tl.matheloai})}" th:object="${tl}">
+                                <button type="submit" style="color: white; background-color:darkblue;">Edit</button>
+                            </form>
+
+                            <form th:action="@{/QLTHELOAI/Detail/{id}(id = ${tl.matheloai})}" th:object="${tl}">
+                                <button type="submit" style="color: white; background-color: red;">Detail</button>
+                            </form>
+
+
+                            <form th:action="@{/QLTHELOAI/Delete/{id}(id = ${tl.matheloai})}" th:object="${tl}">
+                                <button type="submit" style="color: white; background-color: grey;">Delete</button>
+                            </form>
+
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,10 +12,20 @@
                 <h2>DANH SÁCH SÁCH</h2>
                 <hr class="colorgraph" />
 
-                <p>
+                <div class="col-lg-4" style="margin-top:10px; margin-bottom: 10px">
 
+                    <form th:action="@{/QLSACH/Create}">
+                        <button type="submit" style="color: white; background-color:green;">Create</button>
+                    </form>
+                </div>
 
-                </p>
+                <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
+
+                    <form th:action="@{/QLSACH/Index}">
+                        <button type="submit" style="color: white; background-color:darkblue;">Find</button>
+                    </form>
+                </div>
+
                 <table class="table">
                     <tr>
                         <th>
@@ -58,36 +68,46 @@
 
                         </td>
                         <td th:text="${sach.tensach}">
-                            @Html.DisplayFor(modelItem => item.tensach)
+
                         </td>
                         <td th:text="${sach.soluonghienco}">
-                            @Html.DisplayFor(modelItem => item.soluonghienco)
+
                         </td>
                         <td th:text="${sach.dacdiem}">
-                            @Html.DisplayFor(modelItem => item.dacdiem)
+
                         </td>
                         <td >
                             <img th:src="${sach.anhsanpham}" alt="" style="width: 50px" />
                         </td>
                         <td  th:text="${sach.DVT}">
-                            @Html.DisplayFor(modelItem => item.DVT)
+
                         </td>
                         <td th:text="${sach.dongia}">
-                            @Html.DisplayFor(modelItem => item.dongia)
+
                         </td>
                         <td th:text="${sach.tentheloai}">
-                            @Html.DisplayFor(modelItem => item.tentheloai)
+
                         </td>
                         <td th:text="${sach.tennxb}">
-                            @Html.DisplayFor(modelItem => item.tennxb)
+
                         </td>
                         <td th:text="${sach.tennhanvien}">
-                            @Html.DisplayFor(modelItem => item.tennhanvien)
+
                         </td>
                         <td>
-                            <input type="button" style="color: white; background-color:darkblue;" value="Edit" onclick="location.href='@{/QLSACH/Edit(Ma_Sach=${item.masach})}'" />
-                            <input type="button" style="color: white; background-color: red;" value="Thông tin sách" onclick="location.href='@{/QLSACH/Details(Ma_Sach=${item.masach})}'" />
-                            <input type="button" style="color: white; background-color: grey;" value="Xóa sách" onclick="location.href='@{/QLSACH/Delete(Ma_Sach=${item.masach})}'" />
+
+                            <form th:action="@{/QLSACH/Edit/{id}(id = ${sach.masach})}" th:object="${sach}">
+                                <button type="submit" style="color: white; background-color:darkblue;">Edit</button>
+                            </form>
+
+                            <form th:action="@{/QLSACH/Details/{id}(id = ${sach.masach})}" th:object="${sach}">
+                                <button type="submit" style="color: white; background-color: red;">Details</button>
+                            </form>
+
+                            <form th:action="@{/QLSACH/Delete/{id}(id = ${sach.masach})}" th:object="${sach}">
+                                <button type="submit" style="color: white; background-color: grey;">Delete</button>
+                            </form>
+
 
                         </td>
                     </tr>

@@ -6,6 +6,7 @@
     <title>Title</title>
 </head>
 <body>
+<th:block th:include="/Shared/_Layout"></th:block>
 <section id="content">
     <div class="container">
         <div class="row">
@@ -23,7 +24,7 @@
                     <div class="col-lg-2">
                         <input type="submit" value="Tìm kiếm" class="btn btn-default" />
                     </div>
-                    }
+
                 </div>
 
                 <table class="table">
@@ -60,7 +61,13 @@
                         </td>
 
                         <td>
+                            <form th:action="@{/QLKHACH/Detail/{id}(id = ${khach.makhachhang})}" th:object="${khach}">
+                                <button type="submit" style="color: white; background-color: red;">Details</button>
+                            </form>
 
+                            <form th:action="@{/QLKHACH/Delete}">
+                                <button type="submit" style="color: white; background-color: grey;">Delete</button>
+                            </form>
 
                         </td>
                     </tr>

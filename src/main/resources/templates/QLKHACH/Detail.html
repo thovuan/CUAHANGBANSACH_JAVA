@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <h2>Chi tiết khách hàng</h2>
+            <h3 th:text="${TTKHACH.makhachhang}"></h3>
+            <hr class="colorgraph" />
+            <div class="col-lg-4">
+                <h3>Ảnh đại diện</h3>
+                <div class="form-group" th:if="${TTKHACH.avatar}!=null">
+
+                    <img th:src="@{TTKHACH.avatar}" alt="" style="width: 200px; height: auto;" />
+                    }
+
+
+                </div>
+
+                <div class="form-group" th:unless="${TTKHACH.avatar}!=null">
+                    <span>Không có ảnh</span>
+                </div>
+
+            </div>
+
+            <dl class="col-lg-8">
+                <dt>
+                    Tên Khách Hàng
+                </dt>
+
+                <dd th:text="${TTKHACH.tenkhachhang}">
+
+                </dd>
+
+                <dt>
+                    Địa Chỉ
+                </dt>
+
+                <dd th:text="${TTKHACH.diachi}">
+                    @Html.DisplayFor(model => Model.diachi)
+                </dd>
+
+                <dt>
+                    Số Điện Thoại
+                </dt>
+
+                <dd th:text="${TTKHACH.sdt}">
+                    @Html.DisplayFor(model => Model.sdt)
+                </dd>
+
+                <dt>
+                    Email
+                </dt>
+
+                <dd th:text="${TTKHACH.email}">
+                    @Html.DisplayFor(model => Model.email)
+                </dd>
+
+            </dl>
+        </div>
+        <form th:action="@{/QLKHACH/Index}" th:object="${TTKHACH}">
+            <button type="submit" style="color: white; background-color:darkblue;">Trở lại danh sách</button>
+        </form>
+
+    </div>
+
+</section>
+</body>
+</html>
