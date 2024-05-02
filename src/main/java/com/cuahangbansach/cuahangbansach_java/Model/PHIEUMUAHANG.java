@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Setter
@@ -32,4 +33,10 @@ public class PHIEUMUAHANG {
     @JoinColumn(name="makhachhang", referencedColumnName = "makhachhang")
     @ManyToOne(fetch = FetchType.LAZY)
     private KHACH khach;
+
+    @Transient
+    private long DHTotal;
+
+    @Transient
+    public List<SACH> dsSach;
 }

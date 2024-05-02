@@ -1,10 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>PHIẾU MUA HÀNG</h2>
+                <h3 th:text="${pmh.getMaphieumuahang()}"></h3>
+                <hr class="colorgraph"/>
+                <dl class="dl-horizontal">
+                    <dt>
+                        Ngày Lập
+                    </dt>
 
+                    <dd th:text="${pmh.getNgaylap()}">
+
+                    </dd>
+
+                    <dt>
+                        Tình trạng thanh toán
+                    </dt>
+
+                    <dd th:text="${pmh.getTinhtrangthanhtoan()}">
+
+                    </dd>
+
+                    <dt>
+                        Tinh trạng đơn hàng
+                    </dt>
+
+                    <dd th:text="${pmh.getTinhtrang()}">
+
+                    </dd>
+
+
+
+                </dl>
+            </div>
+
+            <div class="col-lg-12">
+                <h2>DANH SÁCH CÁC CUỐN SÁCH TRONG ĐƠN HÀNG</h2>
+                <h3 th:text="${pmh.getMaphieumuahang()}"></h3>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Mã Sách
+                        </th>
+                        <th>
+                            Tên Sách
+                        </th>
+
+                        <th>
+                            Đặc Điểm
+                        </th>
+                        <th>
+                            Ảnh Sản Phẩm
+                        </th>
+                        <th>Số Lượng Mua</th>
+                        <th>
+                            Đơn Giá
+                        </th>
+                        <th>Thành Tiền</th>
+
+
+                    </tr>
+
+
+                    <tr th:each="sach : ${pmh.getDsSach()}">
+                        <td th:text="${sach.getMasach()}">
+
+                        </td>
+                        <td th:text="${sach.getTensach()}">
+                            @Html.DisplayFor(modelItem => item.tensach)
+                        </td>
+
+                        <td th:text="${sach.getDacdiem()}">
+                            @Html.DisplayFor(modelItem => item.dacdiem)
+                        </td>
+                        <td >
+                            <img alt="" th:src="${sach.getAnhsanpham()}" style="width: 50px" />
+                        </td>
+                        <td th:text="${sach.getSoluongmua()}"></td>
+                        <td th:text="${sach.getDongia()}">
+                            VND
+                        </td>
+                        <td th:text="${sach.getThanhtien()}"> VND</td>
+
+                        <td>
+
+                            <form th:action="@{/ShoppingCart/EditSLBook/{id}(id = ${sach.getMasach()})}" th:object="${sach}">
+                                <button type="submit" style="color: white; background-color:darkblue;">Edit</button>
+                            </form>
+
+                            <form th:action="@{/SHOP/Detail/{id}(id = ${sach.getMasach()})}" th:object="${sach}">
+                                <button type="submit" style="color: white; background-color:red;">Details</button>
+                            </form>
+
+                            <form th:action="@{/ShoppingCart/Delete/{id}(id = ${sach.getMasach()})}" th:object="${sach}">
+                                <button type="submit" style="color: white; background-color:grey;">Delete</button>
+                            </form>
+
+
+                        </td>
+                    </tr>
+
+
+                </table>
+                <h3>Tổng giá trị hóa đơn: </h3>
+                <h3 th:text="${pmh.getDHTotal()}"> VND</h3>
+                <p>
+                    @Html.ActionLink("Thêm Sách vào giỏ hàng", "Edit", routeValues: new { @Ma_DH = Model.maphieumuahang }) |
+                    @Html.ActionLink("Back to List", "Index")
+                </p>
+            </div>
+        </div>
+    </div>
+
+</section>
 </body>
 </html>

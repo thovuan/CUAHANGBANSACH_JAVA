@@ -17,6 +17,7 @@ public class SACH {
     @Column(name="masach")
     public String masach;
 
+
     @Column(name="tensach")
     public String tensach;
 
@@ -57,4 +58,10 @@ public class SACH {
 
     @Transient
     public String tennhanvien;
+
+    @Transient
+    private int soluongmua;
+
+    @Transient
+    private long thanhtien;
 }

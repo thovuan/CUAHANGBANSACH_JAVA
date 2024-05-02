@@ -1,10 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12" th:if="${pmh}!=null">
+                <h2>俺のカート</h2>
+                <h3 th:text="${pmh.getMaphieumuahang()}"></h3>
+                <hr class="colorgraph"/>
 
+                <form th:action="@{/ShoppingCart/Create}">
+                    <button type="submit" style="color: white; background-color:yellowgreen;">Create</button>
+                </form>
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        Ngày Lập
+                    </dt>
+
+                    <dd th:text="${pmh.getNgaylap()}">
+
+                    </dd>
+
+                    <dt>
+                        Tình trạng thanh toán
+                    </dt>
+
+                    <dd th:text="${pmh.getTinhtrangthanhtoan()}">
+
+                    </dd>
+
+                    <dt>
+                        Tinh trạng đơn hàng
+                    </dt>
+
+                    <dd th:text="${pmh.getTinhtrang()}">
+
+                    </dd>
+
+
+
+                </dl>
+
+                <div class="col-lg-12">
+                    <form th:action="@{/ShoppingCart/Confirm/{id}(id = ${pmh.getMaphieumuahang()})}" th:object="${pmh}">
+                        <button type="submit" style="color: white; background-color:darkblue;">Confirm</button>
+                    </form>
+
+                    <form th:action="@{/ShoppingCart/Details/{id}(id = ${pmh.getMaphieumuahang()})}" th:object="${pmh}">
+                        <button type="submit" style="color: white; background-color:red;">Details
+                        </button>
+                    </form>
+
+                    <form th:action="@{/ShoppingCart/Delete/{id}(id = ${pmh.getMaphieumuahang()})}" th:object="${pmh}">
+                        <button type="submit" style="color: white; background-color:grey;">Delete</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-12" th:unless="${pmh}!=null">
+                <h3>Please login or add cart to see your cart</h3>
+            </div>
+
+
+
+        </div>
+    </div>
+
+</section>
 </body>
 </html>

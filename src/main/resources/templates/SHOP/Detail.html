@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,19 +8,20 @@
 <section id="content" style="margin-left: 10px; margin-right:10px">
     <div class="col-xs-12">
         <div class="row">
-            <h2>Chi tiết thông tin Sách @Model.masach</h2>
+            <h2>Chi tiết thông tin Sách </h2>
+            <h3 th:text="${SACH.masach}"></h3>
             <hr class="colorgraph" />
             <div class="col-lg-4">
                 <h3>Ảnh sản phẩm</h3>
-                <div class="form-group">
-                    @if (!string.IsNullOrEmpty(Model.anhsanpham))
-                    {
-                    <img src=@Model.anhsanpham style="width: 260px; height: auto;" />
-                    }
-                    else
-                    {
+                <div class="form-group" th:if="${SACH.anhsanpham}!=null">
+
+                    <img th:src="${SACH.anhsanpham}" style="width: 260px; height: auto;" />
+
+
+                </div>
+
+                <div class="form-group" th:unless="${SACH.anhsanpham}!=null">
                     <span>Không có ảnh</span>
-                    }
 
                 </div>
 
@@ -28,15 +29,24 @@
 
             <div class="col-lg-8">
                 <div style="display: -webkit-box; text-overflow: ellipsis; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-size: 20px; font-weight: 500; line-height: 24px; margin: 0; max-height: 48px; max-width: 665px; overflow: hidden; overflow-wrap: break-word; vertical-align: sub;">
-                    <span>
-                        @Html.DisplayFor(model => model.tensach)
+                    <span th:text="${SACH.tensach}">
+
                     </span>
                 </div>
 
                 <div class="row" style="margin-top: 0.625rem; position: relative;">
-                    <div class="flex flex-column">Thể Loại: @Html.DisplayFor(model => model.tentheloai)</div>
-                    <div class="flex flex-column">Thể Loại: @Html.DisplayFor(model => model.tennxb)</div>
-                    <div class="flex flex-column">Số Lượng Hiện có: @Html.DisplayFor(model => model.soluonghienco)</div>
+                    <div class="flex flex-column">
+                        <p th:text="${SACH.tentheloai}">
+                        </p>
+                    </div>
+                    <div class="flex flex-column">
+                        <p th:text="${SACH.tennxb}">
+                        </p>
+                    </div>
+                    <div class="flex flex-column">
+                        <p th:text="${SACH.tennhanvien}">
+                        </p>
+                    </div>
                 </div>
 
                 <div style="margin-top:10px">
@@ -46,7 +56,7 @@
                                 <div class="flex items-center flex-basis: 625px; flex-wrap: wrap;min-height: 1.875rem;width: 625px;">
                                     <div class="flex items-center">
                                         <div class="color: #ee4d2d;font-size: 30px;font-weight: 500;">
-                                            @Html.DisplayFor(model => model.dongia) VND
+                                            <h3 th:text="${SACH.dongia}"> VND</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -56,13 +66,13 @@
                 </div>
 
                 <div style="margin-top: 1.5625rem;">
-                    @Html.DisplayFor(model => model.dacdiem)
+                    <p th:text="${SACH.dacdiem}"> </p>
                 </div>
             </div>
 
         </div>
         <div class="form-group">
-            <input type="button" value="Trở lại shop" onclick="location.href='@Url.Action("Index")'" />
+            <input type="button" value="Trở lại shop" th:onclick="@{/SHOP/Index}" />
         </div>
 
     </div>

@@ -11,6 +11,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Getter
 @DynamicInsert
 @DynamicUpdate
+@IdClass(CHITIETDATHANG.class)
 @Table(name = "CHITIETDATHANG")
 public class CHITIETDATHANG {
     @Id

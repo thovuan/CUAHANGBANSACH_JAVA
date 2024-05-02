@@ -74,11 +74,13 @@
                         <h4 th:text="${hon.tensach}"></h4>
                         <h5 th:text="${hon.dongia}"></h5>
                         <h6 th:text="${hon.soluonghienco}"></h6>
-                        <button onclick="Lay_Thongtin('@sach.masach')" data-toggle="modal" data-target=".bs-modal-lg_1">Chi tiết</button>
-
+                        <!--<button onclick="Lay_Thongtin(${hon.masach})" data-toggle="modal" data-target=".bs-modal-lg_1">Chi tiết</button>-->
+                        <form th:action="@{/SHOP/Detail/{id}(id = ${hon.masach})}" th:object="${hon}">
+                            <button type="submit" style="color: white; background-color:darkblue;">Details</button>
+                        </form>
 
                         <form th:action="@{/SHOP/Buy/{id}(id = ${hon.masach})}" th:object="${hon}">
-                            <button type="submit" style="color: white; background-color:darkblue;">Details</button>
+                            <button type="submit" style="color: white; background-color:darkblue;">Thêm vào giỏ hàng</button>
                         </form>
                     </div>
 

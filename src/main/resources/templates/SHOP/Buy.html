@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section id="content">
+
+    <div class="container">
+        <div class="row">
+            <form th:action="@{/SHOP/AddToCart}" th:method="post" th:object="${SACH}" class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+
+                <div class="form-horizontal">
+                    <h3>XÁC NHẬN thêm vào giỏ hàng?</h3>
+                    <h4 th:text="${SACH.tensach}"></h4>
+                    <hr class="colorgraph" />
+                    <input type="text" th:field="*{masach}" readonly="readonly">
+
+                    <div class="form-group">
+                        <label for="soluongmua" class="col-sm-4 col-form-label">Số Lượng Mua</label>
+                        <div class="col-md-10">
+                            <input type="number" class="form-control" id="soluongmua" name ="soluongmua" th:field="*{soluongmua}" >
+                            <p th:if = "${#fields.hasErrors('soluongmua')}" th:errorclass="text-danger"
+                               th:errors="${SACH.soluongmua}"></p>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+
+                        <div class="col-md-offset-2 col-md-10">
+
+                            <input type="submit" value="Thêm vào giỏ hàng" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+</body>
+</html>

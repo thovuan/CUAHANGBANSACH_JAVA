@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -69,11 +70,12 @@ public class QLSACHController {
 
         try {
             qlsachService.Create(hon);
+            //return "redirect:/QLSACH/Index";
             return "redirect:/QLSACH/Index";
 
-
         } catch (Exception ex) {
-            return "Lỗi";
+            //return "Lỗi";
+            return "/Error/error";
         }
     }
 

@@ -1,21 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"
-        xmlns:th="http://thymeleaf.org">
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Bootstrap 3 template for corporate business" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-
-
-    <!-- Theme skin::: Try Out different themes inside Content/skins folder-->
-    <link id="t-colors" href="~/Content/skins/default.css" rel="stylesheet" />
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <title th:text="${title}">Title</title>
+    <link rel="stylesheet" href="/static/skins/default.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
 </head>
 
 <body>
