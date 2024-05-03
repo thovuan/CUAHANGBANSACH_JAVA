@@ -14,15 +14,14 @@
                 <h2>DANH SÁCH TÀI KHOẢN KHÁCH HÀNG</h2>
                 <hr class="colorgraph" />
 
-                <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
 
-
-
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="submit" value="Tìm kiếm" class="btn btn-default" />
+                        <form th:action="@{/QLKHACH/Index}" method="get"  enctype="multipart/form-data">
+                            <label for = "guestname" class="col-sm-4 col-form-label">Tên Khách hàng</label>
+                            <input type="text" name = "guestname" id = "guestname" >
+                            <button type="submit" style="color: white; background-color:darkblue;">Find</button>
+                        </form>
                     </div>
 
                 </div>
@@ -47,21 +46,21 @@
 
 
                     <tr th:each="khach: ${KhachList}">
-                        <td th:text="${khach.tenkhachhang}">
+                        <td th:text="${khach.getTenkhachhang()}">
 
                         </td>
-                        <td th:text="${khach.diachi}">
+                        <td th:text="${khach.getDiachi()}">
 
                         </td>
-                        <td th:text="${khach.sdt}">
+                        <td th:text="${khach.getSdt()}">
 
                         </td>
-                        <td th:text="${khach.avatar}">
+                        <td th:text="${khach.getAvatar()}">
 
                         </td>
 
                         <td>
-                            <form th:action="@{/QLKHACH/Detail/{id}(id = ${khach.makhachhang})}" th:object="${khach}">
+                            <form th:action="@{/QLKHACH/Detail/{id}(id = ${khach.getMakhachhang()})}" th:object="${khach}">
                                 <button type="submit" style="color: white; background-color: red;">Details</button>
                             </form>
 

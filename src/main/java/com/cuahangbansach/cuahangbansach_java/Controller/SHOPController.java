@@ -103,7 +103,7 @@ public class SHOPController {
         //return "redirect:/ErrorMe?mess=" + sl;
 
         //neu soluong mua vuot qua so luong hien co -> bao loi
-        if (hon.soluonghienco < sl) {
+        if (hon.getSoluonghienco() < sl) {
             return "redirect:/Error/ErrorMe?mess=" + "So luong mua khong vuot qua so luong hien tai";
         }
 

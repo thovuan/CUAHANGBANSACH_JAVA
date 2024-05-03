@@ -39,11 +39,18 @@ public class QLSACHController {
     private HttpSession httpSession;
 
     @GetMapping("/QLSACH/Index")
-    public String QLSACHIndex(Model model) {
-        List<SACH> list= qlsachService.getList();
+    public String QLSACHIndex(Model model, @RequestParam(name = "bookname", required = false) String bookname) {
+        List<SACH> list;
+        if (bookname != null) {
+            list = qlsachService.getSACHByName(bookname);
+        } else {
+            list = qlsachService.getList();
+        }
         model.addAttribute("SACHList", list);
+
         return "QLSACH/Index";
     }
+
 
     @GetMapping("/QLSACH/Create")
     public String AddSachGet(Model model) {

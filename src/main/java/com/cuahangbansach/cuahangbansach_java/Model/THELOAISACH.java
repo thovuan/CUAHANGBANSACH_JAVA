@@ -14,11 +14,11 @@ public class THELOAISACH {
 
     @Id
     @Column(name = "matheloai")
-    public String matheloai;
+    private String matheloai;
 
     @Column(name = "tentheloai")
-    public String tentheloai;
+    private String tentheloai;
 
     @Transient
-    public int Count;
+    private int Count;
 }

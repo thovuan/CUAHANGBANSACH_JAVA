@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Bootstrap 3 template for corporate business" />
     <title th:text="${title}">Title</title>
+    <link style="color-rendering: auto" href="/static/css">
     <link rel="stylesheet" href="/static/skins/default.css">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -59,23 +60,37 @@
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Home <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+                                <li>
+                                    <a th:href="@{/Home/index}">Home</a>
+                                </li>
                             </ul>
                         </li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">SHOP <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Shop", "Index", "SHOP", new { area = "" }, new { @class = "nav-link" })</li>
 
+                                <li>
+                                    <a th:href="@{/SHOP/Index}">Cửa Hàng</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">About <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Our Story", "Our_Story", "ABOUT", new { area = "" }, new { @class = "nav-link" })</li>
-                                <li>@Html.ActionLink("Blog", "Index", "ABOUT", new { area = "" }, new { @class = "nav-link" })</li>
-                                <li>@Html.ActionLink("Contact", "Contact", "ABOUT", new { area = "" }, new { @class = "nav-link" })</li>
+
+                                <li>
+                                    <a th:href="@{/About/OurStory}">Câu chuyện về chúng tôi</a>
+                                </li>
+
+                                <li>
+                                    <a th:href="@{/About/Blog}">Bài Viết</a>
+                                </li>
+
+                                <li>
+                                    <a th:href="@{/About/Contact}">Liên hệ</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -90,20 +105,28 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">ACCOUNT <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                @if (Session["KHACH"] != null)
-                                {
-                                <li>@Html.ActionLink("Thông tin khách hàng", "TTKH", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+                            <ul class="dropdown-menu" >
+
+                                <li>
+                                    <a th:href="@{/Identity/Guest/Information}">Thông tin tài khoản</a>
+                                </li>
                                 <li>@Html.ActionLink("Đăng Xuất", "Logout", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
-                                }
-                                else
-                                {
-                                <li>@Html.ActionLink("Đăng Nhập", "Login", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
-                                <li>@Html.ActionLink("Đổi Mật Khẩu", "UpdateMK", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
-                                <li>@Html.ActionLink("Đăng Ký Tài Khoản", "Create", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
-                                }
+                                <li>
+                                    <a th:href="@{/Identity/Guest/Logout}">Đăng Xuất</a>
+                                </li>
 
 
+                                <li>
+                                    <a th:href="@{/Identity/Guest/Login}">Đăng Nhập</a>
+                                </li>
+
+                                <li>
+                                    <a th:href="@{/Identity/Guest/ChangePassword}">Change Password</a>
+                                </li>
+
+                                <li>
+                                    <a th:href="@{/Identity/Guest/Registration}">Đăng Ký Tài Khoản</a>
+                                </li>
 
                             </ul>
                         </li>
@@ -119,8 +142,14 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Giỏ Hàng<i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Giỏ hàng", "MyCart", "GioHang", new { area = "" }, new { @class = "nav-link" })</li>
-                                <li>@Html.ActionLink("Lịch sử mua hàng", "Index", "GioHang", new { area = "" }, new { @class = "nav-link" })</li>
+
+                                <li>
+                                    <a th:href="@{/ShoppingCart/MyCart}">私のカート</a>
+                                </li>
+
+                                <li>
+                                    <a th:href="@{/ShoppingCart/Index}">Lich su mua hang</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -132,7 +161,9 @@
     <!-- end header -->
 
 
-    @RenderBody()
+    <div th:fragment="content">
+
+    </div>
 
 
 

@@ -26,6 +26,10 @@ public class ShoppingCartService {
         return shoppingCartRepository.findAll();
     }
 
+    public List<PHIEUMUAHANG> GetList2(String id) {
+        return shoppingCartRepository.GetPMHById2(id);
+    }
+
     public PHIEUMUAHANG GetDH(String id) {
         return shoppingCartRepository.GetDH(id);
     }

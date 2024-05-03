@@ -16,6 +16,15 @@
                     <button type="submit" style="color: white; background-color:yellowgreen;">Create</button>
                 </form>
 
+                <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
+
+                    <form th:action="@{/ShoppingCart/Index}" method="get"  enctype="multipart/form-data">
+                        <label for = "dhid" class="col-sm-4 col-form-label">Nhap ma don hang</label>
+                        <input type="text" name = "dhid" id = "dhid" >
+                        <button type="submit" style="color: white; background-color:darkblue;">Find</button>
+                    </form>
+                </div>
+
 
                 <table class="table">
                     <tr>
@@ -37,7 +46,7 @@
 
 
                     <tr th:each="sc : ${SCL}">
-                        <td th:text="${sc.getMaphieumuahang()}">@Html.DisplayFor(modelItem => item.maphieumuahang) </td>
+                        <td th:text="${sc.getMaphieumuahang()}"></td>
                         <td th:text="${sc.getNgaylap()}">
 
                         </td>

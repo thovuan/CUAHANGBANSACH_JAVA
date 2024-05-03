@@ -21,7 +21,9 @@
 
                 <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
 
-                    <form th:action="@{/QLSACH/Index}">
+                    <form th:action="@{/QLSACH/Index}" method="get"  enctype="multipart/form-data">
+                        <label for = "bookname" class="col-sm-4 col-form-label">Tên sách</label>
+                        <input type="text" name = "bookname" id = "bookname" >
                         <button type="submit" style="color: white; background-color:darkblue;">Find</button>
                     </form>
                 </div>

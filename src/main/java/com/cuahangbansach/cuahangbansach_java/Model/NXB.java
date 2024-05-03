@@ -12,11 +12,11 @@ public class NXB {
 
     @Id
     @Column(name = "manxb")
-    public String manxb;
+    private String manxb;
 
     @Column(name = "tennxb")
-    public String tennxb;
+    private String tennxb;
 
     @Transient
-    public int Count;
+    private int Count;
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class QLKHACHController {
@@ -17,9 +18,16 @@ public class QLKHACHController {
     @Autowired private QLKHACHService qlkhachService;
 
     @GetMapping("/QLKHACH/Index")
-    public String index(Model model) {
-        List<KHACH> list = qlkhachRepository.GetList();
-        model.addAttribute("KhachList", list);
+    public String index(Model model, @RequestParam(name = "guestname", required = false) String guestname) {
+        List<KHACH> list;
+        if (guestname != null) {
+            list = qlkhachService.GetByName(guestname);
+            model.addAttribute("KhachList", list);
+        } else {
+            list = qlkhachRepository.GetList();
+            model.addAttribute("KhachList", list);
+        }
+
         return "QLKHACH/Index";
     }
     @GetMapping("/QLKHACH/Detail/{id}")

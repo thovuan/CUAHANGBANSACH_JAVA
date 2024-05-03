@@ -15,4 +15,7 @@ public interface QLKHACHRepository extends JpaRepository<KHACH, String> {
     @Query(value = "select * from KHACH where makhachhang = :id", nativeQuery=true)
     public KHACH GetById(String id);
 
+    @Query(value = "select * from KHACH where tenkhachhang like %:name%", nativeQuery=true)
+    public List<KHACH> GetByName(String name);
+
 }

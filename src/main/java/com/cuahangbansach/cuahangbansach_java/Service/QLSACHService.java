@@ -82,6 +82,31 @@ public class QLSACHService {
         return hon;
     }
 
+    public List<SACH> getSACHByName(String name) {
+        List<SACH> hon = ql.GetSachbyName(name);
+        for (SACH sach : hon) {
+            try {
+                /*String tentheloai = (String) entityManager.createNativeQuery("SELECT tentheloai FROM  THELOAISACH where matheloai = :matheloai")
+                        .setParameter("matheloai", sach.getMatheloai()).getSingleResult();*/
+
+                String tentheloai = sach.getTheloaisach().getTentheloai();
+                String tennxb = sach.getNxb().getTennxb();
+                String tennv = sach.getNhanvien().getTennhanvien();
+
+                sach.setTentheloai(tentheloai);
+                sach.setTennxb(tennxb);
+                sach.setTennhanvien(tennv);
+
+
+            } catch (NoResultException ex) {
+                sach.setTentheloai("Shiranai");
+                sach.setTennxb("Shiranai");
+                sach.setTennhanvien("Shiranai");
+            }
+        }
+        return hon;
+    }
+
     public void  Delete(String id) {
         ql.deleteById(id);
         //return id;

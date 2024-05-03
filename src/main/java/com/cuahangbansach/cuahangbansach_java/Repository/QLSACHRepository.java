@@ -20,4 +20,7 @@ public interface QLSACHRepository extends JpaRepository<SACH, String> {
 
     @Query(value="select * from SACH where manxb = :MaNXB", nativeQuery = true)
     public List<SACH> GetSachByMaNXB(String MaNXB);
+
+    @Query(value = "select * from SACH where tensach like %:name%", nativeQuery = true)
+    public List<SACH> GetSachbyName(String name);
 }

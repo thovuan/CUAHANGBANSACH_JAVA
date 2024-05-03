@@ -15,14 +15,14 @@ public class NHANVIEN {
 
     @Id
     @Column (name = "manhanvien")
-    public String manhanvien;
+    private String manhanvien;
 
     @Column (name="tennhanvien")
-    public String tennhanvien;
+    private String tennhanvien;
 
     @Column(name = "tendangnhap")
-    public String tendangnhap;
+    private String tendangnhap;
 
     @Column(name = "matkhau")
-    public String matkhau;
+    private String matkhau;
 }

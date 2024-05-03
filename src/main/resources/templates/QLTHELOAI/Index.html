@@ -23,8 +23,10 @@
 
                 <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
 
-                    <form th:action="@{/QLTHELOAI/Index/}">
-                        <button type="submit" style="color: white; background-color:darkblue;">Edit</button>
+                    <form th:action="@{/QLTHELOAI/Index}" method="get"  enctype="multipart/form-data">
+                        <label for = "tlname" class="col-sm-4 col-form-label">Tên Thể Loại</label>
+                        <input type="text" name = "tlname" id = "tlname" >
+                        <button type="submit" style="color: white; background-color:darkblue;">Find</button>
                     </form>
                 </div>
 

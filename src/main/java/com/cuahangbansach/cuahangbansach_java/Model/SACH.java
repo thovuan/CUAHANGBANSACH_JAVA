@@ -15,49 +15,49 @@ import org.hibernate.annotations.DynamicUpdate;
 public class SACH {
     @Id
     @Column(name="masach")
-    public String masach;
+    private String masach;
 
 
     @Column(name="tensach")
-    public String tensach;
+    private String tensach;
 
     @Column(name="soluonghienco")
-    public int soluonghienco;
+    private int soluonghienco;
 
     @Column(name="dacdiem")
-    public String dacdiem;
+    private String dacdiem;
 
     @Column(name="anhsanpham")
-    public String anhsanpham;
+    private String anhsanpham;
 
     @Column(name="DVT")
-    public String DVT;
+    private String DVT;
 
     @Column(name="dongia")
-    public int dongia;
+    private int dongia;
 
     @JoinColumn(name="matheloai", referencedColumnName = "matheloai")
     @ManyToOne(fetch = FetchType.LAZY)
-    public THELOAISACH theloaisach;
+    private THELOAISACH theloaisach;
 
 
 
     @JoinColumn(name="manhanvien", referencedColumnName = "manhanvien")
     @ManyToOne(fetch = FetchType.LAZY)
-    public NHANVIEN nhanvien;
+    private NHANVIEN nhanvien;
 
     @JoinColumn(name="manxb", referencedColumnName = "manxb")
     @ManyToOne(fetch = FetchType.LAZY)
-    public NXB nxb;
+    private NXB nxb;
 
     @Transient
-    public String tentheloai;
+    private String tentheloai;
 
     @Transient
-    public String tennxb;
+    private String tennxb;
 
     @Transient
-    public String tennhanvien;
+    private String tennhanvien;
 
     @Transient
     private int soluongmua;

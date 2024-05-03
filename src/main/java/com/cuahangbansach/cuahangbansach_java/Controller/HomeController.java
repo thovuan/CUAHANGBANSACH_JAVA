@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping("/")
+    @GetMapping("/Home/index")
     public String homepage() {
-        return "Home/index";  // Trả về trang index.html
+        return "/Home/index";  // Trả về trang index.html
     }
 
 

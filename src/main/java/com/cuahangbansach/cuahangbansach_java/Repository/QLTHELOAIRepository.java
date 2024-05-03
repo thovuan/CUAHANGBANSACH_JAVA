@@ -16,4 +16,7 @@ public interface QLTHELOAIRepository extends JpaRepository<THELOAISACH, String> 
     @Query(value="select * from THELOAISACH where matheloai = :id", nativeQuery = true)
     public THELOAISACH GetCategoryById(String id);
 
+    @Query(value="select * from THELOAISACH where tentheloai like %:name%", nativeQuery = true)
+    public List<THELOAISACH> GetCategoryByName(String name);
+
 }

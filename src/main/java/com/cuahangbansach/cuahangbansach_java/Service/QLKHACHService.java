@@ -5,6 +5,8 @@ import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class QLKHACHService {
     @Autowired
@@ -16,5 +18,9 @@ public class QLKHACHService {
             return null;
         }
         return k;
+    }
+
+    public List<KHACH> GetByName(String name) {
+        return qlkhachRepository.GetByName(name);
     }
 }

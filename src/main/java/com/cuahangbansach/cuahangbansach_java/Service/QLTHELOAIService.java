@@ -52,4 +52,8 @@ public class QLTHELOAIService {
         return tls;
     }
 
+    public List<THELOAISACH> GetCategoryByName(String name) {
+        return qltheloaiRepository.GetCategoryByName(name);
+    }
+
 }
