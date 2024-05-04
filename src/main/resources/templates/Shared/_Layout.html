@@ -133,8 +133,14 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">GIAO DIỆN <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Giao diện shop", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                                <li>@Html.ActionLink("Giao diện của nhân viên", "Index", "STAFFLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+
+                                <li>
+                                    <a th:href="@{/Home/Index}">Giao Dien cua Shop</a>
+                                </li>
+
+                                <li>
+                                    <a th:href="@{/Identity/Admin/Login}">Giao Diện của Nhân vien</a>
+                                </li>
                             </ul>
                         </li>
 

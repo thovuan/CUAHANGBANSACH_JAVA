@@ -64,8 +64,8 @@ public class QLSACHController {
     }
     @PostMapping("/QLSACH/Save")
     private String SaveSACH(Model model, @ModelAttribute("sach")SACH sach) {
-        SACH hon = new SACH();
-        hon.setMasach(sach.getMasach());
+        SACH hon = qlsachService.GetSachById(sach.getMasach());
+        //hon.setMasach(sach.getMasach());
         hon.setTensach(sach.getTensach());
         hon.setSoluonghienco(sach.getSoluonghienco());
         hon.setDacdiem(sach.getDacdiem());
@@ -73,7 +73,7 @@ public class QLSACHController {
         hon.setDVT(sach.getDVT());
         hon.setTheloaisach(qltheloaiService.GetCategoryById(sach.getTheloaisach().getMatheloai()));
         hon.setNxb(qlnxbService.GetNXBById(sach.getNxb().getManxb()));
-        hon.setNhanvien(qlnvService.GetById("NV01"));
+        //hon.setNhanvien(qlnvService.GetById("NV01"));
 
         try {
             qlsachService.Create(hon);

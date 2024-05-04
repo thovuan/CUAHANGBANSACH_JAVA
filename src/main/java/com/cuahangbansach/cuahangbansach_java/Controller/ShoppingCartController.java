@@ -1,9 +1,8 @@
 package com.cuahangbansach.cuahangbansach_java.Controller;
 
 
-import com.cuahangbansach.cuahangbansach_java.Model.CHITIETDATHANG;
-import com.cuahangbansach.cuahangbansach_java.Model.PHIEUMUAHANG;
-import com.cuahangbansach.cuahangbansach_java.Model.SACH;
+import com.cuahangbansach.cuahangbansach_java.Model.*;
+import com.cuahangbansach.cuahangbansach_java.Service.CardService;
 import com.cuahangbansach.cuahangbansach_java.Service.QLKHACHService;
 import com.cuahangbansach.cuahangbansach_java.Service.QLSACHService;
 import com.cuahangbansach.cuahangbansach_java.Service.ShoppingCartService;
@@ -27,6 +26,9 @@ public class ShoppingCartController {
 
     @Autowired
     private QLSACHService qlsachService;
+
+    @Autowired
+    private CardService cardService;
 
     @Autowired
     private HttpSession httpSession;
@@ -139,20 +141,90 @@ public class ShoppingCartController {
         }
 
         //tien hanh them sach vao
-        CHITIETDATHANG ct = new CHITIETDATHANG();
-        ct.setPhieumuahang(shoppingCartService.GetPMHById(pmh.getMaphieumuahang()));
-        ct.setSach(hon);
+        CHITIETDATHANG ct = shoppingCartService.GetCHHById(sach.getPhieumuahang().getMaphieumuahang(), sach.getSach().getMasach());
+        //ct.setPhieumuahang(shoppingCartService.GetPMHById(pmh.getMaphieumuahang()));
+        //ct.setSach(hon);
         ct.setSoluongmua(sach.getSoluongmua());
-        ct.setTinhtranggiao("Chưa giao");
+        //ct.setTinhtranggiao("Chưa giao");
         //model.addAttribute("Error", "Số lượng mua vượt qua số lượng hiện c");
 
         try {
-            shoppingCartService.Add(ct);
+            shoppingCartService.UpdateCTDH(ct);
             //return "redirect:/SHOP/Index";
             return "redirect:/ShoppingCart/Index";
 
         } catch (Exception ex) {
             return "redirect:/Error/ErrorMe?mess=" + ex.getMessage();
         }
+    }
+
+    @GetMapping("/ShoppingCart/Confirm/{id}")
+    public String Confirm(Model model, @PathVariable String id) {
+        PHIEUMUAHANG pmh = shoppingCartService.GetSCDetail(id);
+        if (pmh == null) {return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thy";}
+
+        model.addAttribute("pmh", pmh);
+        return "ShoppingCart/Confirm";
+    }
+
+    @PostMapping("/ShoppingCart/Confirm")
+    public String CompleteOrder(Model model, @ModelAttribute("pmh")PHIEUMUAHANG pmh) {
+        PHIEUMUAHANG dh = shoppingCartService.GetSCDetail(pmh.getMaphieumuahang());
+        if (dh == null) {return "redirect:/ShoppingCart/CreateDH";}
+
+        //cap nhat trang thai don hang
+        dh.setTinhtrangthanhtoan(pmh.getTinhtrangthanhtoan());
+        dh.setTinhtrang("Xác Nhận");
+
+        //cap nhat thong tin khach hang
+        KHACH kyaku = qlkhachService.getKhachById(pmh.getKhach().getMakhachhang());
+        kyaku.setTenkhachhang(pmh.getKhach().getTenkhachhang());
+        kyaku.setDiachi(pmh.getKhach().getDiachi());
+        kyaku.setSdt(pmh.getKhach().getSdt());
+        kyaku.setEmail(pmh.getKhach().getEmail());
+
+        /*THE the = cardService.FindThe(pmh.getKhach().getMakhachhang());
+        if (the!=null) {
+            int temp = (int) pmh.getDHTotal() /100;
+
+            return "redirect:/Error/ErrorMe?mess=" + temp + " " + pmh.getDHTotal();
+            //the.setDiemthe(the.getDiemthe()+temp);
+            //cardService.UpdateCardPoint(the);
+        }*/
+        //return "redirect:/Error/ErrorMe?mess=" + "lỗi";
+        try {
+
+            qlkhachService.UpdateKhach(kyaku);
+            shoppingCartService.Create(dh);
+
+            //tich diem
+            THE the = cardService.FindThe(pmh.getKhach().getMakhachhang());
+            if (the!=null) {
+                int temp = (int) pmh.getDHTotal() /100;
+                the.setDiemthe(the.getDiemthe()+temp);
+                cardService.UpdateCardPoint(the);
+            }
+
+            for(SACH sach : dh.getDsSach()) {
+                if (sach == null) {return "redirect:/Error/ErrorMe?mess=" +"DSSACH rong";}
+
+                sach.setSoluonghienco((int)sach.getSoluonghienco()-sach.getSoluongmua());
+                //return "redirect:/Error/ErrorMe?mess=" +sach.getSoluonghienco();
+                try {
+                    qlsachService.Create(sach);
+                } catch (Exception ex){
+                    return "redirect:/Error/ErrorMe?mess=" + "Loi CN SL SACH" + ex.getMessage();
+                }
+            }
+
+            httpSession.removeAttribute("donhang");
+            return "redirect:/ShoppingCart/Index";
+        } catch (Exception ex) {
+            return "redirect:/Error/ErrorMe?mess=" + ex.getMessage();
+        }
+
+
+
+        //return "redirect:/ShoppingCart/Index";
     }
 }

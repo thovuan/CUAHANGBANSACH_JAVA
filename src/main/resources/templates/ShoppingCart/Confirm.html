@@ -1,10 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <form th:action="@{/ShoppingCart/Confirm}" th:method="post" th:object="${pmh}" class="col-lg-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 
+                <div class="form-horizontal">
+                    <h2>Xác nhận thanh toán</h2>
+                    <h2>Đơn Hàng: </h2>
+                    <h3 th:text="${pmh.getMaphieumuahang()}"> </h3>
+                    <input type="hidden" th:field="${pmh.maphieumuahang}" readonly="readonly">
+
+                    <dl class="dl-horizontal">
+
+                        <dt>
+                            Ngày Lập
+                        </dt>
+
+                        <dd th:text="${pmh.getNgaylap()}">
+
+                        </dd>
+
+                    </dl>
+                </div>
+                <hr class="colorgraph" />
+
+                <div class="form-horizontal">
+                    <h2>Thông tin khách</h2>
+
+
+                    <input type="text" th:field="${pmh.khach.makhachhang}" readonly="readonly">
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <label for = "tenkhachhang" class="col-sm-4 col-form-label">Tên Khách</label>
+                            <div class = "col-sm-8">
+                                <input type="text" class="form-control" id="tenkhachhang" name = "tenkhachhang" th:field="*{khach.tenkhachhang}">
+                                <p th:if = "${#fields.hasErrors('khach.tenkhachhang')}" th:errorclass="text-danger"
+                                   th:errors="${pmh.getKhach().getTenkhachhang()}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <label for = "diachi" class="col-sm-4 col-form-label">Địa Chỉ</label>
+                            <div class = "col-sm-8">
+                                <input type="text" class="form-control" id="diachi" name = "diachi" th:field="*{khach.diachi}">
+                                <p th:if = "${#fields.hasErrors('khach.diachi')}" th:errorclass="text-danger"
+                                   th:errors="${pmh.getKhach().getDiachi()}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <label for = "sdt" class="col-sm-4 col-form-label">Số Điện Thoại</label>
+                            <div class = "col-sm-8">
+                                <input type="text" class="form-control" id="sdt" name = "sdt" th:field="*{khach.sdt}">
+                                <p th:if = "${#fields.hasErrors('khach.sdt')}" th:errorclass="text-danger"
+                                   th:errors="${pmh.getKhach().getSdt()}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <label for = "email" class="col-sm-4 col-form-label">Email</label>
+                            <div class = "col-sm-8">
+                                <input type="text" class="form-control" id="email" name = "email" th:field="*{khach.email}">
+                                <p th:if = "${#fields.hasErrors('khach.email')}" th:errorclass="text-danger"
+                                   th:errors="${pmh.getKhach().getEmail()}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <hr class="colorgraph" />
+                <div class="form-horizontal">
+
+                    <h2>DANH SÁCH CÁC CUỐN SÁCH TRONG ĐƠN HÀNG</h2>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Mã Sách
+                            </th>
+                            <th>
+                                Tên Sách
+                            </th>
+
+                            <th>
+                                Đặc Điểm
+                            </th>
+                            <th>
+                                Ảnh Sản Phẩm
+                            </th>
+                            <th>Số Lượng Mua</th>
+                            <th>
+                                Đơn Giá
+                            </th>
+                            <th>Thành Tiền</th>
+
+
+                        </tr>
+
+
+                        <tr th:each="sach : ${pmh.getDsSach()}">
+                            <td th:text="${sach.getMasach()}">
+
+                            </td>
+                            <td th:text="${sach.getTensach()}">
+
+                            </td>
+
+                            <td th:text="${sach.getDacdiem()}">
+
+                            </td>
+                            <td >
+                                <img alt="" th:src="${sach.getAnhsanpham()}" style="width: 50px" />
+                            </td>
+                            <td th:text="${sach.getSoluongmua()}"></td>
+                            <td th:text="${sach.getDongia()}">
+                                VND
+                            </td>
+                            <td th:text="${sach.getThanhtien()}"> VND</td>
+                            <td>
+                                <form th:action="@{/ShoppingCart/EditSLBook/{id}(id = ${sach.getMasach()})}" th:object="${sach}">
+                                    <button type="submit" style="color: white; background-color:darkblue;">Edit</button>
+                                </form>
+
+                                <form th:action="@{/SHOP/Detail/{id}(id = ${sach.getMasach()})}" th:object="${sach}">
+                                    <button type="submit" style="color: white; background-color:red;">Details</button>
+                                </form>
+
+                                <form th:action="@{/ShoppingCart/Delete/{id}(id = ${sach.getMasach()})}" th:object="${sach}">
+                                    <button type="submit" style="color: white; background-color:grey;">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+
+                <hr class="colorgraph" />
+                <div class="form-horizontal">
+                    <label for ="PTTT">Chọn phương thức thanh toán</label>
+                    <select name="PTTT" id="PTTT" th:field="*{tinhtrangthanhtoan}" class="form-control">
+                        <option value="0">--Chọn phương thức hanh toán--</option>
+                        <option value="Thanh toán bằng tiền mặt">Thanh toán bằng tiền mặt</option>
+                        <option value="Thanh toán bằng thẻ">Thanh toán bằng thẻ</option>
+                        <option value="Thanh toán bằng ví điện tử">Thanh toán bằng ví điện tử</option>
+                    </select>
+                </div>
+
+                <hr class="colorgraph" />
+                <div class="form-horizontal">
+                    <h2>Tổng giá trị đơn hàng: </h2>
+                    <h3 th:text="${pmh.getDHTotal()}"> VND</h3>
+                    <input type="hidden" th:field="${pmh.DHTotal}" readonly="readonly">
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Xác Nhận" class="btn btn-default" />
+                    </div>
+                </div>
+
+                <form th:action="@{/ShoppingCart/Index}">
+                    <button type="submit" style="color: white; background-color:grey;">Trở lại</button>
+                </form>
+            </form>
+        </div>
+    </div>
+</section>
 </body>
 </html>

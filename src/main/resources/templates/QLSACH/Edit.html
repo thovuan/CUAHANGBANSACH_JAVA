@@ -15,7 +15,7 @@
                     <h5 th:text="${sach.masach}"></h5>
                     <hr class="colorgraph" />
 
-                    <input type="text" th:field="*{masach}" readonly="readonly">
+                    <input type="hidden" th:field="*{masach}" readonly="readonly">
 
                     <div class="form-group">
                         <div class="col-md-10">
@@ -133,9 +133,9 @@
                 </div>
 
 
-                <div>
-                    @Html.ActionLink("Back to List", "Index")
-                </div>
+                <form th:action="@{/QLSACH/Index}">
+                    <button type="submit" style="color: white; background-color:darkblue;">Edit</button>
+                </form>
 
             </form>
         </div>

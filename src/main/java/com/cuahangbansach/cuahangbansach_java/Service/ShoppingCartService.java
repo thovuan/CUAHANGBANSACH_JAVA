@@ -5,6 +5,8 @@ import com.cuahangbansach.cuahangbansach_java.Model.PHIEUMUAHANG;
 import com.cuahangbansach.cuahangbansach_java.Model.SACH;
 import com.cuahangbansach.cuahangbansach_java.Repository.DetailSCRepository;
 import com.cuahangbansach.cuahangbansach_java.Repository.ShoppingCartRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,9 @@ public class ShoppingCartService {
 
     @Autowired
     private DetailSCRepository scRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     public List<PHIEUMUAHANG> GetList() {
         return shoppingCartRepository.findAll();
@@ -68,13 +73,19 @@ public class ShoppingCartService {
         return shoppingCartRepository.save(phieumuahang);
     }
 
-    public CHITIETDATHANG Add(@RequestBody CHITIETDATHANG chitietdathang) {
+    public void Add(CHITIETDATHANG chitietdathang) {
         scRepository.save(chitietdathang);
-        return chitietdathang;
+        //return chitietdathang;
     }
 
     public void Update(CHITIETDATHANG chitietdathang) {
         scRepository.save(chitietdathang);
+    }
+
+    @Transactional
+    public void UpdateCTDH(CHITIETDATHANG chitietdathang) {
+
+        entityManager.merge(chitietdathang);
     }
 
     //public boolean

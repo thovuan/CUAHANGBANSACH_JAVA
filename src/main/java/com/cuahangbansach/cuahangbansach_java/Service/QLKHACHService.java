@@ -23,4 +23,8 @@ public class QLKHACHService {
     public List<KHACH> GetByName(String name) {
         return qlkhachRepository.GetByName(name);
     }
+
+    public void UpdateKhach(KHACH k) {
+        qlkhachRepository.save(k);
+    }
 }
