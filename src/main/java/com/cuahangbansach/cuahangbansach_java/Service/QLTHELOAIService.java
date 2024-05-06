@@ -48,12 +48,13 @@ public class QLTHELOAIService {
     }
 
     public THELOAISACH GetCategoryById(String id) {
-        THELOAISACH tls = qltheloaiRepository.GetCategoryById(id);
-        return tls;
+        return qltheloaiRepository.GetCategoryById(id);
+
     }
 
     public List<THELOAISACH> GetCategoryByName(String name) {
         return qltheloaiRepository.GetCategoryByName(name);
     }
+
 
 }

@@ -9,6 +9,7 @@ import com.cuahangbansach.cuahangbansach_java.Service.QLNXBService;
 import com.cuahangbansach.cuahangbansach_java.Service.QLSACHService;
 import com.cuahangbansach.cuahangbansach_java.Service.QLTHELOAIService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,10 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Controller
+
 public class QLSACHController {
     @Autowired
     private QLSACHRepository qlsachRepository;
@@ -62,6 +65,30 @@ public class QLSACHController {
         model.addAttribute("NXBList", NXBlist);
         return "QLSACH/Create";
     }
+    @PostMapping("/QLSACH/Add")
+    public String AddSachPost(Model model, @RequestBody @Valid @ModelAttribute("sach") SACH sach, HttpSession httpSession) {
+        SACH hon = new SACH();
+        hon.setMasach(sach.getMasach());
+        hon.setTensach(sach.getTensach());
+        hon.setSoluonghienco(sach.getSoluonghienco());
+        hon.setDacdiem(sach.getDacdiem());
+        hon.setDongia(sach.getDongia());
+        hon.setDVT(sach.getDVT());
+        hon.setTheloaisach(qltheloaiService.GetCategoryById(sach.getTheloaisach().getMatheloai()));
+        hon.setNxb(qlnxbService.GetNXBById(sach.getNxb().getManxb()));
+        hon.setNhanvien(qlnvService.GetById("NV01"));
+
+        try {
+            qlsachService.Create(hon);
+            //return "redirect:/QLSACH/Index";
+            return "redirect:/QLSACH/Index";
+
+        } catch (Exception ex) {
+            //return "Lỗi";
+            return "/Error/error";
+        }
+    }
+
     @PostMapping("/QLSACH/Save")
     private String SaveSACH(Model model, @ModelAttribute("sach")SACH sach) {
         SACH hon = qlsachService.GetSachById(sach.getMasach());

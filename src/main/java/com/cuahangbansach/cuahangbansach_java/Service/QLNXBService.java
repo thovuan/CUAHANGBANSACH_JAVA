@@ -50,4 +50,6 @@ public class QLNXBService {
         NXB nxb = qlnxbRepository.GetNXBById(id);
         return nxb;
     }
+
+
 }

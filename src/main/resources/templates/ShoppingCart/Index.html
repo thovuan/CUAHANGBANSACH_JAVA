@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8" >
     <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+
+    >
 </head>
 <body>
 <section id="content">
     <div class="container">
-        <div class="row">
+
             <div class="col-lg-12">
                 <h2>LỊCH SỬ MUA HÀNG</h2>
                 <hr class="colorgraph" />
@@ -19,14 +23,14 @@
                 <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
 
                     <form th:action="@{/ShoppingCart/Index}" method="get"  enctype="multipart/form-data">
-                        <label for = "dhid" class="col-sm-4 col-form-label">Nhap ma don hang</label>
-                        <input type="text" name = "dhid" id = "dhid" >
+                        <label for = "dhid" class="col-sm-4 col-form-label"></label>
+                        <input type="text" name = "dhid" id = "dhid" th:placeholder="${'Nhập MDH'}">
                         <button type="submit" style="color: white; background-color:darkblue;">Find</button>
                     </form>
                 </div>
 
 
-                <table class="table">
+                <table border="1" class="table table-striped table-responsive-md" th:align="center">
                     <tr>
                         <th>Mã Đơn Hàng</th>
                         <th>
@@ -61,18 +65,18 @@
                         </td>
                         <td>
 
-                            <form th:action="@{/ShoppingCart/Confirm/{id}(id = ${sc.getMaphieumuahang()})}" th:object="${sc}">
-                                <button type="submit" style="color: white; background-color:darkblue;">Confirm</button>
-                            </form>
+                            <a th:href="@{/ShoppingCart/Confirm/{id}(id = ${sc.getMaphieumuahang()})}" class="btn" style="color: white; background-color: darkblue" th:object="${sc}">
+                                Confirm
+                            </a>
 
-                            <form th:action="@{/ShoppingCart/Details/{id}(id = ${sc.getMaphieumuahang()})}" th:object="${sc}">
-                                <button type="submit" style="color: white; background-color:red;">Details
-                                </button>
-                            </form>
+                            <a th:href="@{/ShoppingCart/Details/{id}(id = ${sc.getMaphieumuahang()})}" class="btn" style="color: white; background-color:red;" th:object="${sc}">
+                                Details
 
-                            <form th:action="@{/ShoppingCart/Delete/{id}(id = ${sc.getMaphieumuahang()})}" th:object="${sc}">
-                                <button type="submit" style="color: white; background-color:grey;">Delete</button>
-                            </form>
+                            </a>
+
+                            <a th:href="@{/ShoppingCart/Delete/{id}(id = ${sc.getMaphieumuahang()})}" class="btn" style="color: white; background-color:grey;" th:object="${sc}">
+                                Delete
+                            </a>
                         </td>
                     </tr>
                     }
@@ -81,7 +85,7 @@
                 }
             </div>
         </div>
-    </div>
+
 
 </section>
 </body>

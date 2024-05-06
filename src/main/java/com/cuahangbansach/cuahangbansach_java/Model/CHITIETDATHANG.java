@@ -1,6 +1,8 @@
 package com.cuahangbansach.cuahangbansach_java.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -25,6 +27,7 @@ public class CHITIETDATHANG {
     private SACH sach;
 
     @Column(name = "soluongmua")
+    @Min(value = 1, message = "Số lượng mua phải từ 1")
     private int soluongmua;
 
     @Column(name = "tinhtranggiao")

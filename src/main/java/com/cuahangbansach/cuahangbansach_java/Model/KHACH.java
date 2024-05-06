@@ -40,7 +40,10 @@ public class KHACH {
 
     @Column(name = "matkhau")
     @Size(min = 8, max = 20, message = "MK từ 8 -20 kí tự")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", message = "Password không đúng định dạng")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", message = "Password phải chứa ít nhất 1 kí tự viết hoa, thường và kí tự đặc biệt")
     private String matkhau;
+
+    @Transient
+    private String retypedpass;
 
 }

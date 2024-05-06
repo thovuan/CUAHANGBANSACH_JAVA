@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+
+    >
 </head>
 <body>
 <marquee style="color: blue;">本店へようこそ</marquee>
@@ -28,7 +32,7 @@
                             <th:block th:each="cd : ${listTL}">
                                 <li>
                                     <i class="fa fa-angle-right"></i>
-                                    <a th:href = "@{/SHOP/Index(MaTL=${cd.matheloai})}" th:text="${cd.matheloai}"></a><span th:text="(${cd.Count})"></span>
+                                    <a th:href = "@{/SHOP/Index(MaTL=${cd.matheloai})}" th:text="${cd.getTentheloai()}"></a><span th:text="${'('+cd.getCount()+')'}"></span>
 
                                 </li>
                             </th:block>
@@ -42,7 +46,7 @@
                             <th:block th:each="nxb : ${listNXB}">
                                 <li>
                                     <i class="fa fa-angle-right"></i>
-                                    <a th:href = "@{/SHOP/Index_TheoNXB/{MaNXB}(MaNXB=${nxb.manxb})}" th:text="${nxb.manxb}"></a><span th:text="(${nxb.Count})"></span>
+                                    <a th:href = "@{/SHOP/Index_TheoNXB/{MaNXB}(MaNXB=${nxb.manxb})}" th:text="${nxb.getTennxb()}"></a><span th:text="${'('+nxb.getCount()+')'}"></span>
 
                                 </li>
                             </th:block>

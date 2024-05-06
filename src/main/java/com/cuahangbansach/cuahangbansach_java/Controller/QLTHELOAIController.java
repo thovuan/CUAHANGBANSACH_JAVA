@@ -4,8 +4,7 @@ import com.cuahangbansach.cuahangbansach_java.Service.QLTHELOAIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class QLTHELOAIController {
     @Autowired
     private QLTHELOAIService qltheloaiService;
 
-    @GetMapping("QLTHELOAI/Index")
+    @GetMapping("/QLTHELOAI/Index")
     public String Index (Model model, @RequestParam(name = "tlname", required = false)String tl) {
         List<THELOAISACH> list;
         if (tl != null) {
@@ -28,5 +27,19 @@ public class QLTHELOAIController {
         }
 
         return "QLTHELOAI/Index";
+    }
+    @GetMapping("/QLTHELOAI/ListAPI")
+    public List<THELOAISACH> GetList() {
+        return qltheloaiService.GetAll();
+    }
+
+    @GetMapping("/QLTHELOAI/Detail/{id}")
+    public String Detail(Model model, @PathVariable String id) {
+        THELOAISACH tls = qltheloaiService.GetCategoryById(id);
+        if (tls != null) {
+            model.addAttribute("TL", tls);
+            return "QLTHELOAI/Detail";
+        }
+        return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thy";
     }
 }
