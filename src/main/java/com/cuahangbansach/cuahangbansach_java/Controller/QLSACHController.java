@@ -9,16 +9,22 @@ import com.cuahangbansach.cuahangbansach_java.Service.QLNXBService;
 import com.cuahangbansach.cuahangbansach_java.Service.QLSACHService;
 import com.cuahangbansach.cuahangbansach_java.Service.QLTHELOAIService;
 import jakarta.servlet.http.HttpSession;
+
 import jakarta.validation.Valid;
-import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -66,7 +72,13 @@ public class QLSACHController {
         return "QLSACH/Create";
     }
     @PostMapping("/QLSACH/Add")
-    public String AddSachPost(Model model, @RequestBody @Valid @ModelAttribute("sach") SACH sach, HttpSession httpSession) {
+    public String AddSachPost(Model model, @RequestBody @Valid @ModelAttribute("sach") SACH sach, @RequestParam("image") MultipartFile multipartFile, HttpSession httpSession, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Nếu có lỗi xảy ra trong quá trình xác thực, quay lại view tạo mới sách và hiển thị thông báo lỗi
+            return "/QLSACH/Create";
+        }
+
+        //them sach
         SACH hon = new SACH();
         hon.setMasach(sach.getMasach());
         hon.setTensach(sach.getTensach());
@@ -78,19 +90,44 @@ public class QLSACHController {
         hon.setNxb(qlnxbService.GetNXBById(sach.getNxb().getManxb()));
         hon.setNhanvien(qlnvService.GetById("NV01"));
 
+        //them anh
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        System.out.println(fileName);
+        hon.setAnhsanpham(fileName);
+
+
         try {
-            qlsachService.Create(hon);
+            //them sach
+            SACH savesach = qlsachService.Create(hon);
+
+            //cap nhat anh vao
+            String uploadDir = "./src/main/resources/static/ANHSANPHAM/" + savesach.getMasach();
+            Path uploadPath =  Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+
+            try (InputStream inputStream = multipartFile.getInputStream()){
+                Path filePath = uploadPath.resolve(fileName);
+                System.out.println(filePath.toFile().getAbsolutePath());
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+
+            } catch (IOException _) {
+                return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thy";
+            }
+
+
             //return "redirect:/QLSACH/Index";
             return "redirect:/QLSACH/Index";
 
         } catch (Exception ex) {
             //return "Lỗi";
-            return "/Error/error";
+            //return "/Error/error";
+            return "/QLSACH/Create";
         }
     }
 
     @PostMapping("/QLSACH/Save")
-    private String SaveSACH(Model model, @ModelAttribute("sach")SACH sach) {
+    private String SaveSACH(Model model, @ModelAttribute("sach")SACH sach, @RequestParam("image")MultipartFile multipartFile, HttpSession httpSession, BindingResult bindingResult) {
         SACH hon = qlsachService.GetSachById(sach.getMasach());
         //hon.setMasach(sach.getMasach());
         hon.setTensach(sach.getTensach());
@@ -102,8 +139,29 @@ public class QLSACHController {
         hon.setNxb(qlnxbService.GetNXBById(sach.getNxb().getManxb()));
         //hon.setNhanvien(qlnvService.GetById("NV01"));
 
+        //them anh
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        System.out.println(fileName);
+        hon.setAnhsanpham(fileName);
+
         try {
-            qlsachService.Create(hon);
+            //CAP NHAT SACH
+            SACH savesach = qlsachService.Create(hon);
+
+            //cap nhat anh vao
+            String uploadDir = "./src/main/resources/static/ANHSANPHAM/" + savesach.getMasach();
+            Path uploadPath =  Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+
+            try (InputStream inputStream = multipartFile.getInputStream()){
+                Path filePath = uploadPath.resolve(fileName);
+                System.out.println(filePath.toFile().getAbsolutePath());
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+
+            } catch (IOException _) {
+                return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thy";
+            }
             //return "redirect:/QLSACH/Index";
             return "redirect:/QLSACH/Index";
 
@@ -140,31 +198,6 @@ public class QLSACHController {
         return "Loi";
     }
 
-//    @PostMapping("/QLSACH/Edit/{id}")
-//    public String Edit (Model model, @ModelAttribute("sach")SACH sach, @PathVariable("id") String id) {
-//        SACH hon = qlsachService.GetSachById(id);
-//        if (hon == null) return "Can't Find Book: " + id;
-//
-//        hon.setTensach(sach.getTensach());
-//        hon.setSoluonghienco(sach.getSoluonghienco());
-//        hon.setDacdiem(sach.getDacdiem());
-//        hon.setDongia(sach.getDongia());
-//        hon.setDVT(sach.getDVT());
-//        hon.setTheloaisach(qltheloaiService.GetCategoryById(sach.getTheloaisach().getMatheloai()));
-//        hon.setNxb(qlnxbService.GetNXBById(sach.getNxb().getManxb()));
-//        hon.setNhanvien(qlnvService.GetById("NV01"));
-//
-//        try {
-//            qlsachService.Update(hon);
-//            return "redirect:/QLSACH/Index";
-//
-//
-//        } catch (Exception ex) {
-//            return "Lỗi";
-//        }
-//
-//
-//    }
 
     @GetMapping("/QLSACH/Details/{id}")
     public String Details(Model model, @PathVariable("id") String id) {

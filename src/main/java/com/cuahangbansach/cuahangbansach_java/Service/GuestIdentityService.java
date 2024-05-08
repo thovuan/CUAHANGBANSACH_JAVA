@@ -14,7 +14,8 @@ public class GuestIdentityService {
         return guestIdentityRepository.GetByUsername(Username);
     }
 
-    public void Save(KHACH khach) {
+    public KHACH Save(KHACH khach) {
         guestIdentityRepository.save(khach);
+        return khach;
     }
 }

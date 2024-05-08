@@ -1,4 +1,4 @@
-package com.cuahangbansach.cuahangbansach_java.Controller;
+package com.cuahangbansach.cuahangbansach_java.RestAPI;
 
 import com.cuahangbansach.cuahangbansach_java.Exception.ResourceNotFoundException;
 import com.cuahangbansach.cuahangbansach_java.Model.SACH;

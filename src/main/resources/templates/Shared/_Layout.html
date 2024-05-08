@@ -12,6 +12,9 @@
 
     >
 
+    <link rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/site.css"  />
+
 </head>
 
 <body>
@@ -39,6 +42,7 @@
                         </div>
 
 
+
                     </div>
                 </div>
             </div>
@@ -57,7 +61,7 @@
                 <div class="navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="dropdown active">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Home <i class="fa fa-angle-down"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Home <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
 
                                 <li>
@@ -67,7 +71,7 @@
                         </li>
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">SHOP <i class="fa fa-angle-down"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">SHOP <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
 
                                 <li>
@@ -76,7 +80,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">About <i class="fa fa-angle-down"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">About <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
 
                                 <li>
@@ -94,7 +98,7 @@
                         </li>
 
                         <li class="dropdown active">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Tracking<i class="fa fa-angle-down"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Tracking<i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Tracking", "Index", "Tracking", new { area = "" }, new { @class = "nav-link" })</li>
                             </ul>
@@ -103,13 +107,13 @@
 
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">ACCOUNT <i class="fa fa-angle-down"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">ACCOUNT <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu" >
 
                                 <li>
                                     <a th:href="@{/Identity/Guest/Information}">Thông tin tài khoản</a>
                                 </li>
-                                <li>@Html.ActionLink("Đăng Xuất", "Logout", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" })</li>
+
                                 <li>
                                     <a th:href="@{/Identity/Guest/Logout}">Đăng Xuất</a>
                                 </li>
@@ -134,11 +138,11 @@
                             <ul class="dropdown-menu">
 
                                 <li>
-                                    <a th:href="@{/Home/Index}">Giao Dien cua Shop</a>
+                                    <a th:href="@{/Home/Index}">Giao Diện của Shop</a>
                                 </li>
 
                                 <li>
-                                    <a th:href="@{/Identity/Admin/Login}">Giao Diện của Nhân vien</a>
+                                    <a th:href="@{/Identity/Admin/Login}">Giao Diện của Nhân viên</a>
                                 </li>
                             </ul>
                         </li>
@@ -153,7 +157,7 @@
                                 </li>
 
                                 <li>
-                                    <a th:href="@{/ShoppingCart/Index}">Lich su mua hang</a>
+                                    <a th:href="@{/ShoppingCart/Index}">Lich sử mua hàng</a>
                                 </li>
                             </ul>
                         </li>
@@ -180,7 +184,7 @@
                     <div class="widget">
                         <h4>Get in touch with us</h4>
                         <address>
-                            <strong>STLD Shop</strong><br>
+                            <strong>STL Shop</strong><br>
                             475A Dien Bien Phu Street<br>
                             Ward 25, Binh Thanh District
                         </address>

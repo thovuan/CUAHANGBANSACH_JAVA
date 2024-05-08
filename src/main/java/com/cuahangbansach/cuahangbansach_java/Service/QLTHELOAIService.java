@@ -56,5 +56,12 @@ public class QLTHELOAIService {
         return qltheloaiRepository.GetCategoryByName(name);
     }
 
+    public void Save(THELOAISACH item) {
+        qltheloaiRepository.save(item);
+    }
+
+    public void Delete(THELOAISACH item) {
+        qltheloaiRepository.delete(item);
+    }
 
 }

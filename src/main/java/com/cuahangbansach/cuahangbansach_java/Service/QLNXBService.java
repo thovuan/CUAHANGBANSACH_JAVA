@@ -51,5 +51,13 @@ public class QLNXBService {
         return nxb;
     }
 
+    public void Save(NXB items) {
+        qlnxbRepository.save(items);
+    }
+
+    public void Delete(NXB items) {
+        qlnxbRepository.delete(items);
+    }
+
 
 }

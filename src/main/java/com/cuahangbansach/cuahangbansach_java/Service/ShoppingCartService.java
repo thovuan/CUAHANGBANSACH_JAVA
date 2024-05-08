@@ -8,6 +8,7 @@ import com.cuahangbansach.cuahangbansach_java.Repository.ShoppingCartRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,6 +16,9 @@ import java.util.*;
 
 @Service
 public class ShoppingCartService {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
@@ -70,6 +74,7 @@ public class ShoppingCartService {
     }
 
     public PHIEUMUAHANG Create(PHIEUMUAHANG phieumuahang) {
+
         return shoppingCartRepository.save(phieumuahang);
     }
 
@@ -86,6 +91,7 @@ public class ShoppingCartService {
     public void UpdateCTDH(CHITIETDATHANG chitietdathang) {
 
         entityManager.merge(chitietdathang);
+        scRepository.save(chitietdathang);
     }
 
     //public boolean

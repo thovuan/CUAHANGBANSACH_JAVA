@@ -16,6 +16,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @IdClass(CHITIETDATHANG.class)
 @Table(name = "CHITIETDATHANG")
 public class CHITIETDATHANG {
+
     @Id
     @JoinColumn(name="maphieumuahang", referencedColumnName = "maphieumuahang")
     @ManyToOne(fetch = FetchType.LAZY)

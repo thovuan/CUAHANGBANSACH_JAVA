@@ -1,15 +1,14 @@
-package com.cuahangbansach.cuahangbansach_java.Controller;
+package com.cuahangbansach.cuahangbansach_java.RestAPI;
 
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
+import com.cuahangbansach.cuahangbansach_java.Model.PHIEUMUAHANG;
 import com.cuahangbansach.cuahangbansach_java.Service.GuestIdentityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @RestController
@@ -22,7 +21,7 @@ public class GuestIdentityAPIController {
     public ResponseEntity<String> Login(@RequestBody @Valid KHACH khach) {
         KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
         if (guest != null) {
-            if(Objects.equals(guest.getTendangnhap(), khach.getTendangnhap())) {
+            if(Objects.equals(guest.getMatkhau(), khach.getMatkhau())) {
                 return ResponseEntity.ok("Login 完了");
             }
             else throw new RuntimeException("Tai khoan hoac mat khau khong dung");
@@ -48,4 +47,28 @@ public class GuestIdentityAPIController {
         }
         else throw new RuntimeException("Tai khoan khong trung khop");
     }
+    @PutMapping("/NewUser")
+    public ResponseEntity<String> NewUser(@RequestBody @Valid KHACH khach) {
+        KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
+        if (guest == null) {
+            LocalDateTime dt = LocalDateTime.now();
+            KHACH kyaku = new KHACH();
+            kyaku.setMakhachhang("KH" + dt.getYear() + dt.getMonthValue() + dt.getDayOfMonth() + dt.getHour() + dt.getMinute() + dt.getSecond());
+            kyaku.setTenkhachhang(khach.getTenkhachhang());
+            kyaku.setTendangnhap(khach.getTendangnhap());
+            kyaku.setMatkhau(khach.getMatkhau());
+            kyaku.setDiachi(khach.getDiachi());
+            kyaku.setSdt(khach.getSdt());
+            kyaku.setEmail(khach.getEmail());
+
+            try{
+                guestIdentityService.Save(kyaku);
+                return ResponseEntity.ok("Register 完了");
+            }catch(Exception ex){
+                return ResponseEntity.badRequest().body(ex.getMessage());
+            }
+        }
+        else throw new RuntimeException("Tai khoan hoac mat khau ton tai");
+    }
 }
+

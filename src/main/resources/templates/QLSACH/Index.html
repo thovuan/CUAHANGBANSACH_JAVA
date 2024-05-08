@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{/Shared/_Layout}"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,6 +10,7 @@
     >
 </head>
 <body>
+<th:block th:include="/Shared/_Layout :: header"></th:block>
 <section id="content">
     <div class="container">
 
@@ -83,7 +85,7 @@
 
                         </td>
                         <td >
-                            <img th:src="${sach.anhsanpham}" alt="" style="width: 50px" />
+                            <img th:src="@{'/ANHSANPHAM/' + ${sach.getMasach()} + '/' + ${sach.getAnhsanpham()}}" alt="" style="width: 50px" />
                         </td>
                         <td  th:text="${sach.DVT}">
 
@@ -128,4 +130,5 @@
 
 </section>
 </body>
+<th:block th:include="/Shared/_Layout :: footer"></th:block>
 </html>

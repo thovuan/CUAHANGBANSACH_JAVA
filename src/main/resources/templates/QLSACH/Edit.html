@@ -25,7 +25,7 @@
                         <div class="col-md-10">
                             <label for = "tensach" class="col-sm-4 col-form-label">Tên Sách</label>
 
-                                <input type="text" class="form-control" id="tensach" name = "tensach" th:field="*{tensach}" th:placeholder="${'Tên Sách'}">
+                                <input type="text" class="form-control" id="tensach" name = "tensach" th:field="*{tensach}" th:placeholder="${'Tên Sách'}" required>
                                 <p th:if = "${#fields.hasErrors('tensach')}" th:errorclass="text-danger"
                                    th:errors="${sach.tensach}"></p>
 
@@ -37,7 +37,7 @@
                         <div class="col-md-10">
                             <label for = "soluonghienco" class="col-sm-8 col-form-label">Số Lượng Hện Có</label>
 
-                                <input type="text" class="form-control" id="soluonghienco" name = "soluonghienco" th:field="*{soluonghienco}" th:placeholder="${'Số Lượng Hiện Có'}">
+                                <input type="text" class="form-control" id="soluonghienco" name = "soluonghienco" th:field="*{soluonghienco}" th:placeholder="${'Số Lượng Hiện Có'}" required>
                                 <p th:if = "${#fields.hasErrors('soluonghienco')}" th:errorclass="text-danger"
                                    th:errors="${sach.soluonghienco}"></p>
 
@@ -66,7 +66,7 @@
 
                             <label for = "DVT" class="col-sm-4 col-form-label">Đơn Vị Tính</label>
 
-                                <input type="text" class="form-control" id="DVT" name = "DVT" th:field="*{DVT}" th:placeholder="${'Đơn Vị Tính'}">
+                                <input type="text" class="form-control" id="DVT" name = "DVT" th:field="*{DVT}" th:placeholder="${'Đơn Vị Tính'}" required>
                                 <p th:if = "${#fields.hasErrors('DVT')}" th:errorclass="text-danger"
                                    th:errors="${sach.DVT}"></p>
 
@@ -81,7 +81,7 @@
                         <div class="col-md-10">
                             <label for = "dongia" class="col-sm-4 col-form-label">Đơn Giá</label>
 
-                                <input type="text" class="form-control" id="dongia" name = "dongia" th:field="*{dongia}" th:placeholder="${'Đơn Giá'}">
+                                <input type="text" class="form-control" id="dongia" name = "dongia" th:field="*{dongia}" th:placeholder="${'Đơn Giá'}" required>
                                 <p th:if = "${#fields.hasErrors('dongia')}" th:errorclass="text-danger"
                                    th:errors="${sach.dongia}"></p>
 
@@ -125,7 +125,8 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="file" class="form-control" name="image" />
+                        <label for="image">Choose book no shashin</label>
+                        <input type="file" class="form-control" name="image" id = "image" th:placeholder="${'Choose book no picture'}"/>
 
                     </div>
 
