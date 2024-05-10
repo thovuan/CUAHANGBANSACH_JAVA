@@ -1,7 +1,10 @@
 package com.cuahangbansach.cuahangbansach_java.RestAPI;
 
+import com.cuahangbansach.cuahangbansach_java.Exception.UserPassExistedException;
+import com.cuahangbansach.cuahangbansach_java.Exception.UserPassNotFoundException;
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
 import com.cuahangbansach.cuahangbansach_java.Model.PHIEUMUAHANG;
+import com.cuahangbansach.cuahangbansach_java.Service.GuestIdentitySendMailService;
 import com.cuahangbansach.cuahangbansach_java.Service.GuestIdentityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,9 @@ public class GuestIdentityAPIController {
     @Autowired
     private GuestIdentityService guestIdentityService;
 
+    @Autowired
+    private GuestIdentitySendMailService guestIdentitySendMailService;
+
     @PostMapping("/Login")
     public ResponseEntity<String> Login(@RequestBody @Valid KHACH khach) {
         KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
@@ -24,9 +30,9 @@ public class GuestIdentityAPIController {
             if(Objects.equals(guest.getMatkhau(), khach.getMatkhau())) {
                 return ResponseEntity.ok("Login 完了");
             }
-            else throw new RuntimeException("Tai khoan hoac mat khau khong dung");
+            else throw new UserPassNotFoundException("Tai khoan hoac mat khau khong dung");
         }
-        else throw new RuntimeException("Tai khoan hoac mat khau khong dung");
+        else throw new UserPassNotFoundException("Tai khoan hoac mat khau khong dung");
         //return null;
     }
 
@@ -38,14 +44,15 @@ public class GuestIdentityAPIController {
                 guest.setMatkhau(khach.getMatkhau());
                 try {
                     guestIdentityService.Save(guest);
+                    guestIdentitySendMailService.Register_ChangePassComplete(guest.getEmail(), "Thông báo đã đổi mật khẩu thành công", guest, "Identity/Guest/ChangePasswordComplete");
                     return ResponseEntity.ok("Doi Mat Khau 完了");
                 } catch (Exception ex) {
                     return ResponseEntity.badRequest().body(ex.getMessage());
                 }
             }
-            else throw new RuntimeException("Mat khau nhap lai khong dung");
+            else throw new UserPassNotFoundException("Mat khau nhap lai khong dung");
         }
-        else throw new RuntimeException("Tai khoan khong trung khop");
+        else throw new UserPassNotFoundException("Tai khoan khong tim thay");
     }
     @PutMapping("/NewUser")
     public ResponseEntity<String> NewUser(@RequestBody @Valid KHACH khach) {
@@ -63,12 +70,13 @@ public class GuestIdentityAPIController {
 
             try{
                 guestIdentityService.Save(kyaku);
+                guestIdentitySendMailService.Register_ChangePassComplete(khach.getEmail(), "Register Complete", khach, "Identity/Guest/RegisterComplete");
                 return ResponseEntity.ok("Register 完了");
             }catch(Exception ex){
                 return ResponseEntity.badRequest().body(ex.getMessage());
             }
         }
-        else throw new RuntimeException("Tai khoan hoac mat khau ton tai");
+        else throw new UserPassExistedException("Tai khoan hoac mat khau ton tai");
     }
 }
 

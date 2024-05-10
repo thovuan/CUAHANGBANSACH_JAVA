@@ -1,10 +1,13 @@
 package com.cuahangbansach.cuahangbansach_java.Controller;
 
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
+import com.cuahangbansach.cuahangbansach_java.Service.EmailSenderService;
+import com.cuahangbansach.cuahangbansach_java.Service.GuestIdentitySendMailService;
 import com.cuahangbansach.cuahangbansach_java.Service.GuestIdentityService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,10 +24,19 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Controller
-public class Guest_IdentityController {
+public class GuestIdentityController {
 
     @Autowired
     private GuestIdentityService guestIdentityService;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
+
+    @Autowired
+    private GuestIdentitySendMailService guestIdentitySendMailService;
+
+    @Autowired
+    private HttpSession httpSession;
 
     @GetMapping("/Identity/Guest/Login")
     public String Login_Page(Model model) {
@@ -37,6 +49,9 @@ public class Guest_IdentityController {
         KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
         if (guest != null) {
             if(Objects.equals(guest.getMatkhau(), khach.getMatkhau())) {
+                //emailSenderService.sendmail(guest.getEmail(), "Login Successfully", "ログイン完了");
+                httpSession.setAttribute("guest", guest);
+
                 return "redirect:/Home/index";
             }
             else throw new RuntimeException("Tai khoan hoac mat khau khong dung");
@@ -59,6 +74,7 @@ public class Guest_IdentityController {
                 guest.setMatkhau(khach.getMatkhau());
                 try {
                     guestIdentityService.Save(guest);
+                    guestIdentitySendMailService.Register_ChangePassComplete(guest.getEmail(), "Thông báo đã đổi mật khẩu thành công", guest, "Identity/Guest/ChangePasswordComplete");
                     return "redirect:/Home/index";
                 } catch (Exception ex) {
                     return "/Identity/Guest/ChangePassword";
@@ -112,7 +128,7 @@ public class Guest_IdentityController {
                 } catch (IOException _) {
                     return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thấy";
                 }
-
+                guestIdentitySendMailService.Register_ChangePassComplete(khach.getEmail(), "Register Complete", khach, "Identity/Guest/RegisterComplete");
                 return "redirect:/Home/index";
             } catch (Exception ex) {
                 return "/Identity/Guest/NewUser";
@@ -120,6 +136,13 @@ public class Guest_IdentityController {
         }
         else throw new RuntimeException("Tai khoan hoac mat khau ton tai");
 
+    }
+
+    @GetMapping("/Identity/Guest/Logout")
+    public String Logout (Model model) {
+        httpSession.removeAttribute("guest");
+        httpSession.removeAttribute("donhang");
+        return "redirect:/Home/index";
     }
 
     @GetMapping("/Identity/Guest/GuestInfomation")

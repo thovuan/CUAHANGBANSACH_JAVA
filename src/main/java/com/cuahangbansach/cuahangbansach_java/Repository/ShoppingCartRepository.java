@@ -20,6 +20,9 @@ public interface ShoppingCartRepository extends JpaRepository<PHIEUMUAHANG, Stri
 
     @Query(value="select Top(1) * from PHIEUMUAHANG where tinhtrang = N'Chưa xác nhận' and makhachhang = :id", nativeQuery = true)
     public PHIEUMUAHANG GetDH(String id);
+
+    @Query(value="select * from PHIEUMUAHANG where makhachhang = :id", nativeQuery = true)
+    public List<PHIEUMUAHANG> GetPMHByGuestId(String id);
 }
 
 

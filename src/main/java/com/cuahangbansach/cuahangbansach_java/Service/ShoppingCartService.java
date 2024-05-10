@@ -35,6 +35,10 @@ public class ShoppingCartService {
         return shoppingCartRepository.findAll();
     }
 
+    public List<PHIEUMUAHANG> GetListByGuestId(String guestId) {
+        return shoppingCartRepository.GetPMHByGuestId(guestId);
+    }
+
     public List<PHIEUMUAHANG> GetList2(String id) {
         return shoppingCartRepository.GetPMHById2(id);
     }
@@ -92,6 +96,10 @@ public class ShoppingCartService {
 
         entityManager.merge(chitietdathang);
         scRepository.save(chitietdathang);
+    }
+
+    public void Delete(PHIEUMUAHANG phieumuahang) {
+        shoppingCartRepository.delete(phieumuahang);
     }
 
     //public boolean

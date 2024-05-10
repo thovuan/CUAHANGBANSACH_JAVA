@@ -1,6 +1,7 @@
 package com.cuahangbansach.cuahangbansach_java.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -26,6 +27,13 @@ public class NHANVIEN {
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", message = "Password không đúng định dạng")
     @Column(name = "matkhau")
     private String matkhau;
+
+    @Column
+    @Email(message = "Email invalid")
+    private String email;
+
+    @Column
+    private String avatar;
 
     @Transient
     private String retypedpass;

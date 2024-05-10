@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+
+    >
+</head>
+<body>
+
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Cảm ơn quý khách <th:block th:text="${user.getTenkhachhang()}"></th:block> đã đặt hàng tại CUAHANGBANSACH</h2>
+                <h4>CUAHANGBANSACH rất vui thông báo đơn hàng <th:block th:text="${pmh.getMaphieumuahang()}"></th:block> của quý khách đã được tiếp nhận và đang trong quá trình xử lý. CUAHANGBANSACH sẽ thông báo đến quý khách ngay khi hàng chuẩn bị được giao.</h4>
+
+                <h2 style="color: skyblue">Thông tin đơn hàng <th:block th:text="${pmh.getMaphieumuahang() + ' (' + pmh.getNgaylap() + ')'}"></th:block></h2>
+
+                <hr class="colorgraph"/>
+                <h4>Thông tin khách hàng</h4>
+                <dl class="dl-horizontal">
+                    <dt>
+                        Họ Tên
+                    </dt>
+
+                    <dd th:text="${user.getTenkhachhang()}">
+
+                    </dd>
+
+                    <dt>
+                        Số Điện Thoại
+                    </dt>
+
+                    <dd th:text="${user.getSdt()}">
+
+                    </dd>
+
+                    <dt>
+                        Email
+                    </dt>
+
+                    <dd th:text="${user.getEmail()}">
+
+                    </dd>
+
+                    <dt>
+                        Địa Chỉ
+                    </dt>
+
+                    <dd th:text="${user.getDiachi()}">
+
+                    </dd>
+
+                </dl>
+
+                <dl class="dl-horizontal">
+
+
+                    <dt>
+                        Phương Thức Thanh Toán
+                    </dt>
+
+                    <dd th:text="${pmh.getTinhtrangthanhtoan()}">
+
+                    </dd>
+
+                    <dt>
+                        Thời gian giao hàng
+                    </dt>
+
+                    <dd >
+                        <h4>Shinarai</h4>
+                    </dd>
+
+                    <dt>
+                       Phí Vận Chuyển
+                    </dt>
+
+                    <dd>
+                        <h4>0 VND</h4>
+                    </dd>
+
+
+                </dl>
+            </div>
+
+            <div class="col-lg-12">
+                <h2>DANH SÁCH CÁC CUỐN SÁCH TRONG ĐƠN HÀNG</h2>
+                <h3 th:text="${pmh.getMaphieumuahang()}"></h3>
+                <table border="1" class="table table-striped table-responsive-md" th:align="center">
+                    <tr>
+                        <th>
+                            Mã Sách
+                        </th>
+                        <th>
+                            Tên Sách
+                        </th>
+
+                        <th>
+                            Đặc Điểm
+                        </th>
+                        <th>
+                            Ảnh Sản Phẩm
+                        </th>
+                        <th>Số Lượng Mua</th>
+                        <th>
+                            Đơn Giá
+                        </th>
+                        <th>Thành Tiền</th>
+
+
+                    </tr>
+
+
+                    <tr th:each="sach : ${pmh.getDsSach()}">
+                        <td th:text="${sach.getMasach()}">
+
+                        </td>
+                        <td th:text="${sach.getTensach()}">
+
+                        </td>
+
+                        <td th:text="${sach.getDacdiem()}">
+
+                        </td>
+                        <td >
+                            <img alt="" th:src="${sach.getAnhsanpham()}" style="width: 50px" />
+                        </td>
+                        <td th:text="${sach.getSoluongmua()}"></td>
+                        <td th:text="${sach.getDongia()}">
+                            VND
+                        </td>
+                        <td th:text="${sach.getThanhtien()}"> VND</td>
+
+                    </tr>
+
+
+                </table>
+                <h3>Tổng giá trị hóa đơn: </h3>
+                <h3 th:text="${pmh.getDHTotal()}"> VND</h3>
+
+
+            </div>
+            <div class="col-lg-12">
+                <p>
+                    Trường hợp quý khách có những băn khoăn về đơn hàng, có thể xem thêm mục các câu hỏi thường gặp.
+                </p>
+                <p>
+                    Mọi thắc mắc và góp ý, quý khách vui lòng liên hệ với CUAHANGBANSACH qua ... Đội ngũ CUAHANGBANSACH luôn sẵn sàng hỗ trợ bạn.
+                </p>
+                <p>
+                    Một lần nữa CUAHANGBANSACH cảm ơn quý khách.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

@@ -1,17 +1,16 @@
 package com.cuahangbansach.cuahangbansach_java.Controller;
 
 
+import com.cuahangbansach.cuahangbansach_java.Exception.ResourceNotFoundException;
 import com.cuahangbansach.cuahangbansach_java.Model.*;
-import com.cuahangbansach.cuahangbansach_java.Service.CardService;
-import com.cuahangbansach.cuahangbansach_java.Service.QLKHACHService;
-import com.cuahangbansach.cuahangbansach_java.Service.QLSACHService;
-import com.cuahangbansach.cuahangbansach_java.Service.ShoppingCartService;
+import com.cuahangbansach.cuahangbansach_java.Service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,15 +32,22 @@ public class ShoppingCartController {
     @Autowired
     private HttpSession httpSession;
 
+    @Autowired
+    private EmailSenderService mailSenderService;
+
     @GetMapping("/ShoppingCart/Index")
     public String Index(Model model, @RequestParam(name = "dhid", required = false)String pmh) {
+        KHACH kyaku = (KHACH) httpSession.getAttribute("guest");
         List<PHIEUMUAHANG> list;
         if (pmh != null) {
             list = shoppingCartService.GetList2(pmh);
             model.addAttribute("SCL", list);
         } else {
-            list = shoppingCartService.GetList();
-            model.addAttribute("SCL", list);
+            if (kyaku != null) {
+                list = shoppingCartService.GetListByGuestId(kyaku.getMakhachhang());
+                model.addAttribute("SCL", list);
+            }
+            else model.addAttribute("SCL", null);
         }
 
         return "ShoppingCart/Index";
@@ -58,8 +64,17 @@ public class ShoppingCartController {
 
     @GetMapping("/ShoppingCart/MyCart")
     public String OreNoCart(Model model) {
-        PHIEUMUAHANG dh = shoppingCartService.GetDH("KH01");
-        httpSession.setAttribute("donhang", dh);
+        KHACH kyaku = (KHACH) httpSession.getAttribute("guest");
+        PHIEUMUAHANG dh = (PHIEUMUAHANG) httpSession.getAttribute("donhang");
+        if (kyaku == null || dh == null) {
+
+            httpSession.setAttribute("donhang", null);
+        } else {
+            //dh = shoppingCartService.GetDH(kyaku.getMakhachhang());
+            httpSession.setAttribute("donhang", dh);
+
+        }
+
         model.addAttribute("pmh", dh);
         return "/ShoppingCart/MyCart";
     }
@@ -158,6 +173,18 @@ public class ShoppingCartController {
         }
     }
 
+    @GetMapping("/ShoppingCart/Delete/{id}")
+    public String DeleteDH(@PathVariable String id, Model model) {
+        PHIEUMUAHANG pmh = shoppingCartService.GetPMHById(id);
+        if (pmh==null) throw new ResourceNotFoundException("Resource not found: " + id);
+        try {
+            shoppingCartService.Delete(pmh);
+            return "redirect:/ShoppingCart/Index";
+        } catch(Exception ex) {
+            return "/ShoppingCart/Index";
+        }
+    }
+
     @GetMapping("/ShoppingCart/Confirm/{id}")
     public String Confirm(Model model, @PathVariable String id) {
         PHIEUMUAHANG pmh = shoppingCartService.GetSCDetail(id);
@@ -183,15 +210,6 @@ public class ShoppingCartController {
         kyaku.setSdt(pmh.getKhach().getSdt());
         kyaku.setEmail(pmh.getKhach().getEmail());
 
-        /*THE the = cardService.FindThe(pmh.getKhach().getMakhachhang());
-        if (the!=null) {
-            int temp = (int) pmh.getDHTotal() /100;
-
-            return "redirect:/Error/ErrorMe?mess=" + temp + " " + pmh.getDHTotal();
-            //the.setDiemthe(the.getDiemthe()+temp);
-            //cardService.UpdateCardPoint(the);
-        }*/
-        //return "redirect:/Error/ErrorMe?mess=" + "lỗi";
         try {
 
             qlkhachService.UpdateKhach(kyaku);
@@ -217,14 +235,19 @@ public class ShoppingCartController {
                 }
             }
 
+            mailSenderService.sendCartConfirmMail(kyaku.getEmail(), "Xác nhận đơn hàng #"+dh.getMaphieumuahang(), dh, kyaku, "ShoppingCart/OrderCompleteMail" );
+
             httpSession.removeAttribute("donhang");
-            return "redirect:/ShoppingCart/Index";
+            return "redirect:/ShoppingCart/OrderComplete";
         } catch (Exception ex) {
             return "redirect:/Error/ErrorMe?mess=" + ex.getMessage();
         }
 
-
-
-        //return "redirect:/ShoppingCart/Index";
     }
+
+    @GetMapping("/ShoppingCart/OrderComplete")
+    public String OrderComplete(Model model) {
+        return "ShoppingCart/OrderComplete";
+    }
+
 }

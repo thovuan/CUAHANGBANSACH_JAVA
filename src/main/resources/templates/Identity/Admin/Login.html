@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    >
 </head>
 <body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <form th:action="@{/Identity/Admin/Login}" th:object="${staff}" method="post" class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <h1>DÀNH RIÊNG CHO ADMIN VÀ NHÂN VIEN</h1>
+                <h2>Login</h2>
+                <hr class="colorgraph" />
 
+                <div class="form-group">
+                    <label for="tendangnhap">Tên Đăng Nhập</label>
+                    <input type="text" id="tendangnhap" class="form-control" th:field="*{tendangnhap}" th:placeholder="${'Tên Đăng Nhập'}">
+
+                </div>
+                <div th:if="${param.tendangnhap}">
+                    <div class="alert alert-info">Wrong Username or Password</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mật Khẩu</label>
+                    <input type="password" id="password" class="form-control" th:field="*{matkhau}" th:placeholder="${'Mật Khẩu'}">
+
+                </div>
+
+                <hr class="colorgraph" />
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <input id="LoginForm" type="submit" value="Đăng Nhập" class="btn btn-primary btn-block" />
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-6 col-md-3">
+                            <a th:href="@{/Identity/Admin/ChangePassword}" class="btn" style="color: white; background-color: red">
+                                Change Password
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3" style="margin-top: 10px" >
+                            <a th:href="@{/Identity/Admin/Register}" class="btn" style="color: white; background-color: darkblue">
+                                Register new Account
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+            </form>
+        </div>
+    </div>
+
+
+</section>
 </body>
 </html>

@@ -1,15 +1,17 @@
 package com.cuahangbansach.cuahangbansach_java.RestAPI;
 
+import com.cuahangbansach.cuahangbansach_java.Exception.AllExceptionHandler;
+import com.cuahangbansach.cuahangbansach_java.Exception.ResourceNotFoundException;
+import com.cuahangbansach.cuahangbansach_java.Exception.UserPassNotFoundException;
 import com.cuahangbansach.cuahangbansach_java.Model.NHANVIEN;
+import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentitySendMailService;
 import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Objects;
 
 @RestController
@@ -17,6 +19,9 @@ import java.util.Objects;
 public class StaffIdentityAPIController {
     @Autowired
     private StaffIdentityService staffIdentityService;
+
+    @Autowired
+    private StaffIdentitySendMailService staffIdentitySendMailService;
 
     @PostMapping
     public ResponseEntity<NHANVIEN> NewStaff(@RequestBody @Valid NHANVIEN nhanvien) {
@@ -30,9 +35,9 @@ public class StaffIdentityAPIController {
             if (Objects.equals(nv.getMatkhau(), nhanvien.getMatkhau())) {
                 return ResponseEntity.ok(nv);
             }
-            else throw new RuntimeException("Tài khoản hoặc mật khẩu khong dung");
+            else throw new UserPassNotFoundException("User or Password isn't correct");
         }
-        else throw new RuntimeException("Tài khoản hoặc mật khẩu khong dung");
+        else throw new UserPassNotFoundException("User or Password isn't correct");
         //return ResponseEntity.badRequest().body(null);
     }
 
@@ -52,8 +57,36 @@ public class StaffIdentityAPIController {
                 }
 
             }
-            else throw new RuntimeException("mật khẩu nhap lai khong trung khop");
+            else throw new UserPassNotFoundException("mật khẩu nhap lai khong trung khop");
         }
-        else throw new RuntimeException("Tài khoản khong tim thay");
+        else throw new UserPassNotFoundException("Tài khoản khong tim thay");
+    }
+
+    @PostMapping("/Register")
+    public ResponseEntity<String> Register(@RequestBody @Valid NHANVIEN nhanvien) {
+                try {
+                    staffIdentityService.Add(nhanvien);
+                    staffIdentitySendMailService.Register_ChangePassComplete(nhanvien.getEmail(), "Register Complete", nhanvien, "Identity/Admin/RegisterComplete");
+                    return ResponseEntity.ok("Add Staff User 完了");
+
+                } catch (Exception ex){
+                    return ResponseEntity.badRequest().body("Loi khi them/ sua/ xoa: \n" + ex.toString());
+                }
+
+//          staffIdentityService.Add(nhanvien);
+//            return ResponseEntity.ok("New User 完了");
+    }
+
+    @PostMapping("/ChangeInformation/{id}")
+    public ResponseEntity<String> ChangeInformation(@PathVariable String id, @RequestBody @Valid NHANVIEN nhanvien) {
+        NHANVIEN nv = staffIdentityService.FindByUserName(nhanvien.getTendangnhap());
+        if (nv != null) {
+            nv.setTennhanvien(nhanvien.getTennhanvien());
+
+            staffIdentityService.Update(nv);
+            return ResponseEntity.ok("Update Information 完了");
+        }
+        else throw new ResourceNotFoundException("Nhan vien not found: " + nhanvien.getTendangnhap());
+
     }
 }

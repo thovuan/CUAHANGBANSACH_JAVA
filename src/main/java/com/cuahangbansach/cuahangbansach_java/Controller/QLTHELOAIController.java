@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+
 public class QLTHELOAIController {
 
     @Autowired
@@ -27,10 +28,6 @@ public class QLTHELOAIController {
         }
 
         return "QLTHELOAI/Index";
-    }
-    @GetMapping("/QLTHELOAI/ListAPI")
-    public List<THELOAISACH> GetList() {
-        return qltheloaiService.GetAll();
     }
 
     @GetMapping("/QLTHELOAI/Detail/{id}")

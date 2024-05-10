@@ -3,10 +3,10 @@ package com.cuahangbansach.cuahangbansach_java.Exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class UsernameNotFoundException extends RuntimeException {
+@ResponseStatus(value = HttpStatus.FOUND)
+public class UserPassExistedException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-    public UsernameNotFoundException(String message) {
+    public UserPassExistedException(String message) {
         super(message);
     }
 }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+
+    >
+</head>
+<body>
+
+<section id="content">
+    <div class="container">
+
+            <div class="col-lg-20">
+                <h2>DANH SÁCH SÁCH</h2>
+                <hr class="colorgraph" />
+
+
+
+                <table border="1" class="table table-striped table-responsive-md" th:align="center">
+                    <tr>
+                        <th>
+                            Mã Sách
+                        </th>
+                        <th>
+                            Tên Sách
+                        </th>
+                        <th>
+                            Số Lượng Hiện Có
+                        </th>
+                        <th>
+                            Đặc Điểm
+                        </th>
+
+                        <th>
+                            Đơn Vị Tính
+                        </th>
+                        <th>
+                            Đơn Gi
+                        </th>
+                        <th>
+                            Tên Thể Loại
+                        </th>
+
+                        <th>
+                            Nhà Xuất Bản
+                        </th>
+                        <th>
+                            Tên Nhân Viên
+                        </th>
+
+                    </tr>
+
+
+                    <tr th:each="sach: ${SACHList}">
+                        <td th:text="${sach.masach}">
+
+                        </td>
+                        <td th:text="${sach.tensach}">
+
+                        </td>
+                        <td th:text="${sach.soluonghienco}">
+
+                        </td>
+                        <td th:text="${sach.dacdiem}">
+
+                        </td>
+
+                        <td  th:text="${sach.DVT}">
+
+                        </td>
+                        <td th:text="${sach.dongia}">
+
+                        </td>
+                        <td th:text="${sach.tentheloai}">
+
+                        </td>
+                        <td th:text="${sach.tennxb}">
+
+                        </td>
+                        <td th:text="${sach.tennhanvien}">
+
+                        </td>
+
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+
+
+
+
+</section>
+</body>
+
+</html>
