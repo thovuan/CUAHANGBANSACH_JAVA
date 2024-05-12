@@ -1,10 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+
+    >
 </head>
 <body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <h2>Chi tiết thông tin Khách <th:block th:text="${guest.getTenkhachhang()}"></th:block> </h2>
+            <hr class="colorgraph" />
+            <div class="col-lg-4">
+                <h3>Ảnh đại diện</h3>
+                <div class="form-group" th:if="${guest.getAvatar()}!=null">
 
+                    <img th:alt="${guest.getTenkhachhang()}" th:src="@{'/GuestAvatar/' + ${guest.getMakhachhang()} + '/' + ${guest.getAvatar()}}" style="width: 200px; height: auto;" />
+
+                </div>
+
+                <div class="form-group" th:if="${guest.getAvatar()}==null">
+                    <span>Không có ảnh</span>
+                </div>
+
+
+                <div  class="form-group">
+
+                    <a th:href="@{/Identity/Guest/UploadAvatar}" class="btn btn-primary">
+                        Upload Avatar
+                    </a>
+                </div>
+
+
+            </div>
+
+            <dl class="col-lg-8">
+                <dt>
+                    Tên Khách Hàng
+                </dt>
+
+                <dd th:text="${guest.getTenkhachhang()}">
+
+                </dd>
+
+                <dt>
+                    Số Điện Thoại
+
+                </dt>
+
+                <dd th:text="${guest.getSdt()}">
+
+                </dd>
+
+                <dt>
+                    Email
+                </dt>
+
+                <dd th:text="${guest.getEmail()}">
+
+                </dd>
+
+                <dt>
+                    Địa Chỉ
+                </dt>
+
+                <dd th:text="${guest.getDiachi()}">
+
+                </dd>
+
+            </dl>
+        </div>
+        <div class="form-group">
+
+            <form th:action="@{/Identity/Guest/UpdateInformation/{tendangnhap}(tendangnhap = ${guest.getTendangnhap()})}" >
+                <button type="submit" style="color: white; background-color:darkblue;">Update Information</button>
+            </form>
+
+            <form th:action="@{/Identity/Guest/CardDetail/{tendangnhap}(tendangnhap = ${guest.getTendangnhap()})}" >
+                <button type="submit" style="color: white; background-color:red;">Card Information</button>
+            </form>
+        </div>
+
+    </div>
+
+</section>
 </body>
 </html>

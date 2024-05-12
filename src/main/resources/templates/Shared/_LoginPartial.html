@@ -5,14 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-@if (Session["KHACH"]==null)
-{
-@Html.ActionLink("Login", "Login", "GUESTLOGIN", new { area = "" }, new { @class = "nav-link" });
-}
-else
-{
-KHACH khach = (KHACH)Session["KHACH"];
-<p>Xin chao, @khach.tenkhachhang</p>
-}
+
+<div th:if="${guest}!=null">
+    <p>Xin chào <th:block th:text="${guest.getTenkhachhang()}"></th:block></p>
+</div>
+<div th:unless="${guest}!=null">
+    <a th:href="@{/Identity/Guest/Login}" th:object="${guest}">
+        Login
+    </a>
+</div>
+
 </body>
 </html>

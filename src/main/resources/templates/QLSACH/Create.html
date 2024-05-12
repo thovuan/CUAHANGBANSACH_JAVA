@@ -145,9 +145,9 @@
                 </div>
 
 
-                <div>
-                    @Html.ActionLink("Back to List", "Index")
-                </div>
+                <form th:action="@{/QLSACH/Index}">
+                    <button type="submit" style="color: white; background-color:darkblue;">Back To List</button>
+                </form>
 
             </form>
         </div>

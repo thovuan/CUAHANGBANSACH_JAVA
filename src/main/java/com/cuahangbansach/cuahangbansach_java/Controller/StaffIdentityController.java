@@ -2,9 +2,11 @@ package com.cuahangbansach.cuahangbansach_java.Controller;
 
 import com.cuahangbansach.cuahangbansach_java.Exception.UserPassExistedException;
 import com.cuahangbansach.cuahangbansach_java.Exception.UserPassNotFoundException;
+import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
 import com.cuahangbansach.cuahangbansach_java.Model.NHANVIEN;
 import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentitySendMailService;
 import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentityService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,9 @@ public class StaffIdentityController {
     @Autowired
     private StaffIdentitySendMailService staffIdentitySendMailService;
 
+    @Autowired
+    private HttpSession httpSession;
+
     @GetMapping("/Identity/Admin/Login")
     public String LoginForm(Model model) {
         model.addAttribute("staff", new NHANVIEN());
@@ -43,6 +48,7 @@ public class StaffIdentityController {
         NHANVIEN nv = staffIdentityService.FindByUserName(nhanvien.getTendangnhap());
         if (nv != null) {
             if (Objects.equals(nv.getMatkhau(), nhanvien.getMatkhau())) {
+                httpSession.setAttribute("nv", nv);
                 return "redirect:/NeoHome/Index";
             }
             else throw new UserPassNotFoundException("User or Password isn't correct");
@@ -98,5 +104,49 @@ public class StaffIdentityController {
         } catch (Exception ex) {
             return "/Identity/Admin/Register";
         }
+    }
+
+    @GetMapping("/Identity/Admin/Logout")
+    public String Logout() {
+        httpSession.removeAttribute("nv");
+        return "redirect:/Identity/Admin/Logout";
+    }
+
+    @GetMapping("/Identity/Admin/ChangePassword")
+    public String ChangePasswordForm(Model model) {
+        model.addAttribute("user", new NHANVIEN());
+        return "/Identity/Admin/ChangePassword";
+    }
+
+    @PostMapping("/Identity/Admin/ChangePassword")
+    public String ChangePassword(Model model, @RequestBody @Valid @ModelAttribute("user")NHANVIEN nhanvien) {
+        NHANVIEN nv = staffIdentityService.FindByUserName(nhanvien.getTendangnhap());
+        if (nv != null) {
+            if (Objects.equals(nhanvien.getRetypedpass(), nhanvien.getMatkhau())) {
+                nv.setMatkhau(nhanvien.getMatkhau());
+
+                try {
+                    staffIdentityService.Update(nv);
+                    staffIdentitySendMailService.Register_ChangePassComplete(nv.getEmail(), "Update Password", nhanvien, "Identity/Admin/ChangePasswordComplete");
+                    return "redirect:/Identity/Admin/Login";
+
+                } catch (Exception ex){
+                    //return "/Identity/Admin/ChangePassword";
+                    return "redirect:/Error/ErrorMe?mess=" + ex.toString();
+                }
+
+            }
+            else throw new UserPassNotFoundException("mật khẩu nhap lai khong trung khop");
+        }
+        else throw new UserPassNotFoundException("Tài khoản khong tim thay");
+    }
+
+    @GetMapping("/Identity/Admin/StaffInformation")
+    public String StaffInformation(Model model) {
+        NHANVIEN nv = (NHANVIEN) httpSession.getAttribute("nv");
+
+        model.addAttribute("nv", nv);
+        //return "/Identity/Guest/Information";
+        return "/Identity/Admin/Information";
     }
 }

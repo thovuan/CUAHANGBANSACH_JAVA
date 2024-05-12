@@ -9,6 +9,7 @@ import com.cuahangbansach.cuahangbansach_java.Service.GuestIdentityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -78,5 +79,35 @@ public class GuestIdentityAPIController {
         }
         else throw new UserPassExistedException("Tai khoan hoac mat khau ton tai");
     }
+
+    @GetMapping("/GI/{tendangnhap}")
+    public ResponseEntity<KHACH> GuestInformation(@PathVariable String tendangnhap) {
+        KHACH guest = guestIdentityService.FindByGuest(tendangnhap);
+        if(guest != null){
+            return ResponseEntity.ok(guest);
+        }
+        return ResponseEntity.badRequest().body(null);
+    }
+
+    @PostMapping("/UpdateInformation")
+    public ResponseEntity<String> UpdateInformation(@RequestBody @Valid KHACH khach) {
+        KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
+        if (guest != null) {
+            guest.setTenkhachhang(khach.getTenkhachhang());
+            //guest.setMatkhau(khach.getMatkhau());
+            guest.setSdt(khach.getSdt());
+            guest.setEmail(khach.getEmail());
+            guest.setDiachi(khach.getDiachi());
+            try {
+                guestIdentityService.Save(guest);
+                guestIdentitySendMailService.Register_ChangePassComplete(guest.getEmail(), "Update Information Complete", khach, "Identity/Guest/ChangeInformationComplete");
+                return ResponseEntity.ok("Update Information 完了");
+            } catch (Exception ex) {
+                return ResponseEntity.badRequest().body(ex.getMessage());
+            }
+        } else throw new UserPassExistedException("Account not Found!!!");
+
+    }
+
 }
 

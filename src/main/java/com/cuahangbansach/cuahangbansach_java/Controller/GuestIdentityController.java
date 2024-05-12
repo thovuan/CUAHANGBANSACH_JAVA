@@ -1,5 +1,6 @@
 package com.cuahangbansach.cuahangbansach_java.Controller;
 
+import com.cuahangbansach.cuahangbansach_java.Exception.UserPassExistedException;
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
 import com.cuahangbansach.cuahangbansach_java.Service.EmailSenderService;
 import com.cuahangbansach.cuahangbansach_java.Service.GuestIdentitySendMailService;
@@ -8,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -145,19 +147,69 @@ public class GuestIdentityController {
         return "redirect:/Home/index";
     }
 
-    @GetMapping("/Identity/Guest/GuestInfomation")
+    @GetMapping("/Identity/Guest/GuestInformation")
     public String GuestInfomationForm(Model model){
-        model.addAttribute("user", new KHACH());
-        return "/Identity/Guest/Information";
+
+        KHACH guest = (KHACH) httpSession.getAttribute("guest");
+
+            model.addAttribute("guest", guest);
+            return "/Identity/Guest/Information";
+
+        //return ResponseEntity.badRequest().body(null);
+
+        //return "/Identity/Guest/Information";
     }
 
-    @GetMapping("/Identity/Guest/UpdateInformation")
-    public String UpdateInformationForm(Model model) {
-        return "/Identity/Guest/Information";
+    @GetMapping("/Identity/Guest/UpdateInformation/{tendangnhap}")
+    public String UpdateInformationForm(Model model, @PathVariable String tendangnhap) {
+        KHACH guest = guestIdentityService.FindByGuest(tendangnhap);
+        if (guest == null) {
+            return "/Identity/Guest/Information";
+        }
+        model.addAttribute("user", guest);
+        return "/Identity/Guest/UpdateInformation";
     }
 
-    //post updateinfor
+    @PostMapping("/Identity/Guest/UpdateInformation")
+    public String UpdateInformation(Model model,@RequestBody @Valid @ModelAttribute("user")  KHACH khach, @RequestParam(name = "image", required = false) MultipartFile multipartFile) {
+        KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
+        if (guest != null) {
+            guest.setTenkhachhang(khach.getTenkhachhang());
+            //guest.setMatkhau(khach.getMatkhau());
+            guest.setSdt(khach.getSdt());
+            guest.setEmail(khach.getEmail());
+            guest.setDiachi(khach.getDiachi());
 
-    //get-post updateimage
+            //them anh
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            //System.out.println(fileName);
+            guest.setAvatar(fileName);
+
+
+            try {
+                KHACH saveguest = guestIdentityService.Save(guest);
+
+                //cap nhat anh vao
+                String uploadDir = "./src/main/resources/static/GuestAvatar/" + saveguest.getMakhachhang();
+                Path uploadPath =  Paths.get(uploadDir);
+                if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+
+                try (InputStream inputStream = multipartFile.getInputStream()){
+                    Path filePath = uploadPath.resolve(fileName);
+                    System.out.println(filePath.toFile().getAbsolutePath());
+                    Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+
+                } catch (IOException _) {
+                    return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thấy";
+                }
+
+                guestIdentitySendMailService.Register_ChangePassComplete(guest.getEmail(), "Update Information Complete", khach, "Identity/Guest/ChangeInformationComplete");
+                return "redirect:/Identity/Guest/GuestInformation";
+            } catch (Exception ex) {
+                return "/Identity/Guest/UpdateInformation";
+            }
+        } else throw new UserPassExistedException("Account not Found!!!");
+    }
 
 }

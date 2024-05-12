@@ -89,4 +89,12 @@ public class StaffIdentityAPIController {
         else throw new ResourceNotFoundException("Nhan vien not found: " + nhanvien.getTendangnhap());
 
     }
+
+    @GetMapping("/SI/{tendangnhap}")
+    public ResponseEntity<NHANVIEN> StaffInformation(@PathVariable String tendangnhap) {
+        NHANVIEN nv = staffIdentityService.FindByUserName(tendangnhap);
+        if (nv!=null) {
+            return ResponseEntity.ok(nv);
+        } return ResponseEntity.badRequest().body(null);
+    }
 }
