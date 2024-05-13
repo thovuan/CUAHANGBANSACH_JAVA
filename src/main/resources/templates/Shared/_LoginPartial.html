@@ -6,11 +6,11 @@
 </head>
 <body>
 
-<div th:if="${guest}!=null">
-    <p>Xin chào <th:block th:text="${guest.getTenkhachhang()}"></th:block></p>
+<div th:if="${session.guest}!=null">
+    <p>Xin chào <th:block th:text="${session.guest.getTenkhachhang()}"></th:block></p>
 </div>
-<div th:unless="${guest}!=null">
-    <a th:href="@{/Identity/Guest/Login}" th:object="${guest}">
+<div th:unless="${session.guest}!=null">
+    <a th:href="@{/Identity/Guest/Login}" th:object="${session.guest}">
         Login
     </a>
 </div>

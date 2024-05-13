@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    >
+</head>
+<body>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <h2>Chi tiết thông tin Khách <th:block th:text="${nv.getTennhanvien()}"></th:block> </h2>
+            <hr class="colorgraph" />
+            <div class="col-lg-4">
+                <h3>Ảnh đại diện</h3>
+                <div class="form-group" th:if="${nv.getAvatar()}!=null">
+
+                    <img th:alt="${nv.getTennhanvien()}" th:src="@{'/GuestAvatar/' + ${nv.getManhanvien()} + '/' + ${nv.getAvatar()}}" style="width: 200px; height: auto;" />
+
+                </div>
+
+                <div class="form-group" th:if="${nv.getAvatar()}==null">
+                    <span>Không có ảnh</span>
+                </div>
+
+
+                <div  class="form-group">
+
+                    <a th:href="@{/Identity/Admin/UploadAvatar}" class="btn btn-primary">
+                        Upload Avatar
+                    </a>
+                </div>
+
+
+            </div>
+
+            <dl class="col-lg-8">
+                <dt>
+                    Tên Nhân Viên
+                </dt>
+
+                <dd th:text="${nv.getTennhanvien()}">
+
+                </dd>
+
+
+
+                <dt>
+                    Email
+                </dt>
+
+                <dd th:text="${nv.getEmail()}">
+
+
+
+            </dl>
+        </div>
+        <div class="form-group">
+
+            <form th:action="@{/Identity/Admin/UpdateInformation/{tendangnhap}(tendangnhap = ${nv.getTendangnhap()})}" >
+                <button type="submit" style="color: white; background-color:darkblue;">Update Information</button>
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>

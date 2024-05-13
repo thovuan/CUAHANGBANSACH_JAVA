@@ -8,7 +8,7 @@
 
     >
 </head>
-<th:block th:include="/Shared/_Layout :: header"></th:block>
+<th:block th:include="/Shared/_Layout"></th:block>
 <body>
 <marquee style="color: blue;">本店へようこそ</marquee>
 <section id="content">
@@ -47,7 +47,7 @@
                             <th:block th:each="nxb : ${listNXB}">
                                 <li>
                                     <i class="fa fa-angle-right"></i>
-                                    <a th:href = "@{/SHOP/Index_TheoNXB/{MaNXB}(MaNXB=${nxb.manxb})}" th:text="${nxb.getTennxb()}"></a><span th:text="${'('+nxb.getCount()+')'}"></span>
+                                    <a th:href = "@{/SHOP/Index(MaNXB=${nxb.manxb})}" th:text="${nxb.getTennxb()}"></a><span th:text="${'('+nxb.getCount()+')'}"></span>
 
                                 </li>
                             </th:block>
@@ -143,5 +143,5 @@
     </div>
 </section>
 </body>
-<th:block th:include="/Shared/_Layout :: footer"></th:block>
+
 </html>
