@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Biểu Đồ</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    >
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        // Load the Visualization API and the corechart package.
+
+        google.charts.load('current', {packages: ['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+
+        google.charts.load("current", {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var chartData = /*[[${chartData}]]*/ {};
+            var dataTable = new google.visualization.DataTable();
+
+            // Add columns
+            dataTable.addColumn('string', chartData.columns[0]);
+            for (var i = 1; i < chartData.columns.length; i++) {
+                dataTable.addColumn('number', chartData.columns[i]);
+            }
+
+            // Add rows
+            dataTable.addRows(chartData.rows);
+
+            // Set options
+            var options = {
+                title: 'Company Performance',
+                hAxis: {title: 'Year', titleTextStyle: {color: '#333'}},
+                vAxis: {minValue: 0}
+
+
+            };
+
+            // Draw chart
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(dataTable, options);
+
+
+
+
+        }
+    </script>
+</head>
+<body>
+    <div id="chart_div" style="width: 900px; height: 300px;"></div>
+</body>
+</html>

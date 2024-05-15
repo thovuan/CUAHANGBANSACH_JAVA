@@ -8,6 +8,7 @@
     >
 </head>
 <body>
+<th:block th:include="/Shared/_StaffLayout"></th:block>
 <section id="content">
     <div class="container">
         <div class="row">
@@ -18,7 +19,7 @@
 
                 <div class="form-group">
                     <label for="tendangnhap">Tên Đăng Nhập</label>
-                    <input type="text" id="tendangnhap" class="form-control" th:field="*{tendangnhap}" th:placeholder="${'Tên Đăng Nhập'}">
+                    <input type="text" id="tendangnhap" class="form-control" th:width="50px" th:height="100px" th:field="*{tendangnhap}" th:placeholder="${'Tên Đăng Nhập'}" style="font-size: 16px; width: 100%; height: 40px;" required>
 
                 </div>
                 <div th:if="${param.tendangnhap}">
@@ -27,7 +28,7 @@
 
                 <div class="form-group">
                     <label for="password">Mật Khẩu</label>
-                    <input type="password" id="password" class="form-control" th:field="*{matkhau}" th:placeholder="${'Mật Khẩu'}">
+                    <input type="password" id="password" class="form-control" th:width="50px" th:height="100px" th:field="*{matkhau}" th:placeholder="${'Mật Khẩu'}" style="font-size: 16px; width: 100%; height: 40px;" required>
 
                 </div>
 
@@ -37,16 +38,14 @@
                         <input id="LoginForm" type="submit" value="Đăng Nhập" class="btn btn-primary btn-block" />
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <div class="col-xs-6 col-md-3">
-                            <a th:href="@{/Identity/Admin/ChangePassword}" class="btn" style="color: white; background-color: red">
-                                Change Password
-                            </a>
-                        </div>
-                        <div class="col-xs-6 col-md-3" style="margin-top: 10px" >
-                            <a th:href="@{/Identity/Admin/Register}" class="btn" style="color: white; background-color: darkblue">
-                                Register new Account
-                            </a>
-                        </div>
+                        <a th:href="@{/Identity/Admin/ChangePassword}" class="btn" style="color: white; background-color: red">
+                            Change Password
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-md-6" style="margin-top: 10px" >
+                        <a th:href="@{/Identity/Admin/Register}" class="btn" style="color: white; background-color: darkblue">
+                            Register new Account
+                        </a>
                     </div>
 
                 </div>

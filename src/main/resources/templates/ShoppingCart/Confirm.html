@@ -46,7 +46,7 @@
                         <div class="col-md-10">
                             <label for = "tenkhachhang" class="col-sm-4 col-form-label">Tên Khách</label>
                             <div class = "col-sm-8">
-                                <input type="text" class="form-control" id="tenkhachhang" name = "tenkhachhang" th:field="*{khach.tenkhachhang}">
+                                <input type="text" class="form-control" id="tenkhachhang" name = "tenkhachhang" th:field="*{khach.tenkhachhang}" style="font-size: 16px; width: 100%; height: 40px;" required>
                                 <p th:if = "${#fields.hasErrors('khach.tenkhachhang')}" th:errorclass="text-danger"
                                    th:errors="${pmh.getKhach().getTenkhachhang()}"></p>
                             </div>
@@ -58,7 +58,7 @@
                         <div class="col-md-10">
                             <label for = "diachi" class="col-sm-4 col-form-label">Địa Chỉ</label>
                             <div class = "col-sm-8">
-                                <input type="text" class="form-control" id="diachi" name = "diachi" th:field="*{khach.diachi}">
+                                <input type="text" class="form-control" id="diachi" name = "diachi" th:field="*{khach.diachi}" style="font-size: 16px; width: 100%; height: 40px;" required>
                                 <p th:if = "${#fields.hasErrors('khach.diachi')}" th:errorclass="text-danger"
                                    th:errors="${pmh.getKhach().getDiachi()}"></p>
                             </div>
@@ -70,7 +70,7 @@
                         <div class="col-md-10">
                             <label for = "sdt" class="col-sm-4 col-form-label">Số Điện Thoại</label>
                             <div class = "col-sm-8">
-                                <input type="text" class="form-control" id="sdt" name = "sdt" th:field="*{khach.sdt}">
+                                <input type="text" class="form-control" id="sdt" name = "sdt" th:field="*{khach.sdt}" style="font-size: 16px; width: 100%; height: 40px;" required>
                                 <p th:if = "${#fields.hasErrors('khach.sdt')}" th:errorclass="text-danger"
                                    th:errors="${pmh.getKhach().getSdt()}"></p>
                             </div>
@@ -82,7 +82,7 @@
                         <div class="col-md-10">
                             <label for = "email" class="col-sm-4 col-form-label">Email</label>
                             <div class = "col-sm-8">
-                                <input type="text" class="form-control" id="email" name = "email" th:field="*{khach.email}">
+                                <input type="text" class="form-control" id="email" name = "email" th:field="*{khach.email}" style="font-size: 16px; width: 100%; height: 40px;" required>
                                 <p th:if = "${#fields.hasErrors('khach.email')}" th:errorclass="text-danger"
                                    th:errors="${pmh.getKhach().getEmail()}"></p>
                             </div>
@@ -162,8 +162,21 @@
 
                 <hr class="colorgraph" />
                 <div class="form-horizontal">
+                    <label for ="promo">Chọn mã khuyến mãi</label>
+                    <select name="promo" id="promo" class="form-control" style="font-size: 16px; width: 100%; height: 40px;">
+                        <option value="0">--Promotion--</option>
+                        <option th:each="promos : ${promo}"
+                                th:value="${promos.getCode()}"
+                                th:text="${promos.getDescription()}"
+                                th:attr="data-discount=${promos.getDiscount()}">
+                        ></option>
+                    </select>
+                </div>
+
+                <hr class="colorgraph" />
+                <div class="form-horizontal">
                     <label for ="PTTT">Chọn phương thức thanh toán</label>
-                    <select name="PTTT" id="PTTT" th:field="*{tinhtrangthanhtoan}" class="form-control">
+                    <select name="PTTT" id="PTTT" th:field="*{tinhtrangthanhtoan}" class="form-control" style="font-size: 16px; width: 100%; height: 40px;" required>
                         <option value="0">--Chọn phương thức hanh toán--</option>
                         <option value="Thanh toán bằng tiền mặt">Thanh toán bằng tiền mặt</option>
                         <option value="Thanh toán bằng thẻ">Thanh toán bằng thẻ</option>
@@ -175,8 +188,28 @@
                 <div class="form-horizontal">
                     <h2>Tổng giá trị đơn hàng: </h2>
                     <h3 th:text="${pmh.getDHTotal()}"> VND</h3>
-                    <input type="hidden" th:field="${pmh.DHTotal}" readonly="readonly">
+                    <input id="DHTotal" type="hidden" th:field="${pmh.DHTotal}" readonly="readonly">
+
+                    <input id="discountPrice" type="hidden"  readonly="readonly">
+
+                    <input id="totalPrice" type="hidden"  readonly="readonly">
                 </div>
+
+                <script>
+                    function updatePrices() {
+                        var promoSelect = document.getElementById("promos");
+                        var selectedOption = promoSelect.options[promoSelect.selectedIndex];
+
+                        var discount = parseFloat(selectedOption.getAttribute("data-discount"));
+                        var originalPrice = parseFloat(document.getElementById("DHTotal").innerText);
+
+                        var discountAmount = originalPrice * (discount / 100);
+                        var discountedPrice = originalPrice - discountAmount;
+
+                        document.getElementById("discountPrice").innerText = "Discounted Price: " + discountedPrice.toFixed(2);
+                        document.getElementById("totalPrice").innerText = "Total Price: " + discountedPrice.toFixed(2);
+                    }
+                </script>
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">

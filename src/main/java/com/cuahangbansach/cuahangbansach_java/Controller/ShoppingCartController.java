@@ -21,6 +21,9 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @Autowired
+    private PromotionService promotionService;
+
+    @Autowired
     private QLKHACHService qlkhachService;
 
     @Autowired
@@ -189,19 +192,30 @@ public class ShoppingCartController {
     public String Confirm(Model model, @PathVariable String id) {
         PHIEUMUAHANG pmh = shoppingCartService.GetSCDetail(id);
         if (pmh == null) {return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thy";}
-
+        List<KHUYENMAI> promo = promotionService.GetSuggetedPromotion(pmh.getDHTotal());
         model.addAttribute("pmh", pmh);
+        model.addAttribute("promo", promo);
         return "ShoppingCart/Confirm";
     }
 
     @PostMapping("/ShoppingCart/Confirm")
-    public String CompleteOrder(Model model, @ModelAttribute("pmh")PHIEUMUAHANG pmh) {
+    public String CompleteOrder(Model model,@ModelAttribute("promo")KHUYENMAI promo, @ModelAttribute("pmh")PHIEUMUAHANG pmh) {
         PHIEUMUAHANG dh = shoppingCartService.GetSCDetail(pmh.getMaphieumuahang());
         if (dh == null) {return "redirect:/ShoppingCart/CreateDH";}
+
+        KHUYENMAI pro = new KHUYENMAI();
+        if (promo.getCode() != "0" ) {
+            pro = promotionService.getById(promo.getCode());
+            pro.setQuantity(pro.getQuantity()-1);
+
+            int temp = (int) dh.getDHTotal()*(1-pro.getDiscount()/100);
+            dh.setDHTotal(temp);
+        }
 
         //cap nhat trang thai don hang
         dh.setTinhtrangthanhtoan(pmh.getTinhtrangthanhtoan());
         dh.setTinhtrang("Xác Nhận");
+
 
         //cap nhat thong tin khach hang
         KHACH kyaku = qlkhachService.getKhachById(pmh.getKhach().getMakhachhang());
@@ -214,14 +228,7 @@ public class ShoppingCartController {
 
             qlkhachService.UpdateKhach(kyaku);
             shoppingCartService.Create(dh);
-
-            //tich diem
-            THE the = cardService.FindThe(pmh.getKhach().getMakhachhang());
-            if (the!=null) {
-                int temp = (int) pmh.getDHTotal() /100;
-                the.setDiemthe(the.getDiemthe()+temp);
-                cardService.UpdateCardPoint(the);
-            }
+            promotionService.Save(pro);
 
             for(SACH sach : dh.getDsSach()) {
                 if (sach == null) {return "redirect:/Error/ErrorMe?mess=" +"DSSACH rong";}
@@ -236,6 +243,16 @@ public class ShoppingCartController {
             }
 
             mailSenderService.sendCartConfirmMail(kyaku.getEmail(), "Xác nhận đơn hàng #"+dh.getMaphieumuahang(), dh, kyaku, "ShoppingCart/OrderCompleteMail" );
+
+
+
+            //tich diem
+            THE the = cardService.FindThe(pmh.getKhach().getMakhachhang());
+            if (the!=null) {
+                int temp = (int) pmh.getDHTotal() /100;
+                the.setDiemthe(the.getDiemthe()+temp);
+                cardService.UpdateCardPoint(the);
+            }
 
             httpSession.removeAttribute("donhang");
             return "redirect:/ShoppingCart/OrderComplete";

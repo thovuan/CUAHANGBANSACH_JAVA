@@ -31,7 +31,7 @@ public class PHIEUMUAHANG {
     private String tinhtrang;
 
     @JoinColumn(name="makhachhang", referencedColumnName = "makhachhang")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private KHACH khach;
 
     @Transient

@@ -30,7 +30,7 @@
 
                             <div id="text-10" class="widget_text">
                                 <div class="textwidget">
-                                    <th:block th:include="/Shared/_LoginPartial :: body"></th:block>
+                                    <th:block th:include="/Shared/_StaffIdentityPartial :: body"></th:block>
                                 </div>
                             </div>
                         </div>
@@ -153,10 +153,10 @@
                                     <ul id="primary-menu" class="menu">
                                         <li id="menu-item-53333"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-53333">
-                                            <a th:href="@{/Home/index}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                                            <a th:href="@{/NeoHome/index}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                                         <li id="menu-item-180878"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-ancestor current-menu-parent menu-item-has-children menu-item-180878">
-                                            <a th:href="@{/SHOP/Index}">Cửa Hàng</a>
+                                            <a th:href="@{/QLDONHANG/QLDONHANG/Index}">Quản Lý Đơn Hàng</a>
 
                                         </li>
                                         <li id="menu-item-55625"
@@ -177,41 +177,41 @@
 
                                             </ul>
                                         </li>
-                                        <li id="menu-item-69690" th:if="${session.guest!=null}"
+                                        <li id="menu-item-69690" th:if="${session.nv!=null}"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69690">
                                             <a href="#">Thông tin tài khoản</a>
                                             <ul class="sub-menu">
                                                 <li id="menu-item-69766"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-dmuc-nganh-hoc menu-item-has-children menu-item-69766">
-                                                    <a th:href="@{/Identity/Guest/GuestInformation}">Thông tin tài khoản</a>
+                                                    <a th:href="@{/Identity/Admin/StaffInformation}">Thông tin tài khoản</a>
 
                                                 </li>
                                                 <li id="menu-item-69768"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-dmuc-nganh-hoc menu-item-has-children menu-item-69768">
-                                                    <a th:href="@{/Identity/Guest/Logout}">Đăng Xuất</a>
+                                                    <a th:href="@{/Identity/Admin/Logout}">Đăng Xuất</a>
 
                                                 </li>
 
                                             </ul>
                                         </li>
-                                        <li id="menu-item-69691" th:if="${session.guest==null}"
+                                        <li id="menu-item-69691" th:if="${session.nv==null}"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69690">
                                             <a href="#">Đăng Nhập</a>
                                             <ul class="sub-menu">
                                                 <li id="menu-item-69767"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-dmuc-nganh-hoc menu-item-has-children menu-item-69766">
-                                                    <a th:href="@{/Identity/Guest/Login}">Đăng Nhập</a>
+                                                    <a th:href="@{/Identity/Admin/Login}">Đăng Nhập</a>
 
                                                 </li>
                                                 <li id="menu-item-69769"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-dmuc-nganh-hoc menu-item-has-children menu-item-69768">
-                                                    <a th:href="@{/Identity/Guest/ChangePassword}">Change Password</a>
+                                                    <a th:href="@{/Identity/Admin/ChangePassword}">Change Password</a>
 
                                                 </li>
 
                                                 <li id="menu-item-69770"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-dmuc-nganh-hoc menu-item-has-children menu-item-69768">
-                                                    <a th:href="@{/Identity/Guest/NewUser}">Đăng Ký Tài Khoản</a>
+                                                    <a th:href="@{/Identity/Admin/Register}">Đăng Ký Tài Khoản</a>
 
                                                 </li>
 
@@ -223,7 +223,7 @@
                                             <ul class="sub-menu">
                                                 <li id="menu-item-46310"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-46310">
-                                                    <a th:href="@{/Home/Index}">Giao Diện của Cửa Hàng</a></li>
+                                                    <a th:href="@{/Home/index}">Giao Diện của Cửa Hàng</a></li>
                                                 <li id="menu-item-69785"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-69785">
                                                     <a th:href="@{/Identity/Admin/Login}">Giao Diện của Nhân Viên</a>

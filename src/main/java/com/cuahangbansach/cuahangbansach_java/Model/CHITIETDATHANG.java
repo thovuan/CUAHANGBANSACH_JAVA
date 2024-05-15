@@ -19,12 +19,12 @@ public class CHITIETDATHANG {
 
     @Id
     @JoinColumn(name="maphieumuahang", referencedColumnName = "maphieumuahang")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PHIEUMUAHANG phieumuahang;
 
     @Id
     @JoinColumn(name="masach", referencedColumnName = "masach")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SACH sach;
 
     @Column(name = "soluongmua")
