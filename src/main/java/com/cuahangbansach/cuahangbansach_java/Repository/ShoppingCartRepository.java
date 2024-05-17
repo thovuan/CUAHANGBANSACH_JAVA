@@ -23,6 +23,9 @@ public interface ShoppingCartRepository extends JpaRepository<PHIEUMUAHANG, Stri
 
     @Query(value="select * from PHIEUMUAHANG where makhachhang = :id", nativeQuery = true)
     public List<PHIEUMUAHANG> GetPMHByGuestId(String id);
+
+    @Query(value="select pmh.* from PHIEUMUAHANG pmh inner join KHACH guest on pmh.makhachhang = guest.makhachhang where pmh.maphieumuahang = :id and guest.email = :email", nativeQuery = true)
+    public PHIEUMUAHANG TrackingCart(String id, String email);
 }
 
 

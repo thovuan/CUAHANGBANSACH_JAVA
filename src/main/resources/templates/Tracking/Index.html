@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    >
+    <link rel="stylesheet" th:href="@{/css/dtdd.css}">
+</head>
+<body>
+<th:block th:include="/Shared/_Layout"></th:block>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <form th:action="@{/Tracking/Index}" th:object="${phieumuahang}" method="post" class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <h1>TRACKING</h1>
+                <h2>Login</h2>
+                <hr class="colorgraph" />
+
+                <div class="form-group">
+                    <label for="maphieumuahang">Mã Đơn Hàng</label>
+                    <input type="text" id="maphieumuahang" class="form-control" th:width="50px" th:height="100px" th:field="*{maphieumuahang}" th:placeholder="${'Mã Phiếu Mua Hàng'}" style="font-size: 16px; width: 100%; height: 40px;" required>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" class="form-control" th:width="50px" th:height="100px" th:field="*{email}" th:placeholder="${'Email'}" style="font-size: 16px; width: 100%; height: 40px;" required>
+
+                </div>
+
+                <hr class="colorgraph" />
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <input id="LoginForm" type="submit" value="Tracking" class="btn btn-primary btn-block" />
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" th:if="${guest_no_cart}!=null">
+
+                <h2>Chi tiết thông tin Đơn Hàng </h2> <br><br>
+                <h3 th:text="${guest_no_cart.getMaphieumuahang()}"></h3>
+                <hr class="colorgraph" />
+
+
+                <dl class="col-lg-12">
+                    <dt>
+                        Mã Đơn Hàng
+                    </dt>
+
+                    <dd th:text="${guest_no_cart.getMaphieumuahang()}">
+
+                    </dd>
+
+                    <dt>
+                        Ngày Lập
+                    </dt>
+
+                    <dd th:text="${guest_no_cart.getNgaylap()}">
+
+                    </dd>
+
+                    <dt>
+                        Người Đặt Đơn Hàng
+                    </dt>
+
+                    <dd th:text="${guest_no_cart.getKhach().getTenkhachhang()}">
+
+                    </dd>
+
+
+                    <dt>
+                        Tình trạng đơn hàng
+                    </dt>
+
+                    <dd th:text="${guest_no_cart.getTinhtrang()}">
+
+                    </dd>
+
+                    <dt>
+                        Tình trạng thanh toán
+                    </dt>
+
+                    <dd th:text="${guest_no_cart.getTinhtrangthanhtoan()}">
+
+                    </dd>
+
+
+                </dl>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</section>
+</body>
+</html>

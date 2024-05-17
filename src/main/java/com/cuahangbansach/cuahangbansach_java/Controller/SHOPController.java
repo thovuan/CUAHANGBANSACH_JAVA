@@ -73,7 +73,7 @@ public class SHOPController {
         SACH hon = qlsachService.GetSachById(id);
         if (hon == null) return "Can't Find Book: " + id;
         model.addAttribute("SACH", hon);
-        return "SHOP/Detail";
+        return "/SHOP/Detail";
     }
 
     @GetMapping("/SHOP/Buy/{id}")

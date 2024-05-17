@@ -159,24 +159,51 @@
                                             <a th:href="@{/QLDONHANG/QLDONHANG/Index}">Quản Lý Đơn Hàng</a>
 
                                         </li>
-                                        <li id="menu-item-55625"
-                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-55625">
-                                            <a href="#">Về chúng tôi</a>
-                                            <ul class="sub-menu">
-                                                <li id="menu-item-69907"
-                                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-69907">
-                                                    <a th:href="@{/About/OurStory}">Câu chuyện về chúng tôi</a></li>
-                                                <li id="menu-item-69992"
-                                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-69992">
-                                                    <a th:href="@{/About/Blog}"><strong
-                                                            style="color:orange;">Blog</strong></a></li>
-                                                <li id="menu-item-179889"
-                                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-179889">
-                                                    <a th:href="@{/About/Contact}">Tương tác</a></li>
 
+                                        <li id="menu-item-53330"
+                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-53331">
+                                            <a href="#">Quản Lý Sách</a>
+                                            <ul class="sub-menu">
+                                                <li id="menu-item-46311"
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-46310">
+                                                    <a th:href="@{/QLSACH/Index}">Quản Lý Sách</a></li>
+                                                <li id="menu-item-69786"
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-69785">
+                                                    <a th:href="@{/QLTHELOAI/Index}">Quản Lý Thể Loại</a>
+
+                                                </li>
+
+                                                <li id="menu-item-69787"
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-69785">
+                                                    <a th:href="@{/QLNXB/Index}">Quản Lý NXB</a>
+
+                                                </li>
 
                                             </ul>
                                         </li>
+                                        <li id="menu-item-69966"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69965">
+                                            <a href="#">Quản Lý Tài Khoản</a>
+                                            <ul class="sub-menu">
+                                                <li id="menu-item-170765"
+                                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-170764">
+                                                    <a th:href="@{/QLTKKH/Index}">Quản Ly Tài Khoản Khách Hàng</a></li>
+                                                <li id="menu-item-29633"
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-29632">
+                                                    <a href="#">Quản Lý Tài Khoản Công Ty</a>
+                                                    <ul class="sub-menu">
+                                                        <li id="menu-item-29634"
+                                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                            <a th:href="@{/QLTKNV/Index}">Quản Ly Tài Khoản Nhân Viên</a>
+                                                        </li>
+                                                        <li id="menu-item-29635"
+                                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                            <a th:href="@{/QLTKCV/Index}">Quản Ly Chức Vụ</a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                        </li>
+
                                         <li id="menu-item-69690" th:if="${session.nv!=null}"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69690">
                                             <a href="#">Thông tin tài khoản</a>
@@ -232,22 +259,8 @@
 
                                             </ul>
                                         </li>
-                                        <li id="menu-item-69965"
-                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69965">
-                                            <a href="#">Giỏ Hàng</a>
-                                            <ul class="sub-menu">
-                                                <li id="menu-item-170764"
-                                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-170764">
-                                                    <a th:href="@{/ShoppingCart/MyCart}">Giỏ Hàng</a></li>
-                                                <li id="menu-item-29632"
-                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
-                                                    <a th:href="@{/ShoppingCart/Index}">Lich sử mua hàng</a></li>
 
-                                            </ul>
-                                        </li>
-                                        <li id="menu-item-285695"
-                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-285695">
-                                            <a th:href="@{/Tracking/Index}">Tracking</a></li>
+
                                         <li id="menu-item-105320"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-105320">
                                             <a th:href="@{/Version/Index}">Thông tin phiên bản</a></li>

@@ -77,6 +77,10 @@ public class ShoppingCartService {
         return scRepository.GetId(DHId, HonId);
     }
 
+    public PHIEUMUAHANG TrackingCart(String id, String email) {
+        return shoppingCartRepository.TrackingCart(id, email);
+    }
+
     public PHIEUMUAHANG Create(PHIEUMUAHANG phieumuahang) {
 
         return shoppingCartRepository.save(phieumuahang);

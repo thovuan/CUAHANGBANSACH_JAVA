@@ -8,8 +8,9 @@
 
     >
 </head>
-<th:block th:include="/Shared/_Layout"></th:block>
+
 <body>
+<th:block th:include="/Shared/_Layout"></th:block>
 <marquee style="color: blue;">本店へようこそ</marquee>
 <section id="content">
 
@@ -74,12 +75,21 @@
                 <div class="row2" th:each="hon : ${list}">
 
                     <div class="col-4">
-                        <img th:src="${hon.anhsanpham}" alt="" />
+                        <div class="form-group" th:if="${hon.anhsanpham}!=null">
+                            <img th:src="@{'/ANHSANPHAM/' + ${hon.getMasach()} + '/' + ${hon.getAnhsanpham()}}" style="width: 260px; height: auto;" />
+
+                        </div>
+
+                        <div class="form-group" th:unless="${hon.anhsanpham}!=null">
+                            <span>Không có ảnh</span>
+
+                        </div>
                         <p th:text="${hon.masach}"></p>
                         <h4 th:text="${hon.tensach}"></h4>
                         <h5 th:text="${hon.dongia}"></h5>
                         <h6 th:text="${hon.soluonghienco}"></h6>
-                        <!--<button onclick="Lay_Thongtin(${hon.masach})" data-toggle="modal" data-target=".bs-modal-lg_1">Chi tiết</button>-->
+
+                        <button th:onclick="Lay_Thongtin(${hon.getMasach()})" data-toggle="modal" data-target=".bs-modal-lg_1">Chi tiết</button>
                         <form th:action="@{/SHOP/Detail/{id}(id = ${hon.masach})}" th:object="${hon}">
                             <button type="submit" style="color: white; background-color:darkblue;">Details</button>
                         </form>
@@ -113,14 +123,15 @@
                 </div>
             </div>
 
-            @section scripts{
+
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             <script>
                 function Lay_Thongtin(MaSach) {
                     //creating an XHLHttpRequest
                     var xhr = new XMLHttpRequest();
                     //define a callback function
-                    var url = '@Url.Action("Detail", "SHOP")';
-                    url += '?MaSach=' + MaSach;
+                    var url = '/SHOP/Detail/' + MaSach;
                     xhr.open("GET", url, true);
                     //onload property
                     xhr.onreadystatechange = function () {
@@ -136,7 +147,7 @@
 
 
             </script>
-            }
+
 
 
         </div>

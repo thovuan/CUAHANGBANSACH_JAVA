@@ -6,15 +6,15 @@
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     >
+    <link rel="stylesheet" th:href="@{/css/dtdd.css}">
 </head>
 <body>
 <th:block th:include="/Shared/_StaffLayout"></th:block>
 <section id="content">
     <div class="container">
         <div class="row">
-            <h2>Chi tiết thông tin Khách <th:block th:text="${nv.getTennhanvien()}"></th:block> </h2>
-            <hr class="colorgraph" />
-            <div class="col-lg-4">
+
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <h3>Ảnh đại diện</h3>
                 <div class="form-group" th:if="${nv.getAvatar()}!=null">
 
@@ -37,7 +37,10 @@
 
             </div>
 
-            <dl class="col-lg-8">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <h2>Chi tiết thông tin Khách <th:block th:text="${nv.getTennhanvien()}"></th:block> </h2>
+                <hr class="colorgraph" />
+
                 <dt>
                     Tên Nhân Viên
                 </dt>
@@ -56,7 +59,7 @@
 
 
 
-            </dl>
+            </div>
         </div>
         <div class="form-group">
 
