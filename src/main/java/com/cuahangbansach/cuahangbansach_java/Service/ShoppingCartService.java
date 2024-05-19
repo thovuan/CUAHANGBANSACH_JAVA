@@ -10,7 +10,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
@@ -74,6 +73,7 @@ public class ShoppingCartService {
     }
 
     public CHITIETDATHANG GetCHHById(String DHId, String HonId) {
+        //return scRepository.GetId(new CHITIETDATHANGKey(DHId, HonId)).orElse(null);
         return scRepository.GetId(DHId, HonId);
     }
 
@@ -99,11 +99,15 @@ public class ShoppingCartService {
     public void UpdateCTDH(CHITIETDATHANG chitietdathang) {
 
         entityManager.merge(chitietdathang);
-        scRepository.save(chitietdathang);
+        //scRepository.save(chitietdathang);
     }
 
     public void Delete(PHIEUMUAHANG phieumuahang) {
         shoppingCartRepository.delete(phieumuahang);
+    }
+
+    public void DeleteBook(CHITIETDATHANG chitietdathang) {
+        scRepository.delete(chitietdathang);
     }
 
     //public boolean

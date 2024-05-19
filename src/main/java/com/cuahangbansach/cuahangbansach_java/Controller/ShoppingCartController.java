@@ -125,16 +125,16 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/ShoppingCart/EditSLBook/{id}")
-    public String EditSLBook(Model model, @PathVariable String id) {
+    public String EditSLBook(Model model, @RequestParam(name = "soluongmua", required = false)CHITIETDATHANG soluongmua, @PathVariable String id) {
         PHIEUMUAHANG pmh = (PHIEUMUAHANG) httpSession.getAttribute("donhang");
         CHITIETDATHANG ctdh = shoppingCartService.GetCHHById(pmh.getMaphieumuahang(), id);
         if (ctdh!=null) {
-            CHITIETDATHANG ct = new CHITIETDATHANG();
-            ct.setPhieumuahang(ctdh.getPhieumuahang());
-            ct.setSach(ctdh.getSach());
-            ct.setSoluongmua(ctdh.getSoluongmua());
-            ct.setTinhtranggiao(ctdh.getTinhtranggiao());
-            model.addAttribute("SACH", ct);
+//            CHITIETDATHANG ct = new CHITIETDATHANG();
+//            ct.setPhieumuahang(ctdh.getPhieumuahang());
+//            ct.setSach(ctdh.getSach());
+//            ct.setSoluongmua(ctdh.getSoluongmua());
+//            ct.setTinhtranggiao(ctdh.getTinhtranggiao());
+            model.addAttribute("SACH", ctdh);
             return "/ShoppingCart/EditSL";
         }
         return "redirect:/Error/ErrorMe?mess=" + "Error";
@@ -159,7 +159,7 @@ public class ShoppingCartController {
         }
 
         //tien hanh them sach vao
-        CHITIETDATHANG ct = shoppingCartService.GetCHHById(sach.getPhieumuahang().getMaphieumuahang(), sach.getSach().getMasach());
+        CHITIETDATHANG ct = shoppingCartService.GetCHHById(pmh.getMaphieumuahang(), sach.getSach().getMasach());
         //ct.setPhieumuahang(shoppingCartService.GetPMHById(pmh.getMaphieumuahang()));
         //ct.setSach(hon);
         ct.setSoluongmua(sach.getSoluongmua());
@@ -169,9 +169,11 @@ public class ShoppingCartController {
         try {
             shoppingCartService.UpdateCTDH(ct);
             //return "redirect:/SHOP/Index";
-            return "redirect:/ShoppingCart/Index";
+            return "redirect:/ShoppingCart/MyCart";
 
         } catch (Exception ex) {
+//            return "redirect:/Error/ErrorMe?mess=" + ct.getPhieumuahang().getMaphieumuahang() + '\n' + ct.getSach().getMasach()
+//            + '\n' + ct.getSoluongmua() + '\n' +ct.toString();
             return "redirect:/Error/ErrorMe?mess=" + ex.getMessage();
         }
     }
@@ -265,6 +267,29 @@ public class ShoppingCartController {
     @GetMapping("/ShoppingCart/OrderComplete")
     public String OrderComplete(Model model) {
         return "ShoppingCart/OrderComplete";
+    }
+
+    @GetMapping("/ShoppingCart/DeleteBook/{id}")
+    public String DeleteBook(@PathVariable String id, Model model) {
+        PHIEUMUAHANG dh = (PHIEUMUAHANG) httpSession.getAttribute("donhang");
+        //SACH hon = qlsachService.GetSachById(id);
+        if (dh != null) {
+            CHITIETDATHANG ct = shoppingCartService.GetCHHById(dh.getMaphieumuahang(), id);
+            try {
+                shoppingCartService.DeleteBook(ct);
+                return "redirect:/ShoppingCart/MyCart";
+            } catch (Exception ex) {
+                return "redirect:/Error/ErrorMe?mess=" + ex.getMessage();
+            }
+
+        } else {
+            //dh = shoppingCartService.GetDH(kyaku.getMakhachhang());
+
+            return "redirect:/Error/ErrorMe?mess=" + "Not found";
+        }
+
+
+
     }
 
 }

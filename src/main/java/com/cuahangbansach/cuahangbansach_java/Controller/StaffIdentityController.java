@@ -4,12 +4,17 @@ import com.cuahangbansach.cuahangbansach_java.Exception.UserPassExistedException
 import com.cuahangbansach.cuahangbansach_java.Exception.UserPassNotFoundException;
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
 import com.cuahangbansach.cuahangbansach_java.Model.NHANVIEN;
+//import com.cuahangbansach.cuahangbansach_java.Service.CustomStaffDetailsService;
+import com.cuahangbansach.cuahangbansach_java.Service.CustomStaffDetailsService;
 import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentitySendMailService;
 import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentityService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -30,6 +35,10 @@ import java.util.Objects;
 public class StaffIdentityController {
     @Autowired
     private StaffIdentityService staffIdentityService;
+    @Autowired
+    public CustomStaffDetailsService userDetailsService;
+//    @Autowired
+//    private CustomStaffDetailsService customStaffDetailsService;
 
     @Autowired
     private StaffIdentitySendMailService staffIdentitySendMailService;
@@ -42,18 +51,30 @@ public class StaffIdentityController {
         model.addAttribute("staff", new NHANVIEN());
         return "/Identity/Admin/Login";
     }
-
+//
     @PostMapping("/Identity/Admin/Login")
-    public String Login(@RequestBody @Valid @ModelAttribute("staff") NHANVIEN nhanvien, Model model) {
-        NHANVIEN nv = staffIdentityService.FindByUserName(nhanvien.getTendangnhap());
-        if (nv != null) {
-            if (Objects.equals(nv.getMatkhau(), nhanvien.getMatkhau())) {
-                httpSession.setAttribute("nv", nv);
-                return "redirect:/NeoHome/Index";
-            }
-            else throw new UserPassNotFoundException("User or Password isn't correct");
-        }
-        else throw new UserPassNotFoundException("User or Password isn't correct");
+    public void Login(@RequestBody @Valid @ModelAttribute("staff") NHANVIEN nhanvien, Model model) {
+
+//        // Xác thực người dùng với thông tin tên người dùng và mật khẩu được lấy từ form đăng nhập
+//        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+//        Authentication authenticated = authenticationManager.authenticate(authentication);
+//
+//        // Nếu xác thực thành công, lưu thông tin người dùng vào SecurityContextHolder
+//        SecurityContextHolder.getContext().setAuthentication(authenticated);
+        //return "redirect:/NeoHome/Index";
+        //customStaffDetailsService.loadUserByUsername(nhanvien.getTendangnhap());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        userDetailsService.loadUserByUsername(username); // Truyền thông tin người dùng vào service
+//        NHANVIEN nv = staffIdentityService.FindByUserName(nhanvien.getTendangnhap());
+//        if (nv != null) {
+//            if (Objects.equals(nv.getMatkhau(), nhanvien.getMatkhau())) {
+//                httpSession.setAttribute("nv", nv);
+//                return "redirect:/NeoHome/Index";
+//            }
+//            else throw new UserPassNotFoundException("User or Password isn't correct");
+//        }
+//        else throw new UserPassNotFoundException("User or Password isn't correct");
     }
 
     @GetMapping("/Identity/Admin/Register")

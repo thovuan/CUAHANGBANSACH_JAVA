@@ -80,16 +80,20 @@
 
                         </td>
                         <td th:text="${sach.getTensach()}">
-                            @Html.DisplayFor(modelItem => item.tensach)
+
                         </td>
 
                         <td th:text="${sach.getDacdiem()}">
-                            @Html.DisplayFor(modelItem => item.dacdiem)
+
                         </td>
                         <td >
                             <img alt="" th:src="${sach.getAnhsanpham()}" style="width: 50px" />
                         </td>
-                        <td th:text="${sach.getSoluongmua()}"></td>
+
+                        <td th:text="${sach.getSoluongmua()}">
+
+
+                        </td>
                         <td th:text="${sach.getDongia()}">
                             VND
                         </td>
@@ -105,7 +109,7 @@
                                 Details
                             </a>
 
-                            <a th:href="@{/ShoppingCart/Delete/{id}(id = ${sach.getMasach()})}" class="btn" style="color: white; background-color:grey;" th:object="${sach}">
+                            <a th:href="@{/ShoppingCart/DeleteBook/{id}(id = ${sach.getMasach()})}" class="btn" style="color: white; background-color:grey;" th:object="${sach}">
                                 Delete
                             </a>
 
