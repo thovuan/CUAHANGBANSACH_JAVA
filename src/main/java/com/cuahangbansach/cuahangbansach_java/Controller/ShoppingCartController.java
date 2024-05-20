@@ -84,7 +84,27 @@ public class ShoppingCartController {
 
     @GetMapping("/ShoppingCart/Create")
     public String Create (Model model) {
+        KHACH kyaku = (KHACH) httpSession.getAttribute("guest");
         PHIEUMUAHANG dh = (PHIEUMUAHANG) httpSession.getAttribute("donhang");
+
+        if (kyaku==null) {
+            LocalDateTime dt = LocalDateTime.now();
+            KHACH khach = new KHACH();
+            khach.setMakhachhang("KH" + dt.getYear() + dt.getMonthValue() + dt.getDayOfMonth() + dt.getHour() + dt.getMinute() + dt.getSecond());
+            khach.setTenkhachhang("Guest" + dt.getYear() + dt.getMonthValue() + dt.getDayOfMonth() + dt.getHour() + dt.getMinute() + dt.getSecond());
+            khach.setSdt("0123456789");
+            khach.setDiachi("Unk");
+
+            try {
+                qlkhachService.UpdateKhach(khach);
+                httpSession.setAttribute("guest", khach);
+                kyaku = khach;
+
+            } catch(Exception ex) {
+                return "redirect:/Error/ErrorMe?mess=" + "Không the tạo đơn hàng";
+            }
+        }
+
         if (dh != null) return "redirect:/Error/ErrorMe?mess=" + "Không the tạo đơn hàng";
         LocalDateTime dt = LocalDateTime.now();
         PHIEUMUAHANG pmh = new PHIEUMUAHANG();
@@ -92,7 +112,7 @@ public class ShoppingCartController {
         pmh.setNgaylap(dt);
         pmh.setTinhtrangthanhtoan("Chưa thanh toán");
         pmh.setTinhtrang("Chưa xác nhận");
-        pmh.setKhach(qlkhachService.getKhachById("KH01"));
+        pmh.setKhach(qlkhachService.getKhachById(kyaku.getMakhachhang()));
         try {
             shoppingCartService.Create(pmh);
             httpSession.setAttribute("donhang", pmh);
@@ -106,13 +126,14 @@ public class ShoppingCartController {
 
     @GetMapping("/ShoppingCart/CreateDH")
     public String CreateDH (Model model) {
+        KHACH kyaku = (KHACH) httpSession.getAttribute("guest");
         LocalDateTime dt = LocalDateTime.now();
         PHIEUMUAHANG pmh = new PHIEUMUAHANG();
         pmh.setMaphieumuahang("DH" + dt.getYear() + dt.getMonthValue() + dt.getDayOfMonth() + dt.getHour() + dt.getMinute() + dt.getSecond());
         pmh.setNgaylap(dt);
         pmh.setTinhtrangthanhtoan("Chưa thanh toán");
         pmh.setTinhtrang("Chưa xác nhận");
-        pmh.setKhach(qlkhachService.getKhachById("KH01"));
+        pmh.setKhach(qlkhachService.getKhachById(kyaku.getMakhachhang()));
         try {
             shoppingCartService.Create(pmh);
             httpSession.setAttribute("donhang", pmh);

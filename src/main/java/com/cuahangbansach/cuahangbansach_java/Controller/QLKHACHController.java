@@ -1,7 +1,10 @@
 package com.cuahangbansach.cuahangbansach_java.Controller;
 import java.util.List;
 
+import com.cuahangbansach.cuahangbansach_java.Model.NHANVIEN;
 import com.cuahangbansach.cuahangbansach_java.Service.QLKHACHService;
+import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentityService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import com.cuahangbansach.cuahangbansach_java.Repository.QLKHACHRepository;
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
@@ -19,8 +22,24 @@ public class QLKHACHController {
 
     @Autowired private QLKHACHService qlkhachService;
 
+    @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
+    private StaffIdentityService staffIdentityService;
+
+    private Boolean CheckPermit() {
+        NHANVIEN nv = (NHANVIEN) httpSession.getAttribute("nv");
+        if (nv != null) return staffIdentityService.CheckPermit(nv.getManhanvien(), "CV01");
+        return false;
+    }
+
     @GetMapping("/QLKHACH/Index")
     public String index(Model model, @RequestParam(name = "guestname", required = false) String guestname) {
+
+        if (!CheckPermit())
+            return "redirect:/Error/ErrorMe?mess=" + "Permission denied";
+
         List<KHACH> list;
         if (guestname != null) {
             list = qlkhachService.GetByName(guestname);
@@ -34,6 +53,10 @@ public class QLKHACHController {
     }
     @GetMapping("/QLKHACH/Detail/{id}")
     public String Detail(Model model, @PathVariable("id") String id) {
+
+        if (!CheckPermit())
+            return "redirect:/Error/ErrorMe?mess=" + "Permission denied";
+
         KHACH khach = qlkhachService.getKhachById(id);
         if (khach != null) {
             model.addAttribute("TTKHACH", khach);

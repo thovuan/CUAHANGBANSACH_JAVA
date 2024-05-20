@@ -1,9 +1,12 @@
 package com.cuahangbansach.cuahangbansach_java.Controller;
 
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
+import com.cuahangbansach.cuahangbansach_java.Model.NHANVIEN;
 import com.cuahangbansach.cuahangbansach_java.Model.PHIEUMUAHANG;
 import com.cuahangbansach.cuahangbansach_java.Service.EmailSenderService;
 import com.cuahangbansach.cuahangbansach_java.Service.ShoppingCartService;
+import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentityService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +22,22 @@ public class QLDONHANGController {
     @Autowired
     private EmailSenderService mailSenderService;
 
+    @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
+    private StaffIdentityService staffIdentityService;
+
+    private Boolean CheckPermit() {
+        NHANVIEN nv = (NHANVIEN) httpSession.getAttribute("nv");
+        if (nv != null) return staffIdentityService.CheckPermit(nv.getManhanvien(), "CV03");
+        return false;
+    }
+
     @GetMapping("/QLDONHANG/QLDONHANG/Index")
     public String Index(Model model, @RequestParam(name = "dhid", required = false)String pmh) {
+        if (!CheckPermit())
+            return "redirect:/Error/ErrorMe?mess=" + "Permission denied";
 
         List<PHIEUMUAHANG> list;
         if (pmh != null) {
@@ -38,6 +55,9 @@ public class QLDONHANGController {
 
     @GetMapping("/QLDONHANG/QLDONHANG/Detail/{id}")
     public String Detail(Model model, @PathVariable String id) {
+        if (!CheckPermit())
+            return "redirect:/Error/ErrorMe?mess=" + "Permission denied";
+
         PHIEUMUAHANG pmh = shoppingCartService.GetSCDetail(id);
         if (pmh == null) {return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thy";}
 
@@ -56,6 +76,9 @@ public class QLDONHANGController {
 
     @PostMapping("/QLDONHANG/QLDONHANG/Confirm/{id}")
     public String Confirm(Model model, @PathVariable String id){
+        if (!CheckPermit())
+            return "redirect:/Error/ErrorMe?mess=" + "Permission denied";
+
         PHIEUMUAHANG pmh = shoppingCartService.GetPMHById(id);
         if (pmh == null) return "Loi";
 

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,6 +42,6 @@ public class NHANVIEN {
     @Transient
     private String retypedpass;
 
-    @OneToMany(mappedBy = "manhanvien", fetch = FetchType.EAGER)
-    private Set<CHITIETCHUCVU> chucVuDetails = new HashSet<>();
+    @OneToMany(mappedBy = "manhanvien", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<CHITIETCHUCVU> chucVuDetails;
 }

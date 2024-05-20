@@ -6,19 +6,28 @@
 </head>
 <body>
 <th:block th:include="/Shared/_Layout"></th:block>
-<h1>Đặt hàng thành công
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Đặt hàng thành công
 
-</h1>
-<p>
-    Vui lòng check mail để biết thông tin chi tiết đơn hàng
-    <br>
-    Arigathank
-    <br>
+                </h1>
+                <p>
+                    Vui lòng check mail để biết thông tin chi tiết đơn hàng
+                    <br>
+                    Arigathank
+                    <br>
 
-</p>
+                </p>
 
-<form th:action="@{/SHOP/Index}">
-    <button type="submit" style="color: white; background-color:grey;">Return Shop</button>
-</form>
+                <form th:action="@{/SHOP/Index}">
+                    <button type="submit" style="color: white; background-color:grey;">Return Shop</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>

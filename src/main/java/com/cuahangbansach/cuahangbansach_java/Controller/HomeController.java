@@ -36,7 +36,7 @@ public class HomeController {
         } else {
             PHIEUMUAHANG dh = shoppingCartService.GetDH(kyaku.getMakhachhang());
             httpSession.setAttribute("donhang", dh);
-            model.addAttribute("guest", kyaku);
+            //model.addAttribute("guest", kyaku);
         }
 
         List<THELOAISACH> tl = qltheloaiService.GetAll();

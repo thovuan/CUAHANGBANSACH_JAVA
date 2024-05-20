@@ -66,4 +66,13 @@ public class StaffIdentityService {
     public void Update(NHANVIEN nhanvien) {
         staffIdentityRepository.save(nhanvien);
     }
+
+    public boolean CheckPermit(String idnv, String idcv) {
+        NHANVIEN nhanvien = staffIdentityRepository.getReferenceById(idnv);
+        for (CHITIETCHUCVU ctcv : nhanvien.getChucVuDetails()) {
+            //if (staffIdentityRepository.checkPermit(idnv, ctcv.getManhanvien().getManhanvien())!=null) return true;
+            if (ctcv.getMachucvu().getMachucvu().equals("CV01") || ctcv.getMachucvu().getMachucvu().equals(idcv)) return true;
+        }
+        return false;
+    }
 }

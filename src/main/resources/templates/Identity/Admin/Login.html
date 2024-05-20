@@ -16,6 +16,11 @@
             <form th:action="@{/Identity/Admin/Login}" th:object="${staff}" method="post" class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <h1>DÀNH RIÊNG CHO ADMIN VÀ NHÂN VIEN</h1>
                 <h2>Login</h2>
+
+                <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                    <span th:text="${errorMessage}"></span>
+                </div>
+
                 <hr class="colorgraph" />
 
                 <div class="form-group">
@@ -23,9 +28,7 @@
                     <input type="text" id="tendangnhap" class="form-control" th:width="50px" th:height="100px" th:field="*{tendangnhap}" th:placeholder="${'Tên Đăng Nhập'}" style="font-size: 16px; width: 100%; height: 40px;" required>
 
                 </div>
-                <div th:if="${param.tendangnhap}">
-                    <div class="alert alert-info">Wrong Username or Password</div>
-                </div>
+
 
                 <div class="form-group">
                     <label for="password">Mật Khẩu</label>

@@ -92,7 +92,8 @@ public class SHOPController {
         //tao them don hang
         if (pmh==null) {
             //return "redirect:/ShoppingCart/CreateDH";
-            return "redirect:/ShoppingCart/CreateDH";
+            //return "redirect:/ShoppingCart/Create";
+            return "redirect:/Error/ErrorMe?mess=" + "Khong thay don hang";
         }
 
         //tim kiem sach trong chi tiet don hang de cong don so luong

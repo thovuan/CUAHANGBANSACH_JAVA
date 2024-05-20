@@ -13,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,6 +50,11 @@ public class GuestIdentityController {
 
     @PostMapping("/Identity/Guest/Login")
     public String Login(Model model,@RequestBody @Valid @ModelAttribute("user") KHACH khach) {
+
+//        if (bindingResult.hasErrors()) {
+//            return "/Identity/Guest/Login";
+//        }
+
         KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
         if (guest != null) {
             if(Objects.equals(guest.getMatkhau(), khach.getMatkhau())) {
@@ -56,9 +63,19 @@ public class GuestIdentityController {
 
                 return "redirect:/Home/index";
             }
-            else throw new RuntimeException("Tai khoan hoac mat khau khong dung");
+            //else throw new RuntimeException("Tai khoan hoac mat khau khong dung");
+            else {
+                model.addAttribute("errorMessage", "Tai khoan hoac mat khau khong dung");
+                return "/Identity/Guest/Login";
+            }
+
         }
-        else throw new RuntimeException("Tai khoan hoac mat khau khong dung");
+        //else throw new RuntimeException("Tai khoan hoac mat khau khong dung");
+        else {
+            model.addAttribute("errorMessage", "Tai khoan hoac mat khau khong dung");
+            return "/Identity/Guest/Login";
+        }
+
         //return "redirect:/Home/Index";
     }
 
@@ -69,7 +86,12 @@ public class GuestIdentityController {
     }
 
     @PostMapping("/Identity/Guest/ChangePassword")
-    public String ChangePassword(Model model,@RequestBody @Valid @ModelAttribute("user") KHACH khach) {
+    public String ChangePassword(Model model,@RequestBody @Valid @ModelAttribute("user") KHACH khach, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "/Identity/Guest/ChangePassword";
+        }
+
         KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
         if (guest != null) {
             if (Objects.equals(khach.getMatkhau(), khach.getRetypedpass())) {
@@ -79,13 +101,22 @@ public class GuestIdentityController {
                     guestIdentitySendMailService.Register_ChangePassComplete(guest.getEmail(), "Thông báo đã đổi mật khẩu thành công", guest, "Identity/Guest/ChangePasswordComplete");
                     return "redirect:/Home/index";
                 } catch (Exception ex) {
+                    model.addAttribute("errorMessage", "Error: " + ex.getMessage());
                     return "/Identity/Guest/ChangePassword";
                 }
             }
-            else throw new RuntimeException("Mat khau nhap lai khong dung");
-        }
-        else throw new RuntimeException("Tai khoan khong trung khop");
+            //else throw new RuntimeException("Mat khau nhap lai khong dung");
+            else {
+                model.addAttribute("errorMessage", "Mật Khẩu Nhap Lại Không đúng");
+                return "/Identity/Guest/ChangePassword";
+            }
 
+        }
+        //else throw new RuntimeException("Tai khoan khong trung khop");
+        else {
+            model.addAttribute("errorMessage", "Không tìm thấy User");
+            return "/Identity/Guest/ChangePassword";
+        }
     }
 
     @GetMapping("/Identity/Guest/NewUser")
@@ -94,7 +125,12 @@ public class GuestIdentityController {
         return "/Identity/Guest/NewUser";
     }
     @PostMapping("/Identity/Guest/Register")
-    public String Register (Model model,@RequestBody @Valid @ModelAttribute("user") KHACH khach, @RequestParam("image") MultipartFile multipartFile) {
+    public String Register (Model model,@RequestBody @Valid @ModelAttribute("user") KHACH khach, @RequestParam("image") MultipartFile multipartFile, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "forward:/Identity/Guest/NewUser";
+        }
+
         //tim kiem ten tai khoan
         KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
         if (guest == null) {
@@ -128,15 +164,19 @@ public class GuestIdentityController {
 
 
                 } catch (IOException _) {
-                    return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thấy";
+                    model.addAttribute("errorMessage", "Lỗi thêm ảnh đại diện");
+                    return "/Identity/Guest/NewUser";
                 }
                 guestIdentitySendMailService.Register_ChangePassComplete(khach.getEmail(), "Register Complete", khach, "Identity/Guest/RegisterComplete");
                 return "redirect:/Home/index";
             } catch (Exception ex) {
+                model.addAttribute("errorMessage", "Lỗi thêm người dùng \n" + ex.toString());
                 return "/Identity/Guest/NewUser";
             }
         }
-        else throw new RuntimeException("Tai khoan hoac mat khau ton tai");
+        model.addAttribute("errorMessage", "Tai khoan hoac mat khau ton tai");
+        return "/Identity/Guest/NewUser";
+        //else throw new RuntimeException("Tai khoan hoac mat khau ton tai");
 
     }
 
@@ -171,7 +211,11 @@ public class GuestIdentityController {
     }
 
     @PostMapping("/Identity/Guest/UpdateInformation")
-    public String UpdateInformation(Model model,@RequestBody @Valid @ModelAttribute("user")  KHACH khach, @RequestParam(name = "image", required = false) MultipartFile multipartFile) {
+    public String UpdateInformation(Model model,@RequestBody @Valid @ModelAttribute("user")  KHACH khach, @RequestParam(name = "image", required = false) MultipartFile multipartFile, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "forward:/Identity/Guest/UpdateInformation";
+        }
+
         KHACH guest = guestIdentityService.FindByGuest(khach.getTendangnhap());
         if (guest != null) {
             guest.setTenkhachhang(khach.getTenkhachhang());
@@ -201,15 +245,20 @@ public class GuestIdentityController {
 
 
                 } catch (IOException _) {
-                    return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thấy";
+                    //return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thấy";
+                    model.addAttribute("errorMessage", "Lỗi thêm ảnh đại diện");
+                    return "/Identity/Guest/UpdateInformation";
                 }
 
                 guestIdentitySendMailService.Register_ChangePassComplete(guest.getEmail(), "Update Information Complete", khach, "Identity/Guest/ChangeInformationComplete");
                 return "redirect:/Identity/Guest/GuestInformation";
             } catch (Exception ex) {
+                model.addAttribute("errorMessage", "Lỗi cập nhật thông tin người dùng \n" + ex.toString());
                 return "/Identity/Guest/UpdateInformation";
             }
-        } else throw new UserPassExistedException("Account not Found!!!");
+        } //else throw new UserPassExistedException("Account not Found!!!");
+        model.addAttribute("errorMessage", "Tai khoan hoac mat khau không tìm thấy");
+        return "/Identity/Guest/UpdateInformation";
     }
 
 }

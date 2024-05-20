@@ -4,8 +4,7 @@ import com.cuahangbansach.cuahangbansach_java.Exception.UserPassExistedException
 import com.cuahangbansach.cuahangbansach_java.Exception.UserPassNotFoundException;
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
 import com.cuahangbansach.cuahangbansach_java.Model.NHANVIEN;
-//import com.cuahangbansach.cuahangbansach_java.Service.CustomStaffDetailsService;
-import com.cuahangbansach.cuahangbansach_java.Service.CustomStaffDetailsService;
+
 import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentitySendMailService;
 import com.cuahangbansach.cuahangbansach_java.Service.StaffIdentityService;
 import jakarta.servlet.http.HttpSession;
@@ -13,11 +12,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,8 +33,7 @@ import java.util.Objects;
 public class StaffIdentityController {
     @Autowired
     private StaffIdentityService staffIdentityService;
-    @Autowired
-    public CustomStaffDetailsService userDetailsService;
+
 //    @Autowired
 //    private CustomStaffDetailsService customStaffDetailsService;
 
@@ -46,6 +43,8 @@ public class StaffIdentityController {
     @Autowired
     private HttpSession httpSession;
 
+
+
     @GetMapping("/Identity/Admin/Login")
     public String LoginForm(Model model) {
         model.addAttribute("staff", new NHANVIEN());
@@ -53,28 +52,21 @@ public class StaffIdentityController {
     }
 //
     @PostMapping("/Identity/Admin/Login")
-    public void Login(@RequestBody @Valid @ModelAttribute("staff") NHANVIEN nhanvien, Model model) {
+    public String Login(@RequestBody @Valid @ModelAttribute("staff") NHANVIEN nhanvien, Model model) {
 
-//        // Xác thực người dùng với thông tin tên người dùng và mật khẩu được lấy từ form đăng nhập
-//        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
-//        Authentication authenticated = authenticationManager.authenticate(authentication);
-//
-//        // Nếu xác thực thành công, lưu thông tin người dùng vào SecurityContextHolder
-//        SecurityContextHolder.getContext().setAuthentication(authenticated);
-        //return "redirect:/NeoHome/Index";
-        //customStaffDetailsService.loadUserByUsername(nhanvien.getTendangnhap());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        userDetailsService.loadUserByUsername(username); // Truyền thông tin người dùng vào service
-//        NHANVIEN nv = staffIdentityService.FindByUserName(nhanvien.getTendangnhap());
-//        if (nv != null) {
-//            if (Objects.equals(nv.getMatkhau(), nhanvien.getMatkhau())) {
-//                httpSession.setAttribute("nv", nv);
-//                return "redirect:/NeoHome/Index";
-//            }
-//            else throw new UserPassNotFoundException("User or Password isn't correct");
-//        }
-//        else throw new UserPassNotFoundException("User or Password isn't correct");
+        NHANVIEN nv = staffIdentityService.FindByUserName(nhanvien.getTendangnhap());
+        if (nv != null) {
+            if (Objects.equals(nv.getMatkhau(), nhanvien.getMatkhau())) {
+                httpSession.setAttribute("nv", nv);
+                return "redirect:/NeoHome/Index";
+            }
+            //else throw new UserPassNotFoundException("User or Password isn't correct");
+            model.addAttribute("errorMessage", "Tai khoan hoac mat khau khong dung");
+            return "/Identity/Admin/Login";
+        }
+        //else throw new UserPassNotFoundException("User or Password isn't correct");
+        model.addAttribute("errorMessage", "Tai khoan hoac mat khau khong dung");
+        return "/Identity/Admin/Login";
     }
 
     @GetMapping("/Identity/Admin/Register")
@@ -84,10 +76,17 @@ public class StaffIdentityController {
     }
 
     @PostMapping("/Identity/Admin/Register")
-    public String Register(@RequestBody @Valid @ModelAttribute("nv") NHANVIEN nhanvien, @RequestParam("image") MultipartFile multipartFile, Model model) {
+    public String Register(@RequestBody @Valid @ModelAttribute("nv") NHANVIEN nhanvien, @RequestParam("image") MultipartFile multipartFile, Model model, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "/Identity/Admin/Register";
+        }
+
         //tim kiem neu ten dang nhap trung khop
         if (staffIdentityService.FindByUserName(nhanvien.getTendangnhap()) !=null) {
-            throw new UserPassExistedException("Nguoi dung ton tai");
+            //throw new UserPassExistedException("Nguoi dung ton tai");
+            model.addAttribute("errorMessage", "Nguoi dung ton tai");
+            return "/Identity/Admin/Register";
         }
 
         //them thong tin nhan vien
@@ -123,6 +122,7 @@ public class StaffIdentityController {
             staffIdentitySendMailService.Register_ChangePassComplete(nhanvien.getEmail(), "Register Complete", nhanvien, "Identity/Admin/RegisterComplete");
             return "redirect:/Identity/Admin/Login";
         } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
             return "/Identity/Admin/Register";
         }
     }
@@ -130,7 +130,7 @@ public class StaffIdentityController {
     @GetMapping("/Identity/Admin/Logout")
     public String Logout() {
         httpSession.removeAttribute("nv");
-        return "redirect:/Identity/Admin/Logout";
+        return "redirect:/Identity/Admin/Login";
     }
 
     @GetMapping("/Identity/Admin/ChangePassword")
@@ -140,7 +140,12 @@ public class StaffIdentityController {
     }
 
     @PostMapping("/Identity/Admin/ChangePassword")
-    public String ChangePassword(Model model, @RequestBody @Valid @ModelAttribute("user")NHANVIEN nhanvien) {
+    public String ChangePassword(Model model, @RequestBody @Valid @ModelAttribute("user")NHANVIEN nhanvien, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+          return "/Identity/Admin/ChangePassword";
+       }
+
         NHANVIEN nv = staffIdentityService.FindByUserName(nhanvien.getTendangnhap());
         if (nv != null) {
             if (Objects.equals(nhanvien.getRetypedpass(), nhanvien.getMatkhau())) {
@@ -152,14 +157,19 @@ public class StaffIdentityController {
                     return "redirect:/Identity/Admin/Login";
 
                 } catch (Exception ex){
-                    //return "/Identity/Admin/ChangePassword";
-                    return "redirect:/Error/ErrorMe?mess=" + ex.toString();
+                    model.addAttribute("errorMessage", ex.getMessage());
+                    return "/Identity/Admin/ChangePassword";
+                    //return "redirect:/Error/ErrorMe?mess=" + ex.toString();
                 }
 
             }
-            else throw new UserPassNotFoundException("mật khẩu nhap lai khong trung khop");
+            //else throw new UserPassNotFoundException("mật khẩu nhap lai khong trung khop");
+            model.addAttribute("errorMessage", "mật khẩu nhap lai khong trung khop");
+            return "/Identity/Admin/ChangePassword";
         }
-        else throw new UserPassNotFoundException("Tài khoản khong tim thay");
+        //else throw new UserPassNotFoundException("Tài khoản khong tim thay");
+        model.addAttribute("errorMessage", "Tài khoản khong tim thay");
+        return "/Identity/Admin/ChangePassword";
     }
 
     @GetMapping("/Identity/Admin/StaffInformation")
