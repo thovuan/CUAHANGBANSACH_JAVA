@@ -18,4 +18,12 @@ public class CardService {
     public void UpdateCardPoint(THE theCard) {
         cardRepository.save(theCard);
     }
+
+    public THE Add(THE theCard) {
+        return cardRepository.save(theCard);
+    }
+
+    public void Delete(THE theCard) {
+        cardRepository.delete(theCard);
+    }
 }

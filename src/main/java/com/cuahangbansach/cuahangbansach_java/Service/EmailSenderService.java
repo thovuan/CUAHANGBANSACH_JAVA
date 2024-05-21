@@ -3,6 +3,7 @@ package com.cuahangbansach.cuahangbansach_java.Service;
 import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
 import com.cuahangbansach.cuahangbansach_java.Model.PHIEUMUAHANG;
 import com.cuahangbansach.cuahangbansach_java.Model.SACH;
+import com.cuahangbansach.cuahangbansach_java.Model.THE;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,27 @@ public class EmailSenderService {
         Context context = new Context();
         context.setVariable("pmh", pmh);
         context.setVariable("user", guest);
+
+        //thêm danh sach vao
+        String html = templateEngine.process(view, context);
+        helper.setText(html, true);
+
+        mailSender.send(message);
+    }
+
+    public void addCardConfirmMail(String to, String subject, THE the, KHACH guest, String view) throws MessagingException {
+        //tao mimimessage va mimemessagehelper de soan va gui email
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        //nhap email nguoi nhan va cc
+        helper.setTo(to);
+        helper.setSubject(subject);
+
+        //goi context de chua du lieu
+        Context context = new Context();
+        context.setVariable("card", the);
+        context.setVariable("guest", guest);
 
         //thêm danh sach vao
         String html = templateEngine.process(view, context);

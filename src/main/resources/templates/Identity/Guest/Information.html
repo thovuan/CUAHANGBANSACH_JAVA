@@ -81,7 +81,7 @@
                 <button type="submit" style="color: white; background-color:darkblue;">Update Information</button>
             </form>
 
-            <form th:action="@{/Identity/Guest/CardDetail/{tendangnhap}(tendangnhap = ${guest.getTendangnhap()})}" >
+            <form th:action="@{/Identity/Guest/CardDetail/{id}(id = ${guest.getMakhachhang()})}" >
                 <button type="submit" style="color: white; background-color:red;">Card Information</button>
             </form>
         </div>

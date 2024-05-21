@@ -8,23 +8,25 @@
     >
 </head>
 <body>
-<th:block th:include="/Shared/_Layout"></th:block>
 <section id="content">
     <div class="container">
         <div class="row">
 
-            <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
-                <span th:text="${errorMessage}"></span>
-            </div>
+            <div class="col-lg-12">
+                <h1>CUAHANGBANSACH</h1>
+                <h2>Chào <th:block th:text="${guest.getTenkhachhang()}"></th:block></h2>
+                <p>
+                    Cảm ơn quý khách đã đăng ký thẻ
+                </p>
+                <p>
+                    Quý khách hiện tại đã được tặng 1000 điểm
+                </p>
+                <p>
+                    Hãy kiểm tra thông tin thẻ
+                </p>
 
-            <div class="col-lg-8" th:if="${card}==null">
-                <h2>Hiện tại bạn chưa có thẻ!</h2>
-                <h3>Bạn có muốn tạo thẻ không? Để được hưởng lợi quyền lợi</h3>
-                <form th:action="@{/Identity/Guest/AddCard}" method="post">
-                    <button type="submit" style="color: white; background-color:green;">Đăng Ký Thè</button>
-                </form>
-            </div>
-            <div class="col-lg-12" th:if="${card}!=null">
+
+                <hr>
 
                 <h2>THÔNG TIN THẺ <th:block th:text="${card.getMathe()}"></th:block></h2>
                 <hr class="colorgraph" />
@@ -47,12 +49,23 @@
 
                     </dl>
                 </div>
-                <div class="form-group">
 
-                    <a th:href="@{/Identity/Guest/DeleteCard}"  class="btn btn-primary btn-block" style="color: white; background-color: red">
-                        Xóa thẻ
-                    </a>
-                </div>
+                <p>
+                    Quý khách lưu ý: Mỗi một đơn hàng thành công sẽ tích lũy 1% tổng giá trị đơn hàng
+                </p>
+                <p>
+                    Nếu quý khách có thắc mắc, hãy liên hệ ...
+                </p>
+                <p>
+                    Một lần nữa CUAHANGBANSACH xin cảm ơn quý khách
+                </p>
+
+                <p>
+                    Kind Regards,
+                </p>
+                <p>
+                    CUAHANGBANSACH Team,
+                </p>
 
             </div>
 

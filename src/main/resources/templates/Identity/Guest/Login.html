@@ -36,15 +36,22 @@
                     <hr class="colorgraph" />
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <input id="LoginForm" type="submit" value="Đăng Nhập" class="btn btn-primary btn-block" />
+                            <input id="LoginForm" type="submit" value="Login" class="btn btn-primary btn-block" />
                         </div>
 
-                        <a th:href="@{/Identity/Guest/ChangePassword}" class="btn" style="color: white; background-color: red">
-                            Change Password
-                        </a>
-                        <a th:href="@{/Identity/Guest/NewUser}" class="btn" style="color: white; background-color: darkblue">
-                            Register new Account
-                        </a>
+                        <div class="col-xs-12 col-md-6">
+                            <a th:href="@{/Identity/Guest/ChangePassword}" class="btn btn-primary btn-block" style="color: white; background-color: red">
+                                Change Password
+                            </a>
+
+                            <a th:href="@{/Identity/Guest/NewUser}" class="btn btn-primary btn-block" style="color: white; background-color: darkblue">
+                                Register new Account
+                            </a>
+                        </div>
+
+
+
+
                     </div>
 
             </form>
