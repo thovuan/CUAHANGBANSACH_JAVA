@@ -24,8 +24,11 @@
                     <div class="widget">
                         <form role="form">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="s" placeholder="Search.." />
-                                <input type="submit" class="form-control" />
+                                <form th:action="@{/SHOP/Index}" method="get"  >
+                                    <label for = "bookname" class="col-sm-4 col-form-label"></label>
+                                    <input type="text" name = "bookname" id = "bookname" th:placeholder="${'Tên Sách'}">
+                                    <button type="submit" style="color: white; background-color:darkblue;">Find</button>
+                                </form>
                             </div>
                         </form>
                     </div>
@@ -73,9 +76,9 @@
             <div class="col-lg-8">
                 <h2 class="title">Book</h2>
                 <hr class="colorgraph" />
-                <div class="row2" th:each="hon : ${list}">
+                <div class="row2" >
 
-                    <div class="col-4">
+                    <div class="col-4" th:each="hon : ${list}">
                         <div class="form-group" th:if="${hon.anhsanpham}!=null">
                             <img th:src="@{'/ANHSANPHAM/' + ${hon.getMasach()} + '/' + ${hon.getAnhsanpham()}}" style="width: 260px; height: auto;" />
 
@@ -87,8 +90,8 @@
                         </div>
                         <p th:text="${hon.masach}"></p>
                         <h4 th:text="${hon.tensach}"></h4>
-                        <h5 th:text="${hon.dongia}"></h5>
-                        <h6 th:text="${hon.soluonghienco}"></h6>
+                        <h5>Đơn Giá: <th:block th:text="${hon.getDongia()}"></th:block> VND</h5>
+                        <h6>Số Lượng Hiện Có: <th:block th:text="${hon.getSoluonghienco()}"> Cuốn</th:block></h6>
 
                         <button th:onclick="Lay_Thongtin(${hon.getMasach()})" data-toggle="modal" data-target=".bs-modal-lg_1">Chi tiết</button>
                         <form th:action="@{/SHOP/Detail/{id}(id = ${hon.masach})}" th:object="${hon}">

@@ -33,7 +33,7 @@ public class SHOPController {
     private ShoppingCartService shoppingCartService;
 
     @GetMapping("/SHOP/Index")
-    public String Index(Model model, @RequestParam(required = false) String MaTL, @RequestParam(required = false) String MaNXB) {
+    public String Index(Model model, @RequestParam(name = "bookname", required = false) String bookname, @RequestParam(required = false) String MaTL, @RequestParam(required = false) String MaNXB) {
         //take all book list
         PHIEUMUAHANG dh = shoppingCartService.GetDH("KH01");
         httpSession.setAttribute("donhang", dh);
@@ -41,6 +41,7 @@ public class SHOPController {
         List<SACH> list;
         if (MaTL != null) {list = qlsachService.getSACHbyMaTL(MaTL);}
         else if (MaNXB != null) {list = qlsachService.getSACHbyMaNXB(MaNXB);}
+        else if (bookname != null) {list = qlsachService.getSACHByName(bookname);}
         else list = qlsachService.getList();
         model.addAttribute("list", list);
 

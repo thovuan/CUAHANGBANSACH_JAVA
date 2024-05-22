@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/static/css/site.css"  />
     <link rel="stylesheet" th:href="@{/css/Header.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 
@@ -35,6 +36,8 @@
                                     <th:block th:include="/Shared/_LoginPartial :: body"></th:block>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                     <div class="top_header_right header_bar">
@@ -110,33 +113,16 @@
                                     <ul id="primary-menu" class="menu">
                                         <li id="menu-item-53333"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-53333">
-                                            <a th:href="@{/Home/index}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                                            <a th:href="@{/Home/index}"><i class="fa fa-home" aria-hidden="false"></i></a></li>
                                         <li id="menu-item-180878"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-ancestor current-menu-parent menu-item-has-children menu-item-180878">
-                                            <a th:href="@{/SHOP/Index}">Cửa Hàng</a>
+                                            <a th:href="@{/SHOP/Index}"><i class="fa fa-solid fa-shop" aria-hidden="false"></i></a>
 
                                         </li>
-                                        <li id="menu-item-55625"
-                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-55625">
-                                            <a href="#">Về chúng tôi</a>
-                                            <ul class="sub-menu">
-                                                <li id="menu-item-69907"
-                                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-69907">
-                                                    <a th:href="@{/About/OurStory}">Câu chuyện về chúng tôi</a></li>
-                                                <li id="menu-item-69992"
-                                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-69992">
-                                                    <a th:href="@{/About/Blog}"><strong
-                                                            style="color:orange;">Blog</strong></a></li>
-                                                <li id="menu-item-179889"
-                                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-179889">
-                                                    <a th:href="@{/About/Contact}">Tương tác</a></li>
 
-
-                                            </ul>
-                                        </li>
                                         <li id="menu-item-69690" th:if="${session.guest!=null}"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69690">
-                                            <a href="#">Thông tin tài khoản</a>
+                                            <a href="#"><i class="fa fa-user" aria-hidden="false"></i></a>
                                             <ul class="sub-menu">
                                                 <li id="menu-item-69766"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-dmuc-nganh-hoc menu-item-has-children menu-item-69766">
@@ -153,7 +139,7 @@
                                         </li>
                                         <li id="menu-item-69691" th:if="${session.guest==null}"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69690">
-                                            <a href="#">Đăng Nhập</a>
+                                            <a href="#"><i class="fa fa-user" aria-hidden="false"></i></a>
                                             <ul class="sub-menu">
                                                 <li id="menu-item-69767"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-dmuc-nganh-hoc menu-item-has-children menu-item-69766">
@@ -174,6 +160,46 @@
 
                                             </ul>
                                         </li>
+
+                                        <li id="menu-item-69965"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69965">
+                                            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="false"></i></a>
+                                            <ul class="sub-menu">
+                                                <li id="menu-item-170764"
+                                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-170764">
+                                                    <a th:href="@{/ShoppingCart/MyCart}">Giỏ Hàng</a></li>
+                                                <li id="menu-item-29632"
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                    <a th:href="@{/ShoppingCart/Index}">Lich sử mua hàng</a></li>
+
+                                            </ul>
+                                        </li>
+
+
+
+                                        <li id="menu-item-285695"
+                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-285695">
+                                            <a th:href="@{/Tracking/Index}">Tracking</a></li>
+
+                                        <li id="menu-item-55625"
+                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-55625">
+                                            <a href="#">Về chúng tôi</a>
+                                            <ul class="sub-menu">
+                                                <li id="menu-item-69907"
+                                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-69907">
+                                                    <a th:href="@{/About/OurStory}">Câu chuyện về chúng tôi</a></li>
+                                                <li id="menu-item-69992"
+                                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-69992">
+                                                    <a th:href="@{/About/Blog}"><strong
+                                                            style="color:orange;">Blog</strong></a></li>
+                                                <li id="menu-item-179889"
+                                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-179889">
+                                                    <a th:href="@{/About/Contact}">Tương tác</a></li>
+
+
+                                            </ul>
+                                        </li>
+
                                         <li id="menu-item-53331"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-53331">
                                             <a href="#">Giao Diện</a>
@@ -189,25 +215,10 @@
 
                                             </ul>
                                         </li>
-                                        <li id="menu-item-69965"
-                                            class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69965">
-                                            <a href="#">Giỏ Hàng</a>
-                                            <ul class="sub-menu">
-                                                <li id="menu-item-170764"
-                                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-170764">
-                                                    <a th:href="@{/ShoppingCart/MyCart}">Giỏ Hàng</a></li>
-                                                <li id="menu-item-29632"
-                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
-                                                    <a th:href="@{/ShoppingCart/Index}">Lich sử mua hàng</a></li>
 
-                                            </ul>
-                                        </li>
-                                        <li id="menu-item-285695"
-                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-285695">
-                                            <a th:href="@{/Tracking/Index}">Tracking</a></li>
                                         <li id="menu-item-105320"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-105320">
-                                            <a th:href="@{/Version/Index}">Thông tin phiên bản</a></li>
+                                            <a th:href="@{/Version/Index}"><i class="fa fa-refresh fa-spin"></i>Thông tin phiên bản</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -231,9 +242,6 @@
 
 
 </div>
-<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-
-<!-- Placed at the end of the document so the pages load faster -->
 
 </body>
 </html>
