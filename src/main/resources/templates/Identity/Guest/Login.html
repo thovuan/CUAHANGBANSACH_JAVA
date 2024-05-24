@@ -6,61 +6,63 @@
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" crossorigin="">
+    <link rel = "stylesheet" th:href="@{/css/loginstyle.css}">
 
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+
 </head>
 <body>
-<th:block th:include="/Shared/_Layout"></th:block>
-<section id="content">
-    <div class="container">
-        <div class="row">
-            <form th:action="@{/Identity/Guest/Login}" th:object="${user}" method="post" class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                <h2>Login</h2>
-                <hr class="colorgraph" />
+<div class="login">
+    <img th:src="@{/PIC_INTRO/login-bg.png}" alt="" class="login__bg">
+    <form th:action="@{/Identity/Guest/Login}" th:object="${user}" method="post" class="login__form">
+        <h4 class="login__title2">STL ORIGINAL - CUAHANGBANSACH</h4>
+        <h2 class="login__title">Đăng nhập</h2>
+        <hr class="colorgraph" />
 
-                <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
-                    <span th:text="${errorMessage}"></span>
-                </div>
-
-                    <div class="form-group">
-                        <label for="tendangnhap">Tên Đăng Nhập</label>
-                        <input type="text" id="tendangnhap" class="form-control" th:field="*{tendangnhap}" th:placeholder="${'Tên Đăng Nhập'}" style="font-size: 16px; width: 100%; height: 40px;" required>
-
-                    </div>
-                    
-
-                    <div class="form-group">
-                        <label for="password">Mật Khẩu</label>
-                        <input type="password" id="password" class="form-control" th:field="*{matkhau}" th:placeholder="${'Mật Khẩu'}" style="font-size: 16px; width: 100%; height: 40px;" required>
-
-                    </div>
-
-                    <hr class="colorgraph" />
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <input id="LoginForm" type="submit" value="Login" class="btn btn-primary btn-block" />
-                        </div>
-
-                        <div class="col-xs-12 col-md-6">
-                            <a th:href="@{/Identity/Guest/ChangePassword}" class="btn btn-primary btn-block" style="color: white; background-color: red">
-                                Change Password
-                            </a>
-
-                            <a th:href="@{/Identity/Guest/NewUser}" class="btn btn-primary btn-block" style="color: white; background-color: darkblue">
-                                Register new Account
-                            </a>
-                        </div>
-
-
-
-
-                    </div>
-
-            </form>
+        <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+            <span th:text="${errorMessage}"></span>
         </div>
-    </div>
+
+        <div class="login__inputs">
+            <div class="login__box">
+
+                <input type="text" id="tendangnhap" class="login__input" th:field="*{tendangnhap}" th:placeholder="${'Tên Đăng Nhập'}"  required>
+
+            </div>
+
+            <div class="login__box">
+
+                <input type="password" id="password" class="login__input" th:field="*{matkhau}" th:placeholder="${'Mật Khẩu'}"  required>
+            </div>
+        </div>
 
 
-</section>
+        <div class="login__check">
+            <div class="login__check-box">
+                <input type="checkbox" class="login__check-input" id="user-check">
+                <label for="user-check" class="login__check-label">Remember me</label>
+            </div>
+
+            <a th:href="@{/Identity/Guest/ChangePassword}" class="login__forgot">
+                Change Password
+            </a>
+        </div>
+
+        <input id="LoginForm" type="submit" value="Login" class="login__button">
+
+
+
+        <div class="login__register">
+            Don't have an account?
+            <a th:href="@{/Identity/Guest/NewUser}" >
+                Register new Account
+            </a>
+        </div>
+
+
+
+    </form>
+</div>
+
 </body>
 </html>

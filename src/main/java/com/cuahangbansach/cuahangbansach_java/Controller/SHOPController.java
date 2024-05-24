@@ -75,7 +75,17 @@ public class SHOPController {
         if (hon == null) return "Can't Find Book: " + id;
         model.addAttribute("SACH", hon);
         return "/SHOP/Detail";
+        //return "redirect:/SHOP/Index";
     }
+
+//    @GetMapping("/SHOP/Detail/{id}")
+//    @ResponseBody
+//    public ResponseEntity<SACH> BookDetail(Model model, @PathVariable String id) {
+//        SACH hon = qlsachService.GetSachById(id);
+//        if (hon == null) return ResponseEntity.notFound().build();
+//        model.addAttribute("SACH", hon);
+//        return "/SHOP/Detail";
+//    }
 
     @GetMapping("/SHOP/Buy/{id}")
     public String Buy(Model model, @PathVariable String id) {

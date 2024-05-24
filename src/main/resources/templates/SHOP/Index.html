@@ -8,6 +8,9 @@
     >
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/js/script.js}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -93,8 +96,9 @@
                         <h5>Đơn Giá: <th:block th:text="${hon.getDongia()}"></th:block> VND</h5>
                         <h6>Số Lượng Hiện Có: <th:block th:text="${hon.getSoluonghienco()}"> Cuốn</th:block></h6>
 
-                        <button th:onclick="Lay_Thongtin(${hon.getMasach()})" data-toggle="modal" data-target=".bs-modal-lg_1">Chi tiết</button>
-                        <form th:action="@{/SHOP/Detail/{id}(id = ${hon.masach})}" th:object="${hon}">
+
+
+                        <form id = "productDetail" th:action="@{/SHOP/Detail/{id}(id = ${hon.masach})}" th:object="${hon}">
                             <button type="submit" style="color: white; background-color:darkblue;">Details</button>
                         </form>
 
@@ -116,6 +120,7 @@
                         <div class="modal-body">
                             <!-- Body -->
                             <div class="row form-group" id="Body_Modal">
+
                             </div>
                             <!-- Footer -->
                             <hr />
@@ -126,31 +131,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-            <script>
-                function Lay_Thongtin(MaSach) {
-                    //creating an XHLHttpRequest
-                    var xhr = new XMLHttpRequest();
-                    //define a callback function
-                    var url = '/SHOP/Detail/' + MaSach;
-                    xhr.open("GET", url, true);
-                    //onload property
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
-                            document.getElementById('Body_Modal').innerHTML = xhr.responseText;
-
-                        }
-                    }
-                    //send request
-                    xhr.send();
-
-                }
-
-
-            </script>
 
 
 
