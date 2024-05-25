@@ -18,7 +18,7 @@
                 <h3>Ảnh đại diện</h3>
                 <div class="form-group" th:if="${nv.getAvatar()}!=null">
 
-                    <img th:alt="${nv.getTennhanvien()}" th:src="@{'/GuestAvatar/' + ${nv.getManhanvien()} + '/' + ${nv.getAvatar()}}" style="width: 200px; height: auto;" />
+                    <img th:alt="${nv.getTennhanvien()}" th:src="@{'/StaffAvatar/' + ${nv.getManhanvien()} + '/' + ${nv.getAvatar()}}" style="width: 200px; height: auto;" />
 
                 </div>
 
@@ -29,16 +29,26 @@
 
                 <div  class="form-group">
 
-                    <a th:href="@{/Identity/Admin/UploadAvatar}" class="btn btn-primary">
-                        Upload Avatar
-                    </a>
+                    <form th:action="@{/Identity/Admin/UploadAvatar}" th:object="${user}" enctype="multipart/form-data" method="post" class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                        <div class="form-group">
+                            <label for = "image">Add your Avatar</label>
+                            <input type="file" class="form-control" name="image" id = "image" style="font-size: 16px; width: 100%; height: 40px;"/>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Cập nhật ảnh đại diện" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
 
             </div>
 
             <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                <h2>Chi tiết thông tin Khách <th:block th:text="${nv.getTennhanvien()}"></th:block> </h2>
+                <h2>Chi tiết thông tin Nhân Viên <th:block th:text="${nv.getTennhanvien()}"></th:block> </h2>
                 <hr class="colorgraph" />
 
                 <dt>

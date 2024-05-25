@@ -127,6 +127,43 @@ public class StaffIdentityController {
         }
     }
 
+    @PostMapping("/Identity/Admin/UploadAvatar")
+    public String UploadAvatar(Model model, @RequestParam("image")MultipartFile multipartFile) {
+        NHANVIEN nv = (NHANVIEN) httpSession.getAttribute("nv");
+
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        //System.out.println(fileName);
+        nv.setAvatar(fileName);
+        try {
+
+            NHANVIEN save = staffIdentityService.Save(nv);
+
+            String uploadDir = "./src/main/resources/static/StaffAvatar/" + save.getManhanvien();
+            Path uploadPath =  Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+
+            try (InputStream inputStream = multipartFile.getInputStream()){
+                //cap nhat anh vao
+
+                Path filePath = uploadPath.resolve(fileName);
+                System.out.println(filePath.toFile().getAbsolutePath());
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                return "redirect:/Identity/Admin/StaffInformation";
+
+            } catch (IOException _) {
+                model.addAttribute("errorMessage", "Lỗi thêm ảnh đại diện");
+                return "/Identity/Admin/Information";
+            }
+
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", "Lỗi thêm ảnh đại diện");
+            return "/Identity/Admin/Information";
+        }
+
+
+    }
+
     @GetMapping("/Identity/Admin/Logout")
     public String Logout() {
         httpSession.removeAttribute("nv");

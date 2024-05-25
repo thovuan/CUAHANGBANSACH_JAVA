@@ -5,6 +5,8 @@ import com.cuahangbansach.cuahangbansach_java.Repository.QLNVRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class QLNVService {
 
@@ -12,7 +14,15 @@ public class QLNVService {
     private QLNVRepository qlnvRepository;
 
     public NHANVIEN GetById(String id) {
-        NHANVIEN nv = qlnvRepository.GetById(id);
-        return nv;
+        return qlnvRepository.GetById(id);
     }
+
+    public List<NHANVIEN> getList() {
+        return qlnvRepository.findAll();
+    }
+
+    public List<NHANVIEN> getName(String staffname) {
+        return qlnvRepository.getName(staffname);
+    }
+
 }

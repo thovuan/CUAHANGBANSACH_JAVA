@@ -97,6 +97,34 @@
 
                 </div>
             </div>
+
+            <div class="col-lg-12">
+                <h2 class="title">Thể Loại Sách</h2>
+
+                <div class="row2">
+
+                    <div class="col-4" th:each="tls : ${tl}">
+                        <img th:src="@{'/ANHSANPHAM/'}" alt="" style="width: 200px"/>
+                        <h4 th:text="${tls.getTentheloai()}"></h4>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <h2 class="title">Nhà Xuất Bản</h2>
+
+                <div class="row2">
+
+                    <div class="col-4" th:each="nxbs : ${nxb}">
+                        <img th:src="@{'/ANHSANPHAM/'}" alt="" style="width: 200px"/>
+                        <h4 th:text="${nxbs.getTennxb()}"></h4>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 

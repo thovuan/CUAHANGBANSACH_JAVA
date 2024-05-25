@@ -34,7 +34,7 @@ public class QLKHACHController {
         return false;
     }
 
-    @GetMapping("/QLKHACH/Index")
+    @GetMapping("/QLTK/QLKHACH/Index")
     public String index(Model model, @RequestParam(name = "guestname", required = false) String guestname) {
 
         if (!CheckPermit())
@@ -49,9 +49,9 @@ public class QLKHACHController {
             model.addAttribute("KhachList", list);
         }
 
-        return "QLKHACH/Index";
+        return "/QLTK/QLKHACH/Index";
     }
-    @GetMapping("/QLKHACH/Detail/{id}")
+    @GetMapping("/QLTK/QLKHACH/Detail/{id}")
     public String Detail(Model model, @PathVariable("id") String id) {
 
         if (!CheckPermit())
@@ -60,7 +60,7 @@ public class QLKHACHController {
         KHACH khach = qlkhachService.getKhachById(id);
         if (khach != null) {
             model.addAttribute("TTKHACH", khach);
-            return "QLKHACH/Detail";
+            return "/QLTK/QLKHACH/Detail";
         }
         return "Loi khong tim thay";
     }

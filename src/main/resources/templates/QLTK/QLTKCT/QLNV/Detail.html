@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+
+    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/dtdd.css}">
+</head>
+<body>
+<th:block th:include="/Shared/_StaffLayout"></th:block>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>CHI TIẾT NHÂN VIEN <th:block th:text="${nv.getManhanvien()}"></th:block></h2>
+
+                <hr class="colorgraph"/>
+
+                <div class="col-lg-4">
+                    <h3>Ảnh đại diện</h3>
+                    <div class="form-group" th:if="${nv.getAvatar()}!=null">
+
+                        <img th:alt="${nv.getTennhanvien()}" th:src="@{'/StaffAvatar/' + ${nv.getManhanvien()} + '/' + ${nv.getAvatar()}}" style="width: 200px; height: auto;" />
+
+
+
+                    </div>
+
+                    <div class="form-group" th:unless="${nv.getAvatar()}!=null">
+                        <span>Không có ảnh</span>
+                    </div>
+
+                </div>
+                <dl class="col-lg-8">
+                    <dt>
+                        Tên nhân viên
+                    </dt>
+
+                    <dd th:text="${nv.getTennhanvien()}">
+
+                    </dd>
+
+                    <dt>
+                        Email
+                    </dt>
+
+                    <dd th:text="${nv.getEmail()}">
+
+                    </dd>
+
+
+                </dl>
+            </div>
+
+            <div class="col-lg-12">
+                <h2>DANH SÁCH CÁC CHỨC VỤ của <th:block th:text="${nv.getManhanvien()}"></th:block></h2>
+
+                <table border="1" class="table table-striped table-responsive-md" th:align="center">
+                    <tr>
+                        <th>
+                            Mã chức vụ
+                        </th>
+                        <th>
+                            Tên chức vụ
+                        </th>
+
+                        <th>
+                            Thời hạn hợp đồng
+                        </th>
+
+
+                    </tr>
+
+
+                    <tr th:each="nvs : ${nv.getChucVuDetails()}">
+                        <td th:text="${nvs.getMachucvu().getMachucvu()}">
+
+                        </td>
+                        <td th:text="${nvs.getMachucvu().getTenchucvu()}">
+
+                        </td>
+
+                        <td th:text="${nvs.getThoihanhopdong()}">
+
+                        </td>
+
+
+                        <td>
+
+                            <a th:href="@{/QLTK/QLTKCT/QLCV/{manv}(manv = ${nv.getManhanvien()})/{macv}=(macv = ${nvs.getMachucvu()})}" class="btn" style="color: white; background-color: grey" th:object="${sach}">
+                                Delete
+                            </a>
+
+
+                        </td>
+                    </tr>
+
+
+                </table>
+                <h3>Tổng giá trị hóa đơn: </h3>
+                <h3 th:text="${pmh.getDHTotal()}"> VND</h3>
+
+                <form th:action="@{/ShoppingCart/Index}">
+                    <button type="submit" style="color: white; background-color:grey;">Quay Lại</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

@@ -1,8 +1,6 @@
 package com.cuahangbansach.cuahangbansach_java.Controller;
-import com.cuahangbansach.cuahangbansach_java.Model.KHACH;
-import com.cuahangbansach.cuahangbansach_java.Model.PHIEUMUAHANG;
-import com.cuahangbansach.cuahangbansach_java.Model.SACH;
-import com.cuahangbansach.cuahangbansach_java.Model.THELOAISACH;
+import com.cuahangbansach.cuahangbansach_java.Model.*;
+import com.cuahangbansach.cuahangbansach_java.Service.QLNXBService;
 import com.cuahangbansach.cuahangbansach_java.Service.QLSACHService;
 import com.cuahangbansach.cuahangbansach_java.Service.QLTHELOAIService;
 import com.cuahangbansach.cuahangbansach_java.Service.ShoppingCartService;
@@ -29,6 +27,9 @@ public class HomeController {
     private QLTHELOAIService qltheloaiService;
 
     @Autowired
+    private QLNXBService qlnxbService;
+
+    @Autowired
     private QLSACHService qlsachService;
 
     @Autowired
@@ -51,6 +52,9 @@ public class HomeController {
 
         List<THELOAISACH> tl = qltheloaiService.GetAll();
         model.addAttribute("tl", tl);
+
+        List<NXB> nxb = qlnxbService.GetList();
+        model.addAttribute("nxb", nxb);
 
         List<SACH> topsell = qlsachService.Top8Seller();
         logger.info("Top products to view: {}", topsell);
