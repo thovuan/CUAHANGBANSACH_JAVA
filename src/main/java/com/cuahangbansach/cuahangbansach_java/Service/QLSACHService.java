@@ -1,6 +1,8 @@
 package com.cuahangbansach.cuahangbansach_java.Service;
 
+import com.cuahangbansach.cuahangbansach_java.Model.BookComment;
 import com.cuahangbansach.cuahangbansach_java.Model.CHITIETDATHANG;
+import com.cuahangbansach.cuahangbansach_java.Repository.BookCommentRepository;
 import com.cuahangbansach.cuahangbansach_java.Repository.DetailSCRepository;
 import com.cuahangbansach.cuahangbansach_java.Repository.QLSACHRepository;
 import com.cuahangbansach.cuahangbansach_java.Model.SACH;
@@ -23,6 +25,8 @@ public class QLSACHService {
     @Autowired
     private DetailSCRepository scRepository;
 
+    @Autowired
+    private BookCommentRepository bookCommentRepository;
 
 
     public List<SACH> getList() {
@@ -155,5 +159,13 @@ public class QLSACHService {
         return sach;
     }
 
+    public void Add(BookComment bookComment) {
+        bookCommentRepository.save(bookComment);
+    }
+
+//    public List<SACH> getSACHs(int page, int pageSize) {
+//        int offset = (page-1)*pageSize;
+//        return ql.fi
+//    }
 
 }

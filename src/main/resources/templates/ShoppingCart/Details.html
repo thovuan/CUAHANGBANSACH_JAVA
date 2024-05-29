@@ -87,7 +87,7 @@
 
                         </td>
                         <td >
-                            <img alt="" th:src="${sach.getAnhsanpham()}" style="width: 50px" />
+                            <img alt="" th:src="@{'/ANHSANPHAM/' + ${sach.getMasach()} + '/' + ${sach.getAnhsanpham()}}" style="width: 50px" />
                         </td>
 
                         <td th:text="${sach.getSoluongmua()}">

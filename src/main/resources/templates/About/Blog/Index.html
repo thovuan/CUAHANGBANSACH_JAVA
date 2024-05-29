@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link th:href="@{/css/templatemo-xtra-blog.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<th:block th:include="/Shared/_Layout"></th:block>
+<section id="content">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-4">
+                <aside class="left-sidebar">
+                    <div class="widget">
+                        <form role="form">
+                            <div class="form-group">
+                                <form th:action="@{/About/Blog/Index}" method="get"  >
+                                    <label for = "bookname" class="col-sm-4 col-form-label"></label>
+                                    <input type="text" name = "bookname" id = "bookname" th:placeholder="${'Tìm kiếm'}">
+                                    <button type="submit" style="color: white; background-color:darkblue;">Find</button>
+                                </form>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="widget">
+                        <h5 class="widgetheading">Thể loại</h5>
+                        <ul class="cat">
+                            <th:block th:each="cd : ${listTL}">
+                                <li>
+                                    <i class="fa fa-angle-right"></i>
+                                    <a th:href = "@{/SHOP/Index(MaTL=${cd.matheloai})}" th:text="${cd.getTentheloai()}"></a><span th:text="${'('+cd.getCount()+')'}"></span>
+
+                                </li>
+                            </th:block>
+
+                        </ul>
+                    </div>
+
+                    <div class="widget">
+                        <h5 class="widgetheading">NXB</h5>
+                        <ul class="cat">
+                            <th:block th:each="nxb : ${listNXB}">
+                                <li>
+                                    <i class="fa fa-angle-right"></i>
+                                    <a th:href = "@{/SHOP/Index(MaNXB=${nxb.manxb})}" th:text="${nxb.getTennxb()}"></a><span th:text="${'('+nxb.getCount()+')'}"></span>
+
+                                </li>
+                            </th:block>
+                        </ul>
+                    </div>
+
+
+                </aside>
+            </div>
+
+
+            <div class="col-lg-8">
+            <div class="row2 tm-row">
+                <article class="col-12 col-md-6 tm-post" th:each="blogs : ${DSBlog}">
+                    <h2 class="title">Blog</h2>
+                    <hr class="tm-hr-primary">
+                    <a th:href="@{/About/Blog/Details/{id}(id = ${blogs.getId()})}" class="effect-lily tm-post-link tm-pt-60">
+
+                        <div class="tm-post-link-inner" th:if="${blogs.getPic()}!=null">
+                            <img th:alt="${blogs.getTitle()}" th:src="@{'/Blog_Picture/' + ${blogs.getId()} + '/' + ${blogs.getPic()}}" style="width: 300px; height: auto;" class="img-fluid" />
+
+                        </div>
+
+                        <div class="form-group" th:unless="${blogs.getPic()}!=null">
+                            <span>Không có ảnh</span>
+
+                        </div>
+                        <span class="position-absolute tm-new-badge">Hot</span>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title" th:text="${blogs.getTitle()}"></h2>
+                    </a>
+                    <p class="tm-pt-30" th:text="${blogs.getContent()}">
+                    </p>
+
+
+                    <div class="d-flex justify-content-between tm-pt-45">
+                        <span class="tm-color-primary">Initial</span>
+                        <span class="tm-color-primary" th:text="${blogs.getNgayviet()}"></span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <span>36 comments</span>
+                        <span>By <th:block th:text="${blogs.getMakhachhang().getTenkhachhang()}"></th:block></span>
+                    </div>
+                </article>
+
+            </div>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+</section>
+</body>
+</html>

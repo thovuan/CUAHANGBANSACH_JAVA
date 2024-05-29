@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.lang.NonNull;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -45,5 +47,9 @@ public class KHACH {
 
     @Transient
     private String retypedpass;
+
+    @OneToMany(mappedBy = "makhachhang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@Transient
+    private List<Blog> blogs;
 
 }

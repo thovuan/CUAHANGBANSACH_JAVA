@@ -1,10 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<th:block th:include="/Shared/_StaffLayout"></th:block>
+<section id="content">
+    <div class="container" >
 
+        <div class="col-lg-20" >
+            <h2>DANH SÁCH NHÀ XUẤT BẢN</h2>
+            <hr class="colorgraph" />
+
+
+            <div class="col-lg-4" style="margin-top:10px; margin-bottom: 10px">
+
+                <form th:action="@{/QLNXB/Create/}">
+                    <button type="submit" style="color: white; background-color:green;">Create</button>
+                </form>
+            </div>
+
+            <div class="col-lg-8" style="margin-top:10px; margin-bottom: 10px">
+
+                <form th:action="@{/QLNXB/Index}" method="get"  >
+                    <label for = "nxbname" class="col-sm-4 col-form-label"></label>
+                    <input type="text" name = "nxbname" id = "nxbname" th:placeholder="${'Tên NHÀ XUẤT BẢN'}">
+                    <button type="submit" style="color: white; background-color:darkblue;">Find</button>
+                </form>
+            </div>
+
+
+
+            <table border="1" class="table table-striped table-responsive-md" th:align="center"
+            >
+                <tr>
+                    <th>
+                        Mã NXB
+                    </th>
+                    <th>
+                        Tên NXB
+                    </th>
+
+                </tr>
+
+
+                <tr th:each ="nxbs: ${NXB}">
+                    <td th:text ="${nxbs.getManxb()}"></td>
+                    <td th:text ="${nxbs.getTennxb()}">
+
+                    </td>
+                    <td>
+
+                        <a th:href="@{/QLNXB/Update/{id}(id = ${nxbs.getManxb()})}" class="btn" style="color: white; background-color: darkblue"  th:object="${nxbs}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+
+                        <a th:href="@{/QLNXB/Detail/{id}(id = ${nxbs.getManxb()})}" class="btn" style="color: white; background-color: red;" th:object="${nxbs}">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+
+
+                        <a th:href="@{/QLNXB/Delete/{id}(id = ${nxbs.getManxb()})}" class="btn" style="color: white; background-color: grey;" th:object="${nxbs}">
+                            <i class="fa fa-eraser" aria-hidden="true"></i>
+                        </a>
+
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+
+
+</section>
 </body>
 </html>

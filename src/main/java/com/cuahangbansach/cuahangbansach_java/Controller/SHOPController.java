@@ -125,10 +125,15 @@ public class SHOPController {
         ct.setSach(hon);
         ct.setSoluongmua(sl);
         ct.setTinhtranggiao("Chưa giao");
+
         //model.addAttribute("Error", "Số lượng mua vượt qua số lượng hiện c");
 
         try {
             shoppingCartService.Add(ct);
+
+            pmh.setDHTotal((long) sl * hon.getDongia());
+            shoppingCartService.Create(pmh);
+
             //return "redirect:/SHOP/Index";
             return "redirect:/SHOP/Index";
 

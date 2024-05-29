@@ -34,9 +34,12 @@ public class PHIEUMUAHANG {
     @ManyToOne(fetch = FetchType.EAGER)
     private KHACH khach;
 
-    @Transient
+    @Column(name = "cost")
     private long DHTotal;
 
     @Transient
     public List<SACH> dsSach;
+
+    @OneToMany(mappedBy = "phieumuahang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<CHITIETDATHANG> chitietDH;
 }

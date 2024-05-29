@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
@@ -56,6 +58,10 @@ public class SACH {
     @JoinColumn(name="manxb", referencedColumnName = "manxb")
     @ManyToOne(fetch = FetchType.EAGER)
     private NXB nxb;
+
+    //@OneToMany(mappedBy = "masach", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Transient
+    private List<BookComment> bookComments;
 
     @Transient
     private String tentheloai;

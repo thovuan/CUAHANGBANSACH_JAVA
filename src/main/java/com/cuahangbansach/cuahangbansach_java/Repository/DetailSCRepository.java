@@ -24,4 +24,6 @@ public interface DetailSCRepository extends JpaRepository<CHITIETDATHANG, String
 //            "FROM CHITIETDATHANG o GROUP BY o.bookId ORDER BY SUM(o.quantity) DESC")
 //    List<BookSales> findTopSellingBooks();
 
+
+
 }
