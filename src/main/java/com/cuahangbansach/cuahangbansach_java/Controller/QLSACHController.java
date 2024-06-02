@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 
@@ -112,7 +113,7 @@ public class QLSACHController {
         hon.setNhanvien(qlnvService.GetById("NV01"));
 
         //them anh
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         System.out.println(fileName);
         hon.setAnhsanpham(fileName);
 
@@ -133,7 +134,8 @@ public class QLSACHController {
 
 
             } catch (IOException _) {
-                return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thy";
+                model.addAttribute("errorMessage", "Loi cập nhật ảnh");
+                return "/QLSACH/Create";
             }
 
 
@@ -143,6 +145,7 @@ public class QLSACHController {
         } catch (Exception ex) {
             //return "Lỗi";
             //return "/Error/error";
+            model.addAttribute("errorMessage", "Lỡi thêm sách");
             return "/QLSACH/Create";
         }
     }
@@ -161,7 +164,7 @@ public class QLSACHController {
         //hon.setNhanvien(qlnvService.GetById("NV01"));
 
         //them anh
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         System.out.println(fileName);
         hon.setAnhsanpham(fileName);
 
@@ -181,14 +184,15 @@ public class QLSACHController {
 
 
             } catch (IOException _) {
-                return "redirect:/Error/ErrorMe?mess=" + "Lỗi không tìm thy";
+                model.addAttribute("errorMessage", "Loi cập nhật ảnh");
+                return "/QLSACH/Edit";
             }
             //return "redirect:/QLSACH/Index";
             return "redirect:/QLSACH/Index";
 
         } catch (Exception ex) {
-            //return "Lỗi";
-            return "/Error/error";
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật");
+            return "/QLSACH/Edit";
         }
     }
 
@@ -237,7 +241,7 @@ public class QLSACHController {
     }
 
     @GetMapping("/QLSACH/Delete/{id}")
-    public String Delete(SACH sach, @PathVariable("id")String id) {
+    public String Delete(Model model, SACH sach, @PathVariable("id")String id) {
 
         if (!CheckPermit())
             return "redirect:/Error/ErrorMe?mess=" + "Permission denied";
@@ -249,7 +253,8 @@ public class QLSACHController {
             qlsachService.Delete(id);
             return "redirect:/QLSACH/Index";
         } catch(Exception ex) {
-            return "Can't Delete Sach: " + id;
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi xóa");
+            return "QLSACH/Index";
         }
 
 

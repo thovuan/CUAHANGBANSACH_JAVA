@@ -31,6 +31,16 @@
                             </div>
                         </form>
                     </div>
+
+                    <div class="widget">
+                        <form role="form">
+                            <div class="form-group">
+                                <form th:action="@{/About/Blog/WriteBlog}" method="get">
+                                    <button type="submit" style="color: white; background-color:green;">Thêm bài viết</button>
+                                </form>
+                            </div>
+                        </form>
+                    </div>
                     <div class="widget">
                         <h5 class="widgetheading">Thể loại</h5>
                         <ul class="cat">
@@ -63,11 +73,17 @@
             </div>
 
 
+
             <div class="col-lg-8">
+
+                <h2 class="title">Blog</h2>
+                <hr class="tm-hr-primary">
+
+
             <div class="row2 tm-row">
+
                 <article class="col-12 col-md-6 tm-post" th:each="blogs : ${DSBlog}">
-                    <h2 class="title">Blog</h2>
-                    <hr class="tm-hr-primary">
+
                     <a th:href="@{/About/Blog/Details/{id}(id = ${blogs.getId()})}" class="effect-lily tm-post-link tm-pt-60">
 
                         <div class="tm-post-link-inner" th:if="${blogs.getPic()}!=null">

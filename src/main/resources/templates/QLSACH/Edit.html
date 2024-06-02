@@ -5,154 +5,168 @@
     <title>Title</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-
     >
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <th:block th:include="/Shared/_StaffLayout"></th:block>
 <section id="content">
     <div class="container">
-        <div class="row">
-            <form th:action="@{/QLSACH/Save}"  method="post" th:object="${sach}" enctype="multipart/form-data" class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 
-                <div class="form-horizontal">
-                    <h4>Update Book Information</h4>
-                    <h5 th:text="${sach.masach}"></h5>
-                    <hr class="colorgraph" />
+            <form th:action="@{/QLSACH/Save}"  method="post" th:object="${sach}" enctype="multipart/form-data" class="was-validated">
 
-                    <input type="hidden" th:field="*{masach}" readonly="readonly">
+                <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                    <span th:text="${errorMessage}"></span>
+                </div>
 
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            <label for = "tensach" class="col-sm-4 col-form-label">Tên Sách</label>
+                <h4>Update Book Information</h4>
+                <h5 th:text="${sach.masach}"></h5>
+                <hr class="colorgraph" />
 
-                                <input type="text" class="form-control" id="tensach" name = "tensach" th:field="*{tensach}" th:placeholder="${'Tên Sách'}" style="font-size: 16px; width: 100%; height: 40px;"  required>
-                                <p th:if = "${#fields.hasErrors('tensach')}" th:errorclass="text-danger"
-                                   th:errors="${sach.tensach}"></p>
+                <div class="form-row">
 
+                    <div class="col-md-2">
+
+                        <label for = "masach" class="col-form-label">Mã Sách</label>
+                        <input  class="form-control-plaintext" id="masach" th:field="*{masach}" readonly="readonly">
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label for = "tensach" class=" col-form-label">Tên Sách</label>
+
+                        <input type="text" class="form-control" id="tensach" name = "tensach" th:field="*{tensach}" th:placeholder="${'Tên Sách'}" style="font-size: 16px; width: 100%; height: 40px;"  required>
+                        <p th:if = "${#fields.hasErrors('tensach')}" th:errorclass="text-danger"
+                           th:errors="${sach.tensach}"></p>
+
+                        <div class="invalid-feedback">
+                            Hãy nhập trường Đặc Điểm
                         </div>
 
 
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            <label for = "soluonghienco" class="col-sm-8 col-form-label">Số Lượng Hện Có</label>
 
-                                <input type="text" class="form-control" id="soluonghienco" name = "soluonghienco" th:field="*{soluonghienco}" th:placeholder="${'Số Lượng Hiện Có'}" style="font-size: 16px; width: 100%; height: 40px;"  required>
-                                <p th:if = "${#fields.hasErrors('soluonghienco')}" th:errorclass="text-danger"
-                                   th:errors="${sach.soluonghienco}"></p>
+                </div>
 
 
+                <div class="form-row">
+                    <div class="col-md-8">
+
+                        <label for = "dacdiem" class=" col-form-label">Đặc Điểm</label>
+
+                        <textarea class="form-control" id="dacdiem" name = "dacdiem" th:field="*{dacdiem}" th:placeholder="${'Đặc Điểm'}" style="font-size: 16px; width: 100%; height: 40px;"></textarea>
+                        <p th:if = "${#fields.hasErrors('dacdiem')}" th:errorclass="text-danger"
+                           th:errors="${sach.dacdiem}"></p>
+                        <div class="invalid-feedback">
+                            Hãy nhập trường Đặc Điểm
                         </div>
+
+
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 ">
+
+                        <label for = "soluonghienco" class=" col-form-label">Số Lượng Hện Có</label>
+
+                        <input type="number" class="form-control" id="soluonghienco" name = "soluonghienco" th:field="*{soluonghienco}" th:placeholder="${'Số Lượng Hiện Có'}" style="font-size: 16px; width: 100%; height: 40px;" required>
+                        <p th:if = "${#fields.hasErrors('soluonghienco')}" th:errorclass="text-danger"
+                           th:errors="${sach.soluonghienco}"></p>
+                        <div class="invalid-feedback">
+                            Hãy nhập trường SLHC
+                        </div>
+
                     </div>
 
-                    <div class="form-group">
 
-                        <div class="col-md-10">
-                            <label for = "dacdiem" class="col-sm-4 col-form-label">Đặc Điểm</label>
+                    <div class="col-md-2 ">
+                        <label for = "DVT" class=" col-form-label">Đơn Vị Tính</label>
 
-                                <textarea class="form-control" id="dacdiem" name = "dacdiem" th:field="*{dacdiem}" th:placeholder="${'Đặc Điểm'}"></textarea>
-                                <p th:if = "${#fields.hasErrors('dacdiem')}" th:errorclass="text-danger"
-                                   th:errors="${sach.dacdiem}"></p>
-
-
+                        <input type="text" class="form-control" id="DVT" name = "DVT" th:field="*{DVT}" th:placeholder="${'Đơn Vị Tính'}" style="font-size: 16px; width: 100%; height: 40px;" required>
+                        <p th:if = "${#fields.hasErrors('DVT')}" th:errorclass="text-danger"
+                           th:errors="${sach.DVT}"></p>
+                        <div class="invalid-feedback">
+                            Hãy Nhập trường DVT
                         </div>
+
                     </div>
 
-
-
-                    <div class="form-group">
-
-                        <div class="col-md-10">
-
-                            <label for = "DVT" class="col-sm-4 col-form-label">Đơn Vị Tính</label>
-
-                                <input type="text" class="form-control" id="DVT" name = "DVT" th:field="*{DVT}" th:placeholder="${'Đơn Vị Tính'}" style="font-size: 16px; width: 100%; height: 40px;"  required>
-                                <p th:if = "${#fields.hasErrors('DVT')}" th:errorclass="text-danger"
-                                   th:errors="${sach.DVT}"></p>
-
-
-
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-
-                        <div class="col-md-10">
-                            <label for = "dongia" class="col-sm-4 col-form-label">Đơn Giá</label>
-
-                                <input type="text" class="form-control" id="dongia" name = "dongia" th:field="*{dongia}" th:placeholder="${'Đơn Giá'}" style="font-size: 16px; width: 100%; height: 40px;"  required>
-                                <p th:if = "${#fields.hasErrors('dongia')}" th:errorclass="text-danger"
-                                   th:errors="${sach.dongia}"></p>
-
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
+                    <div class="col-md-4 ">
 
                         <div class="col-md-10">
-                            <label for="theloaisach" class="col-sm-4 col-form-label">Chọn Thể Loại</label>
-                            <select name="theloaisach" class="form-control form-select" th:field="*{theloaisach}" id="theloaisach" th:name="theloaisach" >
+                            <label for = "dongia" class="col-form-label">Đơn Giá</label>
 
-                                <option value="0">--Chon the loai--</option>
-                                <option th:each="category : ${TLList}"
-                                        th:value="${category.matheloai}"
-                                        th:text="${category.tentheloai}"
-                                        th:selected="${category.matheloai == sach.theloaisach.matheloai}"
+                            <input type="text" class="form-control" id="dongia" name = "dongia" th:field="*{dongia}" th:placeholder="${'Đơn Giá'}" style="font-size: 16px; width: 100%; height: 40px;" required>
+                            <p th:if = "${#fields.hasErrors('dongia')}" th:errorclass="text-danger"
+                               th:errors="${sach.dongia}"></p>
+                            <div class="invalid-feedback">
+                                Hãy nhập đơn giá
+                            </div>
 
-                                ></option>
 
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-
-                        <div class="col-md-10">
-                            <label for="nxb" class="col-sm-4 col-form-label"> Chọn NXB</label>
-                            <select name="nxb" class="form-control" th:field="*{nxb}" id="nxb" th:name="nxb" >
-
-                                <option value="0">--Chon NXB--</option>
-                                <option th:each="category : ${NXBList}"
-                                        th:value="${category.manxb}"
-                                        th:text="${category.tennxb}"
-                                        th:selected="${category.manxb == sach.nxb.manxb}"
-                                ></option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="image">Choose book no shashin</label>
-                        <input type="file" class="form-control" name="image" id = "image" th:placeholder="${'Choose book no picture'}" />
-
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Update" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
 
+                <div class="form-row">
+                    <div class="col-md-6 ">
+                        <label for="theloaisach">Chọn Thể Loại Sách</label>
+                        <select name="theloaisach" class="form-control" th:field="*{theloaisach}" id="theloaisach" th:name="theloaisach" style="font-size: 16px; width: 100%; height: 40px;">
 
-                <form th:action="@{/QLSACH/Index}">
-                    <button type="submit" style="color: white; background-color:darkblue;">Back To List</button>
-                </form>
+                            <option value="0">--Chon the loai--</option>
+                            <option th:each="category : ${TLList}"
+                                    th:value="${category.matheloai}"
+                                    th:text="${category.tentheloai}"
+                            ></option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 ">
+                        <label for="nxb">Chọn nhà xuất bản</label>
+                        <select name="nxb" class="form-control" th:field="*{nxb}" id="nxb" th:name="nxb" style="font-size: 16px; width: 100%; height: 40px;">
+
+                            <option value="0">--Chon NXB--</option>
+                            <option th:each="nxblist : ${NXBList}"
+                                    th:value="${nxblist.manxb}"
+                                    th:text="${nxblist.tennxb}"
+                            ></option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class = "form-row">
+                    <div class="col-md-8 ">
+                        <label for="image">Choose book no shashin</label>
+                        <input type="file" class="form-control" name="image" id="image" th:placeholder="${'Choose book no picture'}" style="font-size: 16px; width: 100%; height: 40px;" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-2">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                    <form class = "col-md-2" th:action="@{/QLSACH/Index}">
+                        <button type="submit" style="color: white; background-color:darkblue;">Back To List</button>
+                    </form>
+                </div>
 
             </form>
         </div>
 
-    </div>
+
 
 </section>
 
 
-@section Scripts {
-@Scripts.Render("~/bundles/jqueryval")
-}
 </body>
 </html>

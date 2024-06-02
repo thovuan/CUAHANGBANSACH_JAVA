@@ -20,6 +20,10 @@
                 <h2>DANH SÁCH SÁCH</h2>
                 <hr class="colorgraph" />
 
+                <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                    <span th:text="${errorMessage}"></span>
+                </div>
+
                 <div class="col-lg-4" style="margin-top:10px; margin-bottom: 10px">
 
                     <form th:action="@{/QLSACH/Create}">
