@@ -185,9 +185,22 @@
                                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-69907">
                                                     <a th:href="@{/About/OurStory}">Câu chuyện về chúng tôi</a></li>
                                                 <li id="menu-item-69992"
-                                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-69992">
-                                                    <a th:href="@{/About/Blog/Index}"><strong
-                                                            style="color:orange;">Blog</strong></a></li>
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-29632">
+                                                    <a href=""><strong
+                                                            style="color:orange;">Blog</strong></a>
+
+                                                    <ul class="sub-menu">
+                                                        <li id="menu-item-29634"
+                                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                            <a th:href="@{/About/Blog/Index}">Trang Blog</a>
+                                                        </li>
+                                                        <li id="menu-item-29635"
+                                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                            <a th:href="@{/About/Blog/Blog}">Quản Ly Blog của bạn</a>
+                                                        </li>
+                                                    </ul>
+
+                                                </li>
                                                 <li id="menu-item-179889"
                                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-179889">
                                                     <a th:href="@{/About/Contact}">Tương tác</a></li>

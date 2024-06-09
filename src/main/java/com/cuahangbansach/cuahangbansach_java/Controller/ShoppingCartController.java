@@ -38,6 +38,8 @@ public class ShoppingCartController {
     @Autowired
     private EmailSenderService mailSenderService;
 
+
+
     @GetMapping("/ShoppingCart/Index")
     public String Index(Model model, @RequestParam(name = "dhid", required = false)String pmh) {
         KHACH kyaku = (KHACH) httpSession.getAttribute("guest");
@@ -220,6 +222,11 @@ public class ShoppingCartController {
         model.addAttribute("promo", promo);
         return "ShoppingCart/Confirm";
     }
+
+//    @PutMapping("/ShoppingCart/Confirm")
+//    public String UsePromo(Model model) {
+//        return "redirect:/ShoppingCart/Confirm";
+//    }
 
     @PostMapping("/ShoppingCart/Confirm")
     public String CompleteOrder(Model model,@ModelAttribute("promo")KHUYENMAI promo, @ModelAttribute("pmh")PHIEUMUAHANG pmh) {

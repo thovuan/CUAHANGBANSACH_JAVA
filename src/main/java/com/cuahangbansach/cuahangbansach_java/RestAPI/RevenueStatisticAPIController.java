@@ -25,8 +25,8 @@ public class RevenueStatisticAPIController {
     }
 
 
-    @GetMapping("/bymonth/{year}&{MB}&{ME}")
-    public List<PHIEUMUAHANG> revenueStatisticByMonth(@PathVariable("year") int year, @PathVariable("MB") int MB, @PathVariable("ME") int ME) {
-        return revenueStatisticsService.getRevenueStatisticsByMonth(year, MB, ME);
-    }
+//    @GetMapping("/bymonth/{year}&{MB}&{ME}")
+//    public List<PHIEUMUAHANG> revenueStatisticByMonth(@PathVariable("year") int year, @PathVariable("MB") int MB, @PathVariable("ME") int ME) {
+//        return revenueStatisticsService.getRevenueStatisticsByMonth(year, MB, ME);
+//    }
 }

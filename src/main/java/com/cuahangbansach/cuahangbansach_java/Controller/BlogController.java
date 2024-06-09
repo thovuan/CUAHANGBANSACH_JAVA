@@ -8,6 +8,7 @@ import com.cuahangbansach.cuahangbansach_java.Service.QLKHACHService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 
 @Controller
 public class BlogController {
@@ -84,8 +87,11 @@ public class BlogController {
         Blog bl = new Blog();
         bl.setNgayviet(dt);
         bl.setTitle(blog.getTitle());
-        bl.setContent(blog.getContent());
         bl.setMakhachhang(qlkhachService.getKhachById(kyaku.getMakhachhang()));
+
+        //xu ly text
+        String sanitizedText = Jsoup.clean(blog.getContent(), Safelist.none());
+        bl.setContent(sanitizedText);
 
         //them anh
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

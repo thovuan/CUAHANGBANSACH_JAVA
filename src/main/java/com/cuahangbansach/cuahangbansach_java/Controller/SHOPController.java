@@ -77,6 +77,14 @@ public class SHOPController {
         return "/SHOP/Detail";
         //return "redirect:/SHOP/Index";
     }
+    @GetMapping("/SHOP/Details/{id}")
+    public String BookDetails(Model model, @PathVariable String id) {
+        SACH hon = qlsachService.GetSachById(id);
+        if (hon == null) return "Can't Find Book: " + id;
+        model.addAttribute("SACH", hon);
+        return "/SHOP/Details";
+        //return "redirect:/SHOP/Index";
+    }
 
 //    @GetMapping("/SHOP/Detail/{id}")
 //    @ResponseBody
@@ -131,7 +139,7 @@ public class SHOPController {
         try {
             shoppingCartService.Add(ct);
 
-            pmh.setDHTotal((long) sl * hon.getDongia());
+            pmh.setDHTotal(pmh.getDHTotal()+(long) sl * hon.getDongia());
             shoppingCartService.Create(pmh);
 
             //return "redirect:/SHOP/Index";

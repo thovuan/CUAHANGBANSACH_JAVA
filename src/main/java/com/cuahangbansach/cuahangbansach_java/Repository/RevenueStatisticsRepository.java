@@ -18,6 +18,9 @@ public interface RevenueStatisticsRepository extends JpaRepository<PHIEUMUAHANG,
     @Query(value = "select * from PHIEUMUAHANG where year(ngaylap) = :years ", nativeQuery = true)
     public List<PHIEUMUAHANG> getRevenueStatisticsByYear(int years);
 
+    @Query(value = "select * from PHIEUMUAHANG where year(ngaylap) = :years and month(ngaylap) = :months", nativeQuery = true)
+    public List<PHIEUMUAHANG> getRevenueStatisticsByYearandMonth(int months, int years);
+
     @Query(value = "select * from PHIEUMUAHANG where year(ngaylap) = :years and month(ngaylap) between :MB and :ME", nativeQuery = true)
     public List<PHIEUMUAHANG> getRevenueStatisticsByMonth(int years, int MB, int ME);
 

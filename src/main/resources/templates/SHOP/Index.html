@@ -103,6 +103,10 @@
                             <button type="submit" style="color: white; background-color:darkblue;"><i class="fa-solid fa-circle-info"></i></button>
                         </form>
 
+                        <a th:href="@{/SHOP/Details/{id}(id = ${hon.masach})}" class="btn btn-primary link_Detail">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+
                         <form th:action="@{/SHOP/Buy/{id}(id = ${hon.masach})}" th:object="${hon}">
                             <button type="submit" style="color: white; background-color:darkblue;">Thêm vào giỏ hàng</button>
                         </form>
@@ -111,7 +115,7 @@
                 </div>
             </div>
 
-            <div class="modal fade bs-modal-lg_1" tabindex="-1" role="document" aria-hidden="true">
+            <div id="myModal" class="modal fade bs-modal-lg_1" tabindex="-1" role="document" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <!-- Header -->
@@ -120,7 +124,7 @@
                         </div>
                         <div class="modal-body">
                             <!-- Body -->
-                            <div class="row form-group" id="Body_Modal">
+                            <div class="form-group" id="Body_Modal">
 
                             </div>
                             <!-- Footer -->
@@ -139,5 +143,13 @@
     </div>
 </section>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".link_Detail").on("click", function(e) {
+            e.preventDefault();
+            $("#myModal").modal("show").find("#Body_Modal").load($(this).attr("href"));
+        });
+    });
+</script>
 
 </html>

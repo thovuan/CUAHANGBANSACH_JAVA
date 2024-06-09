@@ -60,8 +60,8 @@
                         <td th:text="${khach.getSdt()}">
 
                         </td>
-                        <td th:text="${khach.getAvatar()}">
-
+                        <td >
+                            <img th:alt="${khach.getTenkhachhang()}" th:src="@{'/GuestAvatar/' + ${khach.getMakhachhang()} + '/' + ${khach.getAvatar()}}" style="width: 200px; height: auto;" />
                         </td>
 
                         <td>

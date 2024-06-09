@@ -38,6 +38,9 @@ public class PHIEUMUAHANG {
     private long DHTotal;
 
     @Transient
+    private long costpromo;
+
+    @Transient
     public List<SACH> dsSach;
 
     @OneToMany(mappedBy = "phieumuahang", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -227,6 +227,41 @@ public class QLSACHController {
         return "Loi";
     }
 
+    @PostMapping("/QLSACH/UploadPic/{id}")
+    public String UploadPic(Model model, @PathVariable("id") String id, @RequestParam("image")MultipartFile multipartFile) {
+        SACH book = qlsachService.GetSachById(id);
+
+        //them anh
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        System.out.println(fileName);
+        book.setAnhsanpham(fileName);
+
+
+        try {
+
+        //cap nhat anh vao
+        String uploadDir = "./src/main/resources/static/ANHSANPHAM/" + book.getMasach();
+        Path uploadPath =  Paths.get(uploadDir);
+        if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+
+        try (InputStream inputStream = multipartFile.getInputStream()){
+            Path filePath = uploadPath.resolve(fileName);
+            System.out.println(filePath.toFile().getAbsolutePath());
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            return "redirect:/QLSACH/Details";
+
+        } catch (IOException _) {
+            model.addAttribute("errorMessage", "Loi cập nhật ảnh");
+            return "/QLSACH/Index";
+        }
+
+        } catch (Exception ex) {
+            //return "redirect:/QLSACH/Index";
+            return "redirect:/QLSACH/Index";
+        }
+
+    }
 
     @GetMapping("/QLSACH/Details/{id}")
     public String Details(Model model, @PathVariable("id") String id) {

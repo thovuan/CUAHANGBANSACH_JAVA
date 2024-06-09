@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/js/script.js}">
 </head>
 <body>
-<th:block th:include="/Shared/_Layout"></th:block>
+
 <section id="content"  style="margin-left: 10px; margin-right:10px">
     <div class="container">
         <div class="row">
@@ -35,24 +35,23 @@
                 <hr class="colorgraph" />
 
                 <div style="display: -webkit-box; text-overflow: ellipsis; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-size: 20px; font-weight: 500; line-height: 24px; margin: 0; max-height: 48px; max-width: 665px; overflow: hidden; overflow-wrap: break-word; vertical-align: sub;">
-                    <span th:text="${SACH.tensach}">
+                    <h2 th:text="${SACH.tensach}">
 
-                    </span>
+                    </h2>
                 </div>
 
-                <div class="row" style="margin-top: 0.625rem; position: relative;">
-                    <div class="flex flex-column">
+                <div class="form-row" style="margin-top: 0.625rem; position: relative;">
+                    <div class="col-lg-6">
+                        <h5>Thể Loại</h5>
                         <p th:text="${SACH.tentheloai}">
                         </p>
                     </div>
-                    <div class="flex flex-column">
+                    <div class="col-lg-6">
+                        <h5>Nhà Xuất Bản</h5>
                         <p th:text="${SACH.tennxb}">
                         </p>
                     </div>
-                    <div class="flex flex-column">
-                        <p th:text="${SACH.tennhanvien}">
-                        </p>
-                    </div>
+
                 </div>
 
                 <div style="margin-top:10px">
@@ -62,7 +61,7 @@
                                 <div class="flex items-center flex-basis: 625px; flex-wrap: wrap;min-height: 1.875rem;width: 625px;">
                                     <div class="flex items-center">
                                         <div class="color: #ee4d2d;font-size: 30px;font-weight: 500;">
-                                            <h3 th:text="${SACH.dongia}"> VND</h3>
+                                            <h3><th:block th:text="${SACH.dongia}"></th:block> VND</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -72,6 +71,7 @@
                 </div>
 
                 <div style="margin-top: 1.5625rem;">
+                    <h5>Đặc Điểm</h5>
                     <p th:text="${SACH.dacdiem}"> </p>
                 </div>
             </div>
@@ -79,8 +79,16 @@
 
 
         </div>
-        <div class="form-group">
-            <input type="button" value="Trở lại shop" th:onclick="@{/SHOP/Index}" />
+        <div class="form-row">
+
+            <form class="col-lg-3" th:action="@{/SHOP/Buy/{id}(id = ${SACH.getMasach()})}" th:object="${SACH}">
+                <button type="submit" style="color: white; background-color:darkblue;">Thêm vào giỏ hàng</button>
+            </form>
+
+            <div class="col-lg-3">
+                <input type="button" class="btn btn-blue" value="Xem đánh giá" th:onclick="@{/SHOP/Buy/{id}(id=${SACH.getMasach()})}" />
+            </div>
+
         </div>
 
     </div>
