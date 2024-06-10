@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,6 +72,23 @@ public class BlogService {
 
     public List<Blog> getAll() {
         return blogRepository.findAll();
+    }
+
+    public List<List<Object>> getBlogRevenue(int year) {
+        List<List<Object>> data = new ArrayList<>();
+        //List<PHIEUMUAHANG> listDHbyYear = revenueStatisticsRepository.getRevenueStatisticsByYear(2024);
+        for (int i =1 ; i<=12; i++) {
+            List<Blog> listBlog = blogRepository.BlogRevenueByYear(2024,i);
+            List<Object> sub = new ArrayList<>();
+
+            sub.add(i);
+            sub.add(listBlog.size());
+            data.add(sub);
+        }
+//        data.add(Arrays.asList(1,2024));
+//        data.add(Arrays.asList(2,2026));
+        System.out.println(data);
+        return data;
     }
 
     public Blog getBlog(String id) {

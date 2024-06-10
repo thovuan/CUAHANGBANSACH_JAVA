@@ -24,6 +24,15 @@ public interface DetailSCRepository extends JpaRepository<CHITIETDATHANG, String
 //            "FROM CHITIETDATHANG o GROUP BY o.bookId ORDER BY SUM(o.quantity) DESC")
 //    List<BookSales> findTopSellingBooks();
 
+    @Query(value = """
+        select ctdh.* from CHITIETDATHANG ctdh left join PHIEUMUAHANG pmh on ctdh.maphieumuahang = pmh.maphieumuahang
+        where year(pmh.ngaylap) = :yearS and month(pmh.ngaylap) = :monthS
+
+    """, nativeQuery = true)
+    public List<CHITIETDATHANG> BookSellerRevenue(int yearS, int monthS);
+
+
+
 
 
 }

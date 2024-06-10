@@ -19,6 +19,9 @@ public class THELOAISACH {
     @Column(name = "tentheloai")
     private String tentheloai;
 
+    @Column(name = "avatar")
+    private String avatar;
+
     @Transient
     private int Count;
 }

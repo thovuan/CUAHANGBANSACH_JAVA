@@ -1,5 +1,6 @@
 package com.cuahangbansach.cuahangbansach_java.Service;
 
+import com.cuahangbansach.cuahangbansach_java.Model.Blog;
 import com.cuahangbansach.cuahangbansach_java.Model.BookComment;
 import com.cuahangbansach.cuahangbansach_java.Model.CHITIETDATHANG;
 import com.cuahangbansach.cuahangbansach_java.Repository.BookCommentRepository;
@@ -28,6 +29,9 @@ public class QLSACHService {
     @Autowired
     private BookCommentRepository bookCommentRepository;
 
+    @Autowired
+    private DetailSCRepository scDetailRepository;
+
 
     public List<SACH> getList() {
         List<SACH> saches = ql.GetList();
@@ -39,9 +43,9 @@ public class QLSACHService {
 
 
 
-                String tentheloai = sach.getTheloaisach().getTentheloai();
-                String tennxb = sach.getNxb().getTennxb();
-                String tennv = sach.getNhanvien().getTennhanvien();
+                String tentheloai = sach.getMatheloai().getTentheloai();
+                String tennxb = sach.getManxb().getTennxb();
+                String tennv = sach.getManhanvien().getTennhanvien();
 
                 sach.setTentheloai(tentheloai);
                 sach.setTennxb(tennxb);
@@ -67,9 +71,9 @@ public class QLSACHService {
                 /*String tentheloai = (String) entityManager.createNativeQuery("SELECT tentheloai FROM  THELOAISACH where matheloai = :matheloai")
                         .setParameter("matheloai", sach.getMatheloai()).getSingleResult();*/
 
-            String tentheloai = sach.getTheloaisach().getTentheloai();
-            String tennxb = sach.getNxb().getTennxb();
-            String tennv = sach.getNhanvien().getTennhanvien();
+            String tentheloai = sach.getMatheloai().getTentheloai();
+            String tennxb = sach.getManxb().getTennxb();
+            String tennv = sach.getManhanvien().getTennhanvien();
 
             sach.setTentheloai(tentheloai);
             sach.setTennxb(tennxb);
@@ -103,9 +107,9 @@ public class QLSACHService {
                 /*String tentheloai = (String) entityManager.createNativeQuery("SELECT tentheloai FROM  THELOAISACH where matheloai = :matheloai")
                         .setParameter("matheloai", sach.getMatheloai()).getSingleResult();*/
 
-                String tentheloai = sach.getTheloaisach().getTentheloai();
-                String tennxb = sach.getNxb().getTennxb();
-                String tennv = sach.getNhanvien().getTennhanvien();
+                String tentheloai = sach.getMatheloai().getTentheloai();
+                String tennxb = sach.getManxb().getTennxb();
+                String tennv = sach.getManhanvien().getTennhanvien();
 
                 sach.setTentheloai(tentheloai);
                 sach.setTennxb(tennxb);
@@ -127,7 +131,7 @@ public class QLSACHService {
         Map<String, Integer> booksCountMap = new HashMap<>();
 
         for (CHITIETDATHANG cht : ct) {
-            String BookId = cht.getSach().getMasach();
+            String BookId = cht.getMasach().getMasach();
             int quantity = cht.getSoluongmua();
 
             if (booksCountMap.containsKey(BookId)) {
@@ -146,6 +150,30 @@ public class QLSACHService {
         int numTopProducts = Math.min(productList.size(), 8);
 
         return productList.subList(0, numTopProducts);
+    }
+
+    public List<SACH> Top8BookSeller() {
+        return ql.Top8SellerBook();
+    }
+
+    public List<List<Object>> GetBookSellerRevenue(int year) {
+        List<List<Object>> data = new ArrayList<>();
+        //List<PHIEUMUAHANG> listDHbyYear = revenueStatisticsRepository.getRevenueStatisticsByYear(2024);
+        for (int i =1 ; i<=12; i++) {
+            List<CHITIETDATHANG> listSACH = scDetailRepository.BookSellerRevenue(2024, i);
+            List<Object> sub = new ArrayList<>();
+            long soluongmua = 0;
+            for (CHITIETDATHANG cht : listSACH) {
+                soluongmua+=cht.getSoluongmua();
+            }
+            sub.add(i);
+            sub.add(soluongmua);
+            data.add(sub);
+        }
+//        data.add(Arrays.asList(1,2024));
+//        data.add(Arrays.asList(2,2026));
+        System.out.println(data);
+        return data;
     }
 
     public void  Delete(String id) {

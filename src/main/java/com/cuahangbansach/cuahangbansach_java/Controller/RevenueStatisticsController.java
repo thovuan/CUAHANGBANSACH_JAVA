@@ -52,16 +52,7 @@ public class RevenueStatisticsController {
 
     @GetMapping("/QLDONHANG/RevenueStatistics/Index")
     public String Index(Model model, @RequestParam(name = "monthbegin", required = false)String MB, @RequestParam(name = "monthend", required = false)String ME) {
-        //List<List<Object>> list = revenueStatisticsService.getChart();
-//        ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            String jsonData = mapper.writeValueAsString(list);
-//            model.addAttribute("chartData", jsonData);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//            model.addAttribute("errorMessage", "Error processing JSON");
-//            return "/QLDONHANG/RevenueStatistics/Index";
-//        }
+
         if (MB == null && ME == null) {
             model.addAttribute("chartData", revenueStatisticsService.getChart());
         }
@@ -73,5 +64,10 @@ public class RevenueStatisticsController {
         return "/QLDONHANG/RevenueStatistics/Index";
     }
 
+    @GetMapping("/QLDONHANG/RevenueStatistics/Index2")
+    public String Index2(Model model) {
+        model.addAttribute("chartData", revenueStatisticsService.getRevenueStatisticsByYearandMonthandDay(2024,5));
+        return "/QLDONHANG/RevenueStatistics/Index2";
+    }
 
 }

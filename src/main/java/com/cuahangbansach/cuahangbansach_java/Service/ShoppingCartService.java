@@ -54,7 +54,7 @@ public class ShoppingCartService {
             List<CHITIETDATHANG> ctdh = scRepository.GetListDHId(pmh.getMaphieumuahang());
 
             for(CHITIETDATHANG dh : ctdh) {
-                SACH hon = qlsachService.GetSachById(dh.getSach().getMasach());
+                SACH hon = qlsachService.GetSachById(dh.getMasach().getMasach());
 
                 if (hon != null) {
                     hon.setSoluongmua(dh.getSoluongmua());

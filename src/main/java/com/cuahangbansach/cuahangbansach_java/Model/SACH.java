@@ -48,16 +48,16 @@ public class SACH {
 
     @JoinColumn(name="matheloai", referencedColumnName = "matheloai")
     @ManyToOne(fetch = FetchType.EAGER)
-    private THELOAISACH theloaisach;
+    private THELOAISACH matheloai;
 
 
     @JoinColumn(name="manhanvien", referencedColumnName = "manhanvien")
     @ManyToOne(fetch = FetchType.EAGER)
-    private NHANVIEN nhanvien;
+    private NHANVIEN manhanvien;
 
     @JoinColumn(name="manxb", referencedColumnName = "manxb")
     @ManyToOne(fetch = FetchType.EAGER)
-    private NXB nxb;
+    private NXB manxb;
 
     //@OneToMany(mappedBy = "masach", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Transient

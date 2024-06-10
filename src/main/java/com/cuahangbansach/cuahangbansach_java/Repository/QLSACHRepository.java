@@ -23,4 +23,32 @@ public interface QLSACHRepository extends JpaRepository<SACH, String> {
 
     @Query(value = "select * from SACH where tensach like %:name%", nativeQuery = true)
     public List<SACH> GetSachbyName(String name);
+
+    @Query(value = """
+            select top(8) hon.masach, hon.tensach, hon.soluonghienco, hon.dacdiem, hon.anhsanpham, hon.DVT, hon.dongia,
+            hon.matheloai, hon.manxb, hon.manhanvien, sum(ctdh.soluongmua) as total_quantity
+            from SACH hon join CHITIETDATHANG ctdh on hon.masach = ctdh.masach
+            group by hon.masach, hon.tensach, hon.soluonghienco, hon.dacdiem, hon.anhsanpham, hon.DVT, hon.dongia,
+            hon.matheloai, hon.manxb, hon.manhanvien
+            order by total_quantity desc""", nativeQuery = true)
+    public List<SACH> Top8SellerBook();
+
+//    @Query(value = """
+//            select hon.masach, hon.tensach, hon.soluonghienco, hon.dacdiem, hon.anhsanpham, hon.DVT, hon.dongia,
+//            hon.matheloai, hon.manxb, hon.manhanvien, sum(ctdh.soluongmua) as total_quantity
+//            from SACH hon join CHITIETDATHANG ctdh on hon.masach = ctdh.masach
+//            where year(ctdh.phieumuahang.ngaylap) = :years and month(ctdh.phieumuahang.ngaylap) = :months
+//            group by hon.masach, hon.tensach, hon.soluonghienco, hon.dacdiem, hon.anhsanpham, hon.DVT, hon.dongia,
+//            hon.matheloai, hon.manxb, hon.manhanvien
+//            order by total_quantity desc""", nativeQuery = true)
+//    public List<SACH> BookSellerRevenue(int years, int month);
+
+//    @Query(value = """
+//            select top(8) hon.masach, hon.tensach, hon.soluonghienco, hon.dacdiem, hon.anhsanpham, hon.DVT, hon.dongia,
+//            hon.matheloai, hon.manxb, hon.manhanvien, sum(ctdh.soluongmua) as total_quantity
+//            from SACH hon join CHITIETDATHANG ctdh on hon.masach = ctdh.masach
+//            group by hon.masach, hon.tensach, hon.soluonghienco, hon.dacdiem, hon.anhsanpham, hon.DVT, hon.dongia,
+//            hon.matheloai, hon.manxb, hon.manhanvien
+//            order by total_quantity desc""", nativeQuery = true)
+//    public List<SACH> BookSellerRevenue(int years, int monthBG, int monthE);
 }

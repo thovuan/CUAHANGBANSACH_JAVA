@@ -129,8 +129,8 @@ public class SHOPController {
 
         //tien hanh them sach vao
         CHITIETDATHANG ct = new CHITIETDATHANG();
-        ct.setPhieumuahang(shoppingCartService.GetPMHById(pmh.getMaphieumuahang()));
-        ct.setSach(hon);
+        ct.setMaphieumuahang(shoppingCartService.GetPMHById(pmh.getMaphieumuahang()));
+        ct.setMasach(hon);
         ct.setSoluongmua(sl);
         ct.setTinhtranggiao("Chưa giao");
 

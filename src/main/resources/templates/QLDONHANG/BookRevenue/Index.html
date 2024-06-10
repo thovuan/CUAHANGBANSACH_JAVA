@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    >
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+<th:block th:include="/Shared/_StaffLayout"></th:block>
+<section id="content">
+    <div class="container">
+
+        <div class="col-lg-20">
+            <div class="col-lg-10">
+                <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                    <span th:text="${errorMessage}"></span>
+                </div>
+                <script type="text/javascript" th:inline="javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                        var data = new google.visualization.DataTable();
+
+                        data.addColumn('number', 'Tháng');
+                        data.addColumn('number', 'Số Sách Bán Ra');
+
+                        // Chuyển đổi dữ liệu JSON thành mảng Google Charts
+                        data.addRows([
+                            /*[# th:each="row : ${chartData}"]*/
+                            [[${row}]],
+                            /*[/]*/
+                        ]);
+
+                        var options = {
+                            title: 'Thống kê Số sách bán ra theo năm 2024',
+                            hAxis: {title: 'Thang',  titleTextStyle: {color: '#333'}},
+                            vAxis: {minValue: 0}
+                        };
+
+                        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                        chart.draw(data, options);
+                    }
+                </script>
+
+                <div id="chart_div" style="width: 100%; height: 500px;"></div>
+            </div>
+
+
+            <div class="col-lg-10" style="border: #0D0D0D">
+                <form th:action="@{/QLDONHANG/RevenueStatistics/Index}" method="get">
+
+
+                    <div class="col-md-5">
+                        <label for = "monthbegin" class="col-sm-4 col-form-label"></label>
+                        <input type="text" name = "monthbegin" id = "monthbegin" th:placeholder="${'Tháng bắt đầu'}">
+
+
+                        <label for = "monthend" class="col-sm-4 col-form-label"></label>
+                        <input type="text" name = "monthend" id = "monthend" th:placeholder="${'Tháng kết thúc'}">
+
+                    </div>
+
+                    <button type="submit" style="color: white; background-color:darkblue;">Find</button>
+
+
+                </form>
+
+            </div>
+
+            <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <table border="1" class="table table-striped table-responsive-md" th:align="center">
+                <tr>
+                    <th>
+                        Mã Phiếu Mua Hang
+                    </th>
+                    <th>
+                        Ngày Lập
+                    </th>
+                    <th>
+                        Tình trạng thanh toán
+                    </th>
+                    <th>
+                        Tình trạng
+                    </th>
+                    <th>
+                        Giá trị Dơn Hàng
+                    </th>
+
+                </tr>
+
+
+                <tr th:each="pmh: ${PMH}">
+                    <td th:text="${pmh.getMaphieumuahang()}">
+
+                    </td>
+                    <td th:text="${pmh.getNgaylap()}">
+
+                    </td>
+                    <td th:text="${pmh.getTinhtrangthanhtoan()}">
+
+                    </td>
+                    <td th:text="${pmh.getTinhtrang()}">
+
+                    </td>
+
+                    <td  th:text="${pmh.getDHTotal()}">
+
+                    </td>
+
+                </tr>
+
+
+            </table>
+
+            <hr class="colorgraph" />
+            <div class="form-horizontal">
+                <h2>Doanh thu: <th:block th:text="${CostTotal}"></th:block></h2>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+</body>
+</html>

@@ -127,4 +127,10 @@ public class BlogController {
 
 
     }
+
+    @GetMapping("/Revenue/Blog/Index")
+    public String BlogRevenue(Model model) {
+        model.addAttribute("chartData", blogService.getBlogRevenue(2024));
+        return "/Revenue/Blog/Index";
+    }
 }

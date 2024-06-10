@@ -58,8 +58,8 @@ public class QLSACHAPIController {
         hon.setDacdiem(sach.getDacdiem());
         hon.setDongia(sach.getDongia());
         hon.setDVT(sach.getDVT());
-        hon.setTheloaisach(sach.getTheloaisach());
-        hon.setNxb(sach.getNxb());
+        hon.setMatheloai(sach.getMatheloai());
+        hon.setManxb(sach.getManxb());
 
         SACH book = qlsachService.Create(hon);
         return ResponseEntity.ok(book);

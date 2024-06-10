@@ -56,7 +56,7 @@ public class HomeController {
         List<NXB> nxb = qlnxbService.GetList();
         model.addAttribute("nxb", nxb);
 
-        List<SACH> topsell = qlsachService.Top8Seller();
+        List<SACH> topsell = qlsachService.Top8BookSeller();
         logger.info("Top products to view: {}", topsell);
         model.addAttribute("topsell", topsell);
 

@@ -17,6 +17,9 @@ public class NXB {
     @Column(name = "tennxb")
     private String tennxb;
 
+    @Column(name = "avatar")
+    private String avatar;
+
     @Transient
     private int Count;
 }

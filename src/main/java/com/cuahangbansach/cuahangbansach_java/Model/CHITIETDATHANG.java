@@ -20,12 +20,12 @@ public class CHITIETDATHANG {
     @Id
     @JoinColumn(name="maphieumuahang", referencedColumnName = "maphieumuahang")
     @ManyToOne(fetch = FetchType.EAGER)
-    private PHIEUMUAHANG phieumuahang;
+    private PHIEUMUAHANG maphieumuahang;
 
     @Id
     @JoinColumn(name="masach", referencedColumnName = "masach")
     @ManyToOne(fetch = FetchType.EAGER)
-    private SACH sach;
+    private SACH masach;
 
     @Column(name = "soluongmua")
     @Min(value = 1, message = "Số lượng mua phải từ 1")

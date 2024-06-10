@@ -3,6 +3,7 @@ package com.cuahangbansach.cuahangbansach_java.Controller;
 import com.cuahangbansach.cuahangbansach_java.Model.NHANVIEN;
 import com.cuahangbansach.cuahangbansach_java.Model.NXB;
 import com.cuahangbansach.cuahangbansach_java.Model.THELOAISACH;
+import com.cuahangbansach.cuahangbansach_java.Repository.DetailSCRepository;
 import com.cuahangbansach.cuahangbansach_java.Repository.QLSACHRepository;
 import com.cuahangbansach.cuahangbansach_java.Model.SACH;
 import com.cuahangbansach.cuahangbansach_java.Service.*;
@@ -43,8 +44,10 @@ public class QLSACHController {
 
     @Autowired
     private QLNVService qlnvService;
+
     @Autowired
     private HttpSession httpSession;
+
 
 
     @Autowired
@@ -108,9 +111,9 @@ public class QLSACHController {
         hon.setDacdiem(sach.getDacdiem());
         hon.setDongia(sach.getDongia());
         hon.setDVT(sach.getDVT());
-        hon.setTheloaisach(qltheloaiService.GetCategoryById(sach.getTheloaisach().getMatheloai()));
-        hon.setNxb(qlnxbService.GetNXBById(sach.getNxb().getManxb()));
-        hon.setNhanvien(qlnvService.GetById("NV01"));
+        hon.setMatheloai(qltheloaiService.GetCategoryById(sach.getMatheloai().getMatheloai()));
+        hon.setManxb(qlnxbService.GetNXBById(sach.getManxb().getManxb()));
+        hon.setManhanvien(qlnvService.GetById("NV01"));
 
         //them anh
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
@@ -159,8 +162,8 @@ public class QLSACHController {
         hon.setDacdiem(sach.getDacdiem());
         hon.setDongia(sach.getDongia());
         hon.setDVT(sach.getDVT());
-        hon.setTheloaisach(qltheloaiService.GetCategoryById(sach.getTheloaisach().getMatheloai()));
-        hon.setNxb(qlnxbService.GetNXBById(sach.getNxb().getManxb()));
+        hon.setMatheloai(qltheloaiService.GetCategoryById(sach.getMatheloai().getMatheloai()));
+        hon.setManxb(qlnxbService.GetNXBById(sach.getManxb().getManxb()));
         //hon.setNhanvien(qlnvService.GetById("NV01"));
 
         //them anh
@@ -196,7 +199,11 @@ public class QLSACHController {
         }
     }
 
-
+    @GetMapping("/QLDONHANG/BookRevenue/Index")
+    private String BookRevenue(Model model){
+        model.addAttribute("chartData", qlsachService.GetBookSellerRevenue(2024));
+        return "/QLDONHANG/BookRevenue/Index";
+    }
 
     @GetMapping("/QLSACH/Edit/{id}")
     public String QLSACHEdit(Model model, @PathVariable("id") String id) {
@@ -216,8 +223,8 @@ public class QLSACHController {
             hon.setDacdiem(sach.getDacdiem());
             hon.setDongia(sach.getDongia());
             hon.setDVT(sach.getDVT());
-            hon.setTheloaisach(qltheloaiService.GetCategoryById(sach.getTheloaisach().getMatheloai()));
-            hon.setNxb(qlnxbService.GetNXBById(sach.getNxb().getManxb()));
+            hon.setMatheloai(qltheloaiService.GetCategoryById(sach.getMatheloai().getMatheloai()));
+            hon.setManxb(qlnxbService.GetNXBById(sach.getManxb().getManxb()));
 //        hon.setNhanvien(sach.getNhanvien());
             model.addAttribute("sach", hon);
             model.addAttribute("TLList", list);

@@ -165,7 +165,7 @@ public class ShoppingCartController {
 
     @PostMapping("/ShoppingCart/EditSL")
     public  String EditSL(Model model, @ModelAttribute("SACH") CHITIETDATHANG sach) {
-        SACH hon = qlsachService.GetSachById(sach.getSach().getMasach());
+        SACH hon = qlsachService.GetSachById(sach.getMasach().getMasach());
         PHIEUMUAHANG pmh = (PHIEUMUAHANG) httpSession.getAttribute("donhang");
 
         //tao them don hang
@@ -182,7 +182,7 @@ public class ShoppingCartController {
         }
 
         //tien hanh them sach vao
-        CHITIETDATHANG ct = shoppingCartService.GetCHHById(pmh.getMaphieumuahang(), sach.getSach().getMasach());
+        CHITIETDATHANG ct = shoppingCartService.GetCHHById(pmh.getMaphieumuahang(), sach.getMasach().getMasach());
         //ct.setPhieumuahang(shoppingCartService.GetPMHById(pmh.getMaphieumuahang()));
         //ct.setSach(hon);
         ct.setSoluongmua(sach.getSoluongmua());
