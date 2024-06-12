@@ -133,4 +133,9 @@ public class BlogController {
         model.addAttribute("chartData", blogService.getBlogRevenue(2024));
         return "/Revenue/Blog/Index";
     }
+
+    @GetMapping("/About/Contact")
+    public String Contact(Model model) {
+        return "/About/Contact";
+    }
 }

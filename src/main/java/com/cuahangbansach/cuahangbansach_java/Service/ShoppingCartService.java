@@ -34,6 +34,23 @@ public class ShoppingCartService {
         return shoppingCartRepository.findAll();
     }
 
+    public List<List<Object>> CartRevenue() {
+        List<List<Object>> data = new ArrayList<>();
+        //List<PHIEUMUAHANG> listDHbyYear = revenueStatisticsRepository.getRevenueStatisticsByYear(2024);
+        long Totalcost = 0;
+        for (int i =1 ; i<=12; i++) {
+
+            List<Object> sub = new ArrayList<>();
+
+            sub.add(i);
+            sub.add(shoppingCartRepository.Revenue(i, 2024).size());
+            data.add(sub);
+        }
+
+        System.out.println(data);
+        return data;
+    }
+
     public List<PHIEUMUAHANG> GetListByGuestId(String guestId) {
         return shoppingCartRepository.GetPMHByGuestId(guestId);
     }

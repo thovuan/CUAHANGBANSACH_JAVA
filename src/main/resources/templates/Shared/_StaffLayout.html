@@ -108,7 +108,7 @@
                                             <a th:href="@{/NeoHome/index}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                                         <li id="menu-item-180878"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-ancestor current-menu-parent menu-item-has-children menu-item-180878">
-                                            <a th:href="@{/QLDONHANG/QLDONHANG/Index}">Quản Lý Đơn Hàng</a>
+                                            <a th:href="@{/QLDONHANG/QLDONHANG/Index}">Quản Lý Đơn Hàng </a>
 
                                         </li>
 
@@ -154,6 +154,46 @@
                                                         </li>
                                                     </ul>
                                             </ul>
+                                        </li>
+
+                                        <li id="menu-item-105320"
+                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-105320">
+                                            <a href="#">Thống kê</a>
+                                            <ul class="sub-menu">
+                                                <li id="menu-item-296347"
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                    <a th:href="@{/Revenue/All}">Thống kê tổng hợp</a>
+                                                </li>
+                                                <li id="menu-item-296345"
+                                                    class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-69690">
+                                                    <a href="#">Thống kê doanh thu</a>
+                                                    <ul class="sub-menu">
+                                                        <li id="menu-item-2963417"
+                                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                            <a th:href="@{/QLDONHANG/RevenueStatistics/Index}">Tống kê theo năm</a>
+                                                        </li>
+                                                        <li id="menu-item-29634174"
+                                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                            <a th:href="@{/QLDONHANG/RevenueStatistics/Index2}">Tống kê theo tháng</a>
+                                                        </li>
+                                                        <li id="menu-item-29634176"
+                                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                            <a th:href="@{/QLDONHANG/RevenueStatistics/Index3}">Tống kê theo ngày</a>
+                                                        </li>
+                                                    </ul>
+
+                                                </li>
+                                                <li id="menu-item-296356"
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                    <a th:href="@{/QLDONHANG/BookRevenue/Index}">Thống kê đầu sách bán ra</a>
+                                                </li>
+
+                                                <li id="menu-item-2963516"
+                                                    class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-29632">
+                                                    <a th:href="@{/Revenue/Blog/Index}">Thống kê hoạt động Blog</a>
+                                                </li>
+                                            </ul>
+
                                         </li>
 
                                         <li id="menu-item-69690" th:if="${session.nv!=null}"
@@ -213,9 +253,7 @@
                                         </li>
 
 
-                                        <li id="menu-item-105320"
-                                            class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-105320">
-                                            <a th:href="@{/Version/Index}">Thông tin phiên bản</a></li>
+
                                     </ul>
                                 </div>
                             </nav>

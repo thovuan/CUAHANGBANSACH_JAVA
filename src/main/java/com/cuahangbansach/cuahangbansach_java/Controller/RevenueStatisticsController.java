@@ -1,7 +1,7 @@
 package com.cuahangbansach.cuahangbansach_java.Controller;
 
 import com.cuahangbansach.cuahangbansach_java.Model.PHIEUMUAHANG;
-import com.cuahangbansach.cuahangbansach_java.Service.RevenueStatisticsService;
+import com.cuahangbansach.cuahangbansach_java.Service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,18 @@ public class RevenueStatisticsController {
 
     @Autowired
     private RevenueStatisticsService revenueStatisticsService;
+
+    @Autowired
+    private RevenueService revenueService;
+
+    @Autowired
+    private BlogService blogService;
+
+    @Autowired
+    private QLSACHService qlsachService;
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
 //    @GetMapping("/QLDONHANG/RevenueStatistics/Index")
 //    public String index(Model model, @RequestParam(name = "year", required = false) String year,
@@ -68,6 +80,20 @@ public class RevenueStatisticsController {
     public String Index2(Model model) {
         model.addAttribute("chartData", revenueStatisticsService.getRevenueStatisticsByYearandMonthandDay(2024,5));
         return "/QLDONHANG/RevenueStatistics/Index2";
+    }
+    @GetMapping("/Revenue/All")
+    public String TotalRevenue  (Model model) {
+        model.addAttribute("TotalRevenue", revenueService.TotalRevenue());
+        model.addAttribute("Cart", revenueService.CartSize());
+        model.addAttribute("BookSeller", revenueService.BookSellerRe());
+        model.addAttribute("User", revenueService.UserNumber());
+        model.addAttribute("Blog", revenueService.BlogActivity());
+
+        model.addAttribute("chartData", revenueStatisticsService.getChart());
+        model.addAttribute("chartData2", qlsachService.GetBookSellerRevenue(2024));
+        model.addAttribute("chartData3", shoppingCartService.CartRevenue());
+        model.addAttribute("chartData4", blogService.getBlogRevenue(2024));
+        return "/Revenue/TotalRevenue";
     }
 
 }
