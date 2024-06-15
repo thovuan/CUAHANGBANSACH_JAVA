@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,5 +55,16 @@ public class QLNHANVIENController {
         NHANVIEN nv = qlnvService.GetById(id);
         model.addAttribute("nv", nv);
         return "/QLTK/QLTKCT/QLNV/Detail";
+    }
+
+    @GetMapping("/QLTK/QLTKCT/QLNV/Delete/{id}")
+    public String Delete (Model model, @PathVariable String id){
+        try {
+            qlnvService.Delete(id);
+            return "redirect:/QLTK/QLTKCT/QLNV/Index";
+        } catch(Exception ex) {
+            model.addAttribute("errorMessage", "Lỗi xóa tài khoản");
+            return "redirect:/QLTK/QLTKCT/QLNV/Index";
+        }
     }
 }

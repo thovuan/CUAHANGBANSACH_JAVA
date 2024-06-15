@@ -113,7 +113,7 @@
                 <div class="form-row">
                     <div class="col-md-6 ">
                         <label for="theloaisach">Chọn Thể Loại Sách</label>
-                        <select name="theloaisach" class="form-control" th:field="*{theloaisach}" id="theloaisach" th:name="theloaisach" style="font-size: 16px; width: 100%; height: 40px;">
+                        <select name="theloaisach" class="form-control" th:field="*{matheloai}" id="theloaisach" th:name="theloaisach" style="font-size: 16px; width: 100%; height: 40px;">
 
                             <option value="0">--Chon the loai--</option>
                             <option th:each="category : ${TLList}"
@@ -127,7 +127,7 @@
 
                     <div class="col-md-6 ">
                         <label for="nxb">Chọn nhà xuất bản</label>
-                        <select name="nxb" class="form-control" th:field="*{nxb}" id="nxb" th:name="nxb" style="font-size: 16px; width: 100%; height: 40px;">
+                        <select name="nxb" class="form-control" th:field="*{manxb}" id="nxb" th:name="nxb" style="font-size: 16px; width: 100%; height: 40px;">
 
                             <option value="0">--Chon NXB--</option>
                             <option th:each="nxblist : ${NXBList}"

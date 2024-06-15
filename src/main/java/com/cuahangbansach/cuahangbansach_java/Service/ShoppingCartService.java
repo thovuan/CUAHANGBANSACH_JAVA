@@ -76,7 +76,7 @@ public class ShoppingCartService {
                 if (hon != null) {
                     hon.setSoluongmua(dh.getSoluongmua());
                     hon.setThanhtien((long) hon.getDongia() * dh.getSoluongmua());
-                    pmh.setDHTotal(pmh.getDHTotal() + hon.getThanhtien());
+                    pmh.setDHTotal(pmh.getDHTotal());
                     pmh.dsSach.add(hon);
                 }
             }

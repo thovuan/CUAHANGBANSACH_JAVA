@@ -104,7 +104,15 @@
                 <div class="row2">
 
                     <div class="col-4" th:each="tls : ${tl}">
-                        <img th:src="@{'/ANHSANPHAM/'}" alt="" style="width: 200px"/>
+                        <div class="form-group" th:if="${tls.getAvatar()}!=null">
+                            <img alt="" th:src="@{'/TLAvatar/' + ${tls.getMatheloai()} + '/' + ${tls.getAvatar()}}" style="width: 260px; height: auto;" />
+
+                        </div>
+
+                        <div class="form-group" th:unless="${tls.getAvatar()}!=null">
+                            <span>Không có ảnh</span>
+
+                        </div>
                         <h4 th:text="${tls.getTentheloai()}"></h4>
 
                     </div>
@@ -118,7 +126,15 @@
                 <div class="row2">
 
                     <div class="col-4" th:each="nxbs : ${nxb}">
-                        <img th:src="@{'/ANHSANPHAM/'}" alt="" style="width: 200px"/>
+                        <div class="form-group" th:if="${nxbs.getAvatar()}!=null">
+                            <img alt="" th:src="@{'/NXBAvatar/' + ${nxbs.getManxb()} + '/' + ${nxbs.getAvatar()}}" style="width: 260px; height: auto;" />
+
+                        </div>
+
+                        <div class="form-group" th:unless="${nxbs.getAvatar()}!=null">
+                            <span>Không có ảnh</span>
+
+                        </div>
                         <h4 th:text="${nxbs.getTennxb()}"></h4>
 
                     </div>

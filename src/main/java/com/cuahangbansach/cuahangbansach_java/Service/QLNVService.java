@@ -25,4 +25,8 @@ public class QLNVService {
         return qlnvRepository.getName(staffname);
     }
 
+    public void Delete(String id) {
+        qlnvRepository.deleteById(id);
+    }
+
 }
